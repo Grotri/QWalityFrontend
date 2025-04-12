@@ -64,7 +64,11 @@ const Profile = () => {
               >
                 <Text style={styles.btnText}>Изменить данные</Text>
               </Button>
-              <Button style={styles.btn} color="blue">
+              <Button
+                style={styles.btn}
+                color="blue"
+                onPress={() => navigate("FAQ")}
+              >
                 <Text style={styles.btnText}>Управлять подпиской</Text>
               </Button>
               <Button
