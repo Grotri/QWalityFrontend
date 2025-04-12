@@ -1,5 +1,6 @@
 import AccountManagement from "../components/pages/AccountManagement";
 import Admin from "../components/pages/Admin";
+import FAQ from "../components/pages/FAQ";
 import ForgotPassword from "../components/pages/ForgotPassword";
 import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
@@ -8,6 +9,10 @@ import Registration from "../components/pages/Registration";
 import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
+  {
+    name: "FAQ",
+    component: FAQ,
+  },
   {
     name: "Profile",
     component: Profile,
