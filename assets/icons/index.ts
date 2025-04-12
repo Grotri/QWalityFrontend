@@ -1,10 +1,12 @@
 export { default as ArrowBottomIcon } from "./ArrowBottomIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
 export { default as ArrowRightIcon } from "./ArrowRightIcon";
+export { default as ArrowTopFAQIcon } from "./ArrowTopFAQIcon";
 export { default as ArrowTopIcon } from "./ArrowTopIcon";
 export { default as CheckIcon } from "./CheckIcon";
 export { default as CrossIcon } from "./CrossIcon";
 export { default as LogoIcon } from "./LogoIcon";
+export { default as MessageIcon } from "./MessageIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as ProfileIconSmall } from "./ProfileIconSmall";
 export { default as SolarPanelIcon } from "./SolarPanelIcon";
