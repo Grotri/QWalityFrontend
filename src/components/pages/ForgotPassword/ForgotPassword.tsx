@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import Header from "../../molecules/Header";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
@@ -14,12 +13,12 @@ const ForgotPassword = () => {
   const [password, setPassword] = useState<string>("");
 
   return (
-    <GradientPageTemplate>
+    <GradientPageTemplate
+      headerText="Восстановление пароля"
+      onClick={() => navigate("Login")}
+      mustScroll={false}
+    >
       <View style={styles.wrapper}>
-        <Header
-          headerText="Восстановление пароля"
-          onClick={() => navigate("Login")}
-        />
         <View style={styles.fields}>
           <Input
             label="Почта"

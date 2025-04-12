@@ -1,7 +1,5 @@
-import { GestureResponderEvent } from "react-native";
-
 export interface IHeader {
-  onClick?: (event: GestureResponderEvent) => void;
+  onClick?: () => void;
   headerText: string;
   underlined?: boolean;
 }

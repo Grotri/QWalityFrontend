@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
-import Header from "../../molecules/Header";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { Slider } from "@miblanchard/react-native-slider";
@@ -60,13 +59,14 @@ const Admin = () => {
   };
 
   return (
-    <PageTemplate mustScroll={false} onPress={closeDropdowns}>
-      <View style={styles.wrapper}>
-        <Header
-          headerText="Админ панель"
-          underlined
-          onClick={() => navigate("Profile")}
-        />
+    <PageTemplate
+      mustScroll={false}
+      onPress={closeDropdowns}
+      headerText="Админ панель"
+      underlined
+      onClick={() => navigate("Profile")}
+    >
+      <View>
         <View style={styles.adminWrapper}>
           <Text style={styles.subTitle}>Уверенность нейросети</Text>
           <View style={styles.sliderWrapper}>

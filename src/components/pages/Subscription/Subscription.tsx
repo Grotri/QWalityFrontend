@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import Header from "../../molecules/Header";
 import { styles } from "./styles";
 import SliderCard from "../../organisms/SliderCard";
 import { slidersInfo } from "./types";
@@ -23,9 +22,11 @@ const Subscription = () => {
   };
 
   return (
-    <GradientPageTemplate mustScroll={false}>
+    <GradientPageTemplate
+      headerText="Выберите уровень подписки"
+      mustScroll={false}
+    >
       <View style={styles.wrapper}>
-        <Header headerText="Выберите уровень подписки" />
         <View style={styles.flatWrapper}>
           {currentSlide > 0 && (
             <ArrowLeftIcon

@@ -5,11 +5,11 @@ import { fonts } from "../../../constants/fonts";
 export const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    padding: 28,
+    paddingHorizontal: 28,
+    marginTop: 8,
     alignItems: "center",
   },
   fields: {
-    paddingTop: 36,
     paddingBottom: 52,
     paddingHorizontal: 12,
     gap: 12,
