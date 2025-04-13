@@ -5,17 +5,22 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Header from "../../molecules/Header";
+import { IPageTemplate } from "./types";
+import { styles } from "./styles";
 
-const PageTemplate: FC<
-  PropsWithChildren & {
-    mustScroll?: boolean;
-    onPress?: () => void;
-  }
-> = ({ children, mustScroll = true, onPress }) => (
+const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
+  children,
+  mustScroll = true,
+  onPress,
+  headerText,
+  onClick,
+  underlined = false,
+  bottomIcon,
+}) => (
   <SafeAreaView style={styles.container}>
+    <Header headerText={headerText} onClick={onClick} underlined={underlined} />
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
@@ -35,17 +40,8 @@ const PageTemplate: FC<
         <View style={styles.scrollContainer}>{children}</View>
       )}
     </TouchableWithoutFeedback>
+    {bottomIcon && <View style={styles.bottomIcon}>{bottomIcon}</View>}
   </SafeAreaView>
 );
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.bg,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-});
 
 export default PageTemplate;

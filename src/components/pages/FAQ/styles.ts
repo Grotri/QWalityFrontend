@@ -3,14 +3,9 @@ import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    padding: 28,
-    alignItems: "center",
-  },
   managerWrapper: {
-    marginTop: 44,
-    paddingHorizontal: 6,
+    marginTop: 16,
+    paddingHorizontal: 28,
     width: "100%",
   },
   accordion: {
@@ -45,10 +40,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
   },
   support: {
-    position: "absolute",
-    bottom: 0,
-    right: 10,
     alignItems: "center",
+    backgroundColor: palette.bg,
+    padding: 4,
   },
   circle: {
     height: 52,

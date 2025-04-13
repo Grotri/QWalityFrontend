@@ -10,10 +10,6 @@ import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
   {
-    name: "FAQ",
-    component: FAQ,
-  },
-  {
     name: "Profile",
     component: Profile,
   },
@@ -24,6 +20,10 @@ export const mainRoutes: IMainRoute[] = [
   {
     name: "AccountManagement",
     component: AccountManagement,
+  },
+  {
+    name: "FAQ",
+    component: FAQ,
   },
 ];
 

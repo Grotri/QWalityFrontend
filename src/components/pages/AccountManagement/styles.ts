@@ -3,14 +3,10 @@ import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    padding: 28,
-    alignItems: "center",
-  },
   managerWrapper: {
-    marginTop: 36,
-    paddingHorizontal: 6,
+    flex: 1,
+    marginTop: 8,
+    paddingHorizontal: 34,
     width: "100%",
     alignItems: "center",
   },

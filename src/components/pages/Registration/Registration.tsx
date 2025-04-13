@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import Header from "../../molecules/Header";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
 import { CheckIcon } from "../../../../assets/icons";
@@ -30,9 +29,12 @@ const Registration = () => {
   };
 
   return (
-    <GradientPageTemplate>
+    <GradientPageTemplate
+      headerText="Регистрация"
+      onClick={() => navigate("Home")}
+      mustScroll={false}
+    >
       <View style={styles.wrapper}>
-        <Header headerText="Регистрация" onClick={() => navigate("Home")} />
         <View style={styles.fields}>
           <Input
             label="ИНН"
