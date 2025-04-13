@@ -5,10 +5,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import Header from "../../molecules/Header";
 import { IPageTemplate } from "./types";
 import { styles } from "./styles";
+import Menu from "../../molecules/Menu";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
@@ -18,30 +22,45 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   onClick,
   underlined = false,
   bottomIcon,
-}) => (
-  <SafeAreaView style={styles.container}>
-    <Header headerText={headerText} onClick={onClick} underlined={underlined} />
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-        if (onPress) {
-          onPress();
-        }
-      }}
-    >
-      {mustScroll ? (
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          nestedScrollEnabled
-        >
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={styles.scrollContainer}>{children}</View>
+  hasMenu = false,
+}) => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {hasMenu && (
+        <View style={[styles.fixBackground, { height: insets.top }]} />
       )}
-    </TouchableWithoutFeedback>
-    {bottomIcon && <View style={styles.bottomIcon}>{bottomIcon}</View>}
-  </SafeAreaView>
-);
+      {headerText && (
+        <Header
+          headerText={headerText}
+          onClick={onClick}
+          underlined={underlined}
+        />
+      )}
+      {hasMenu && <Menu />}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          if (onPress) {
+            onPress();
+          }
+        }}
+      >
+        {mustScroll ? (
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            nestedScrollEnabled
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={styles.scrollContainer}>{children}</View>
+        )}
+      </TouchableWithoutFeedback>
+      {bottomIcon && <View style={styles.bottomIcon}>{bottomIcon}</View>}
+    </SafeAreaView>
+  );
+};
 
 export default PageTemplate;

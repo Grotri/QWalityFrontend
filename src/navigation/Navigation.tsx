@@ -28,20 +28,18 @@ const AuthTabs = () => (
 
 const MainTabs = () => {
   const { user } = useAuthStore();
+
   return (
     <MainStack.Navigator
       screenOptions={{
         animation: "slide_from_right",
         headerShown: false,
       }}
+      initialRouteName={user?.subscription === "0" ? "Main" : "Profile"}
     >
-      {user?.subscription ? (
-        mainRoutes.map((route) => (
-          <MainStack.Screen key={route.name} {...route} />
-        ))
-      ) : (
-        <RootStack.Screen name={"Subscription"} component={Subscription} />
-      )}
+      {mainRoutes.map((route) => (
+        <MainStack.Screen key={route.name} {...route} />
+      ))}
     </MainStack.Navigator>
   );
 };
@@ -61,9 +59,11 @@ export const Navigation = () => {
             }}
           >
             {!user ? (
-              <RootStack.Screen name="Auth" component={AuthTabs} />
+              <RootStack.Screen name="AuthTabs" component={AuthTabs} />
+            ) : user.subscription ? (
+              <RootStack.Screen name="MainTabs" component={MainTabs} />
             ) : (
-              <RootStack.Screen name="Main" component={MainTabs} />
+              <RootStack.Screen name="Subscription" component={Subscription} />
             )}
           </RootStack.Navigator>
         </NavigationContainer>

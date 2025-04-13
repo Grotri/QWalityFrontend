@@ -17,4 +17,12 @@ export const styles = StyleSheet.create({
     bottom: 12,
     right: 12,
   },
+  fixBackground: {
+    backgroundColor: palette.blue2,
+    position: "absolute",
+    top: 0,
+    right: 0,
+    left: 0,
+    zIndex: -1000,
+  },
 });
