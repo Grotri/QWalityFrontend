@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     gap: 8,
     alignItems: "center",
+    padding: 28,
   },
   header: {
     flexDirection: "row",

@@ -23,6 +23,7 @@ const Modal: FC<IModal> = ({ children, isVisible, setIsVisible, onPress }) => {
         hideModalContentWhileAnimating
         onBackdropPress={handlePress}
         onBackButtonPress={handlePress}
+        style={{ alignItems: "center" }}
       >
         {children}
       </NativeModal>

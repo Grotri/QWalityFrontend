@@ -13,6 +13,7 @@ interface IUseAuthStore extends IStoreStatus {
   user: IUser | null;
   setUser: (userData: IUser) => void;
   setUserField: (field: keyof IUser, value: string) => void;
+  logout: () => void;
 }
 
 const useAuthStore = create<IUseAuthStore>((set) => ({
@@ -24,6 +25,7 @@ const useAuthStore = create<IUseAuthStore>((set) => ({
     set((state) => ({
       user: state.user ? { ...state.user, [field]: value } : null,
     })),
+  logout: () => set({ user: null }),
 }));
 
 export default useAuthStore;

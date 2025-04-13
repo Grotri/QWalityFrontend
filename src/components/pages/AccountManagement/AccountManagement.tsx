@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
-import Header from "../../molecules/Header";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
@@ -114,24 +113,21 @@ const AccountManagement = () => {
   };
 
   return (
-    <PageTemplate>
+    <PageTemplate
+      headerText="Управление аккаунтами"
+      onHeaderClick={() => navigate("Admin")}
+    >
       <TouchableWithoutFeedback onPress={closeDd}>
-        <View style={styles.wrapper}>
-          <Header
-            headerText="Управление аккаунтами"
-            onClick={() => navigate("Admin")}
+        <View style={styles.managerWrapper}>
+          <Accordion
+            containerStyle={styles.accordion}
+            sections={sections}
+            activeSections={activeSections}
+            renderHeader={renderHeader}
+            renderContent={renderContent}
+            onChange={setActiveSections}
+            touchableComponent={Pressable}
           />
-          <View style={styles.managerWrapper}>
-            <Accordion
-              containerStyle={styles.accordion}
-              sections={sections}
-              activeSections={activeSections}
-              renderHeader={renderHeader}
-              renderContent={renderContent}
-              onChange={setActiveSections}
-              touchableComponent={Pressable}
-            />
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </PageTemplate>

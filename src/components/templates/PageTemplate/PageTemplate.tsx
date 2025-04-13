@@ -5,47 +5,62 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import Header from "../../molecules/Header";
+import { IPageTemplate } from "./types";
+import { styles } from "./styles";
+import Menu from "../../molecules/Menu";
 
-const PageTemplate: FC<
-  PropsWithChildren & {
-    mustScroll?: boolean;
-    onPress?: () => void;
-  }
-> = ({ children, mustScroll = true, onPress }) => (
-  <SafeAreaView style={styles.container}>
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-        if (onPress) {
-          onPress();
-        }
-      }}
-    >
-      {mustScroll ? (
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          nestedScrollEnabled
-        >
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={styles.scrollContainer}>{children}</View>
+const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
+  children,
+  mustScroll = true,
+  onTouchablePress,
+  headerText,
+  onHeaderClick,
+  underlined = false,
+  bottomIcon,
+  hasMenu = false,
+}) => {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {hasMenu && (
+        <View style={[styles.fixBackground, { height: insets.top }]} />
       )}
-    </TouchableWithoutFeedback>
-  </SafeAreaView>
-);
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.bg,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-});
+      {headerText && (
+        <Header
+          headerText={headerText}
+          onClick={onHeaderClick}
+          underlined={underlined}
+        />
+      )}
+      {hasMenu && <Menu />}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          if (onTouchablePress) {
+            onTouchablePress();
+          }
+        }}
+      >
+        {mustScroll ? (
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            nestedScrollEnabled
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={styles.scrollContainer}>{children}</View>
+        )}
+      </TouchableWithoutFeedback>
+      {bottomIcon && <View style={styles.bottomIcon}>{bottomIcon}</View>}
+    </SafeAreaView>
+  );
+};
 
 export default PageTemplate;

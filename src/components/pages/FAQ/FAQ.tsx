@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
-import { Pressable, ScrollView, Text, View } from "react-native";
-import Header from "../../molecules/Header";
+import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import { questions } from "../../../constants/questions";
@@ -35,33 +34,32 @@ const FAQ = () => {
   };
 
   return (
-    <PageTemplate mustScroll={false}>
-      <View style={styles.wrapper}>
-        <Header headerText="Помощь" />
-        <ScrollView
-          style={styles.managerWrapper}
-          showsVerticalScrollIndicator={false}
+    <PageTemplate
+      headerText="Помощь"
+      onHeaderClick={() => navigate("Main")}
+      bottomIcon={
+        <Pressable
+          style={styles.support}
+          onPress={() => alert("Обратиться в поддержку пока невозможно.")}
         >
-          <Accordion
-            containerStyle={styles.accordion}
-            sections={questions}
-            activeSections={activeSections}
-            renderHeader={renderHeader}
-            renderContent={renderContent}
-            onChange={setActiveSections}
-            touchableComponent={Pressable}
-          />
-        </ScrollView>
+          <View style={styles.circle}>
+            <MessageIcon />
+          </View>
+          <Text style={styles.supportText}>Обратиться в поддержку</Text>
+        </Pressable>
+      }
+    >
+      <View style={styles.managerWrapper}>
+        <Accordion
+          containerStyle={styles.accordion}
+          sections={questions}
+          activeSections={activeSections}
+          renderHeader={renderHeader}
+          renderContent={renderContent}
+          onChange={setActiveSections}
+          touchableComponent={Pressable}
+        />
       </View>
-      <Pressable
-        style={styles.support}
-        onPress={() => alert("Обратиться в поддержку пока невозможно.")}
-      >
-        <View style={styles.circle}>
-          <MessageIcon />
-        </View>
-        <Text style={styles.supportText}>Обратиться в поддержку</Text>
-      </Pressable>
     </PageTemplate>
   );
 };

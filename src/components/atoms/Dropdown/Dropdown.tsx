@@ -19,6 +19,8 @@ const Dropdown: FC<IDropdown> = ({
   labelStyle,
   itemContainerStyle,
   borderColor = palette.bg,
+  arrowDownIconComponent,
+  arrowUpIconComponent,
 }) => (
   <View style={[styles.wrapper, wrapperStyle]}>
     {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
@@ -37,10 +39,14 @@ const Dropdown: FC<IDropdown> = ({
       listItemContainerStyle={[styles.item, itemContainerStyle]}
       selectedItemContainerStyle={styles.selectedItem}
       showTickIcon={false}
-      ArrowDownIconComponent={() => <ArrowBottomIcon />}
-      ArrowUpIconComponent={() => (
-        <ArrowBottomIcon style={{ transform: [{ scaleY: -1 }] }} />
-      )}
+      ArrowDownIconComponent={() =>
+        arrowDownIconComponent || <ArrowBottomIcon />
+      }
+      ArrowUpIconComponent={() =>
+        arrowUpIconComponent || (
+          <ArrowBottomIcon style={{ transform: [{ scaleY: -1 }] }} />
+        )
+      }
       closeAfterSelecting
       closeOnBackPressed
       onClose={() => setIsOpen(false)}

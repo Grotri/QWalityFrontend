@@ -4,15 +4,13 @@ import FAQ from "../components/pages/FAQ";
 import ForgotPassword from "../components/pages/ForgotPassword";
 import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
+import Main from "../components/pages/Main";
 import Profile from "../components/pages/Profile";
 import Registration from "../components/pages/Registration";
+import Settings from "../components/pages/Settings";
 import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
-  {
-    name: "FAQ",
-    component: FAQ,
-  },
   {
     name: "Profile",
     component: Profile,
@@ -24,6 +22,18 @@ export const mainRoutes: IMainRoute[] = [
   {
     name: "AccountManagement",
     component: AccountManagement,
+  },
+  {
+    name: "FAQ",
+    component: FAQ,
+  },
+  {
+    name: "Main",
+    component: Main,
+  },
+  {
+    name: "Settings",
+    component: Settings,
   },
 ];
 

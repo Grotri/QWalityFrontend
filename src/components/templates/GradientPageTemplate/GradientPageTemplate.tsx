@@ -1,34 +1,43 @@
 import React, { FC, PropsWithChildren } from "react";
-import { View, ScrollView } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import RadialGradientBg from "../../atoms/RadialGradient";
-import { StyleSheet } from "react-native";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
-import { palette } from "../../../constants/palette";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IGradientPageTemplate } from "./types";
+import { styles } from "./styles";
+import Header from "../../molecules/Header";
 
-const GradientPageTemplate: FC<
-  PropsWithChildren & { mustScroll?: boolean }
-> = ({ children, mustScroll = true }) => (
+const GradientPageTemplate: FC<PropsWithChildren & IGradientPageTemplate> = ({
+  children,
+  mustScroll = true,
+  headerText,
+  onClick,
+  underlined = false,
+}) => (
   <SafeAreaView style={styles.container}>
     <RadialGradientBg screenWidth={screenWidth} screenHeight={screenHeight} />
-    {mustScroll ? (
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {children}
-      </ScrollView>
-    ) : (
-      <View style={styles.scrollContainer}>{children}</View>
+    {headerText && (
+      <Header
+        headerText={headerText}
+        onClick={onClick}
+        underlined={underlined}
+      />
     )}
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {mustScroll ? (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {children}
+        </ScrollView>
+      ) : (
+        <View style={styles.scrollContainer}>{children}</View>
+      )}
+    </TouchableWithoutFeedback>
   </SafeAreaView>
 );
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.gradientBlue,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-});
 
 export default GradientPageTemplate;
