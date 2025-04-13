@@ -43,7 +43,7 @@ const Settings = () => {
     <PageTemplate
       headerText="Настройки"
       underlined
-      onHeaderClick={() => navigate("Main")}
+      onHeaderClick={() => navigate("Main", { direction: "backward" })}
       mustScroll={false}
       onTouchablePress={closeDD}
     >

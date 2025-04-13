@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   return (
     <GradientPageTemplate
       headerText="Восстановление пароля"
-      onClick={() => navigate("Login")}
+      onHeaderClick={() => navigate("Login", { direction: "backward" })}
       mustScroll={false}
     >
       <View style={styles.wrapper}>

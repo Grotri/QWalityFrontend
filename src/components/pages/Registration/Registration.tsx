@@ -31,7 +31,7 @@ const Registration = () => {
   return (
     <GradientPageTemplate
       headerText="Регистрация"
-      onClick={() => navigate("Home")}
+      onHeaderClick={() => navigate("Home", { direction: "backward" })}
       mustScroll={false}
     >
       <View style={styles.wrapper}>

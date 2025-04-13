@@ -18,7 +18,7 @@ const Profile = () => {
     <PageTemplate
       mustScroll={false}
       headerText="Профиль"
-      onHeaderClick={() => navigate("Main")}
+      onHeaderClick={() => navigate("Main", { direction: "backward" })}
     >
       <View style={styles.profileWrapper}>
         <ProfileIcon />
