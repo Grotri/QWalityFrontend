@@ -28,4 +28,5 @@ export type TypeMainStackParamList = {
   FAQ: NavigationParams | undefined;
   Main: NavigationParams | undefined;
   Settings: NavigationParams | undefined;
+  TrashBin: NavigationParams | undefined;
 };

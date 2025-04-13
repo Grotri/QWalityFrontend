@@ -8,6 +8,7 @@ import Main from "../components/pages/Main";
 import Profile from "../components/pages/Profile";
 import Registration from "../components/pages/Registration";
 import Settings from "../components/pages/Settings";
+import TrashBin from "../components/pages/TrashBin";
 import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
@@ -34,6 +35,10 @@ export const mainRoutes: IMainRoute[] = [
   {
     name: "Settings",
     component: Settings,
+  },
+  {
+    name: "TrashBin",
+    component: TrashBin,
   },
 ];
 
