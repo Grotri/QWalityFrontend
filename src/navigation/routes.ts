@@ -7,6 +7,7 @@ import Login from "../components/pages/Login";
 import Main from "../components/pages/Main";
 import Profile from "../components/pages/Profile";
 import Registration from "../components/pages/Registration";
+import Settings from "../components/pages/Settings";
 import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
@@ -29,6 +30,10 @@ export const mainRoutes: IMainRoute[] = [
   {
     name: "Main",
     component: Main,
+  },
+  {
+    name: "Settings",
+    component: Settings,
   },
 ];
 

@@ -10,7 +10,7 @@ export const menuItems: IMenuItem[] = [
   {
     icon: SettingsIcon,
     title: "Настройки",
-    path: "FAQ",
+    path: "Settings",
   },
   {
     icon: HelpIcon,

@@ -23,4 +23,5 @@ export type TypeMainStackParamList = {
   AccountManagement: undefined;
   FAQ: undefined;
   Main: undefined;
+  Settings: undefined;
 };
