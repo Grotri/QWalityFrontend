@@ -10,18 +10,22 @@ export interface IMainRoute {
   component: ComponentType;
 }
 
+type NavigationParams = {
+  direction?: "backward";
+};
+
 export type TypeAuthStackParamList = {
-  Home: undefined;
-  Registration: undefined;
-  Login: undefined;
-  ForgotPassword: undefined;
+  Home: NavigationParams | undefined;
+  Registration: NavigationParams | undefined;
+  Login: NavigationParams | undefined;
+  ForgotPassword: NavigationParams | undefined;
 };
 
 export type TypeMainStackParamList = {
-  Profile: undefined;
-  Admin: undefined;
-  AccountManagement: undefined;
-  FAQ: undefined;
-  Main: undefined;
-  Settings: undefined;
+  Profile: NavigationParams | undefined;
+  Admin: NavigationParams | undefined;
+  AccountManagement: NavigationParams | undefined;
+  FAQ: NavigationParams | undefined;
+  Main: NavigationParams | undefined;
+  Settings: NavigationParams | undefined;
 };

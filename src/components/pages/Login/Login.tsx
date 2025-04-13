@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <GradientPageTemplate
       headerText="Вход в аккаунт"
-      onClick={() => navigate("Home")}
+      onHeaderClick={() => navigate("Home", { direction: "backward" })}
       mustScroll={false}
     >
       <View style={styles.wrapper}>

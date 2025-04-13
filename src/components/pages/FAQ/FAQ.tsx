@@ -36,7 +36,7 @@ const FAQ = () => {
   return (
     <PageTemplate
       headerText="Помощь"
-      onHeaderClick={() => navigate("Main")}
+      onHeaderClick={() => navigate("Main", { direction: "backward" })}
       bottomIcon={
         <Pressable
           style={styles.support}

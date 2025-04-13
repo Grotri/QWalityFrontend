@@ -14,14 +14,19 @@ const AuthStack = createNativeStackNavigator<TypeAuthStackParamList>();
 const MainStack = createNativeStackNavigator<TypeMainStackParamList>();
 
 const AuthTabs = () => (
-  <AuthStack.Navigator
-    screenOptions={{
-      animation: "slide_from_right",
-      headerShown: false,
-    }}
-  >
-    {authRoutes.map((route) => (
-      <AuthStack.Screen key={route.name} {...route} />
+  <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    {authRoutes.map(({ name, component }) => (
+      <AuthStack.Screen
+        key={name}
+        name={name}
+        component={component}
+        options={({ route }) => ({
+          animation:
+            route.params?.direction === "backward"
+              ? "slide_from_left"
+              : "slide_from_right",
+        })}
+      />
     ))}
   </AuthStack.Navigator>
 );
@@ -31,14 +36,21 @@ const MainTabs = () => {
 
   return (
     <MainStack.Navigator
-      screenOptions={{
-        animation: "slide_from_right",
-        headerShown: false,
-      }}
+      screenOptions={{ headerShown: false }}
       initialRouteName={user?.subscription === "0" ? "Main" : "Profile"}
     >
-      {mainRoutes.map((route) => (
-        <MainStack.Screen key={route.name} {...route} />
+      {mainRoutes.map(({ name, component }) => (
+        <MainStack.Screen
+          key={name}
+          name={name}
+          component={component}
+          options={({ route }) => ({
+            animation:
+              route.params?.direction === "backward"
+                ? "slide_from_left"
+                : "slide_from_right",
+          })}
+        />
       ))}
     </MainStack.Navigator>
   );

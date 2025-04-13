@@ -115,7 +115,7 @@ const AccountManagement = () => {
   return (
     <PageTemplate
       headerText="Управление аккаунтами"
-      onHeaderClick={() => navigate("Admin")}
+      onHeaderClick={() => navigate("Admin", { direction: "backward" })}
     >
       <TouchableWithoutFeedback onPress={closeDd}>
         <View style={styles.managerWrapper}>

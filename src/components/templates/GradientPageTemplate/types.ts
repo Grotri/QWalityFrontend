@@ -1,6 +1,6 @@
 export interface IGradientPageTemplate {
   mustScroll?: boolean;
   headerText?: string;
-  onClick?: () => void;
+  onHeaderClick?: () => void;
   underlined?: boolean;
 }

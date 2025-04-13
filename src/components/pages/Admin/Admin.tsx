@@ -64,7 +64,7 @@ const Admin = () => {
       onTouchablePress={closeDropdowns}
       headerText="Админ панель"
       underlined
-      onHeaderClick={() => navigate("Profile")}
+      onHeaderClick={() => navigate("Profile", { direction: "backward" })}
     >
       <View>
         <View style={styles.adminWrapper}>

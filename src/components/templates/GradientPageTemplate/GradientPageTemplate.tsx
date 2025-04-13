@@ -16,7 +16,7 @@ const GradientPageTemplate: FC<PropsWithChildren & IGradientPageTemplate> = ({
   children,
   mustScroll = true,
   headerText,
-  onClick,
+  onHeaderClick,
   underlined = false,
 }) => (
   <SafeAreaView style={styles.container}>
@@ -24,7 +24,7 @@ const GradientPageTemplate: FC<PropsWithChildren & IGradientPageTemplate> = ({
     {headerText && (
       <Header
         headerText={headerText}
-        onClick={onClick}
+        onClick={onHeaderClick}
         underlined={underlined}
       />
     )}
