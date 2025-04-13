@@ -11,6 +11,7 @@ const BlurView = () => (
       left: 0,
       right: 0,
       backgroundColor: "#00000000",
+      zIndex: 1000,
     }}
   >
     <WebView

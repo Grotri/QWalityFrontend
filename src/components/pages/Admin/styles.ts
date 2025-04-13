@@ -81,6 +81,7 @@ export const styles = StyleSheet.create({
     marginTop: -8,
   },
   modals: {
+    width: "100%",
     gap: 20,
   },
   modal: {
