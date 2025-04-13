@@ -18,7 +18,7 @@ const Profile = () => {
     <PageTemplate
       mustScroll={false}
       headerText="Профиль"
-      onClick={() => navigate("Profile")}
+      onClick={() => navigate("Main")}
     >
       <View style={styles.profileWrapper}>
         <ProfileIcon />
@@ -63,11 +63,7 @@ const Profile = () => {
             >
               <Text style={styles.btnText}>Изменить данные</Text>
             </Button>
-            <Button
-              style={styles.btn}
-              color="blue"
-              onPress={() => navigate("FAQ")}
-            >
+            <Button style={styles.btn} color="blue">
               <Text style={styles.btnText}>Управлять подпиской</Text>
             </Button>
             <Button

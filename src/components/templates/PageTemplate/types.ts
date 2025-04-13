@@ -3,8 +3,9 @@ import { ReactNode } from "react";
 export interface IPageTemplate {
   mustScroll?: boolean;
   onPress?: () => void;
-  headerText: string;
+  headerText?: string;
   onClick?: () => void;
   underlined?: boolean;
   bottomIcon?: ReactNode;
+  hasMenu?: boolean;
 }
