@@ -17,7 +17,7 @@ const Menu = () => {
   };
 
   return (
-    <View style={[styles.wrapper]}>
+    <View style={styles.wrapper}>
       <View style={styles.header}>
         <Pressable style={[styles.headerBtn, { width: 44 }]} onPress={toggle}>
           <Hamburger active={isExpanded} />

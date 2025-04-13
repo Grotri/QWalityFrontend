@@ -17,9 +17,9 @@ import Menu from "../../molecules/Menu";
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
   mustScroll = true,
-  onPress,
+  onTouchablePress,
   headerText,
-  onClick,
+  onHeaderClick,
   underlined = false,
   bottomIcon,
   hasMenu = false,
@@ -34,7 +34,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
       {headerText && (
         <Header
           headerText={headerText}
-          onClick={onClick}
+          onClick={onHeaderClick}
           underlined={underlined}
         />
       )}
@@ -42,8 +42,8 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
-          if (onPress) {
-            onPress();
+          if (onTouchablePress) {
+            onTouchablePress();
           }
         }}
       >

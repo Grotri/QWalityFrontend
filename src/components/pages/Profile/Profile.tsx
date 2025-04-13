@@ -18,7 +18,7 @@ const Profile = () => {
     <PageTemplate
       mustScroll={false}
       headerText="Профиль"
-      onClick={() => navigate("Main")}
+      onHeaderClick={() => navigate("Main")}
     >
       <View style={styles.profileWrapper}>
         <ProfileIcon />

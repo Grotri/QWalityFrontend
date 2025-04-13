@@ -36,7 +36,7 @@ const FAQ = () => {
   return (
     <PageTemplate
       headerText="Помощь"
-      onClick={() => navigate("Main")}
+      onHeaderClick={() => navigate("Main")}
       bottomIcon={
         <Pressable
           style={styles.support}

@@ -61,10 +61,10 @@ const Admin = () => {
   return (
     <PageTemplate
       mustScroll={false}
-      onPress={closeDropdowns}
+      onTouchablePress={closeDropdowns}
       headerText="Админ панель"
       underlined
-      onClick={() => navigate("Profile")}
+      onHeaderClick={() => navigate("Profile")}
     >
       <View>
         <View style={styles.adminWrapper}>
