@@ -5,7 +5,7 @@ export const menuItems: IMenuItem[] = [
   {
     icon: TrashBinIcon,
     title: "Корзина",
-    path: "FAQ",
+    path: "TrashBin",
   },
   {
     icon: SettingsIcon,

@@ -67,4 +67,5 @@ export const palette = {
   dropdownListBgTransparent: "rgba(65, 110, 223, 0.7)",
   dashBg: "#B5CAFF",
   modalBtn: "#4B74DD",
+  trashItemImageBg: "#BCBCBC",
 };

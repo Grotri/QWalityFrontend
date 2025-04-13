@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     lineHeight: 27,
-    fontWeight: 700,
+    fontFamily: fonts.semibold,
     color: palette.mainText,
   },
   modalContent: {
