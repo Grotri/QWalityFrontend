@@ -11,12 +11,11 @@ import Modal from "../../atoms/Modal";
 import DatePicker from "../../atoms/DatePicker";
 import { palette } from "../../../constants/palette";
 import { IDefect } from "../Main/types";
+import Defect from "../../molecules/Defect";
 
 const TrashBin = () => {
   const { navigate } = useMainNavigation();
-  const [trashItems, setTrashItems] = useState<IDefect[]>([
-    ...trashBinItems,
-  ]);
+  const [trashItems, setTrashItems] = useState<IDefect[]>([...trashBinItems]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -42,20 +41,7 @@ const TrashBin = () => {
     >
       <View style={styles.wrapper}>
         {trashItems.map((item: IDefect) => (
-          <View key={item.id} style={styles.itemWrapper}>
-            <View style={styles.trashBinItem}>
-              <View style={styles.image}>
-                <Text style={styles.imageText}>.jpg</Text>
-              </View>
-              <View>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemDate}>{item.date}</Text>
-              </View>
-            </View>
-            <Button>
-              <Text style={styles.btnText}>Восстановить</Text>
-            </Button>
-          </View>
+          <Defect key={item.id} defect={item} textBtn="Восстановить" />
         ))}
       </View>
       {isModalOpen && <BlurView />}

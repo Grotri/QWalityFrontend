@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { authRoutes, mainRoutes } from "./routes";
-import { StyleSheet, StatusBar, View } from "react-native";
+import { StyleSheet, StatusBar, View, Platform } from "react-native";
 import { palette } from "../constants/palette";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import useAuthStore from "../hooks/useAuthStore";
@@ -63,7 +63,7 @@ export const Navigation = () => {
     <SafeAreaProvider>
       <View style={styles.container}>
         <NavigationContainer>
-          <StatusBar barStyle="light-content" hidden />
+          <StatusBar barStyle="light-content" hidden={Platform.OS !== "ios"} />
           <RootStack.Navigator
             screenOptions={{
               animation: "slide_from_right",

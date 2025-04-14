@@ -68,4 +68,8 @@ export const styles = StyleSheet.create({
     lineHeight: 19,
     fontFamily: fonts.regular,
   },
+  defects: {
+    padding: 16,
+    gap: 12,
+  }
 });

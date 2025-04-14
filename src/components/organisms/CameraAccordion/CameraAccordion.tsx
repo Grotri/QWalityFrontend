@@ -2,11 +2,12 @@ import React, { FC, useRef, useState } from "react";
 import { ICameraAccordion } from "./types";
 import Accordion from "react-native-collapsible/Accordion";
 import { Pressable, Text, View } from "react-native";
-import { ICamera } from "../../pages/Main/types";
+import { ICamera, IDefect } from "../../pages/Main/types";
 import { ArrowAccordionIcon, CameraIcon } from "../../../../assets/icons";
 import { styles } from "./styles";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
+import Defect from "../../molecules/Defect";
 
 const CameraAccordion: FC<ICameraAccordion> = ({ sections }) => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -56,9 +57,11 @@ const CameraAccordion: FC<ICameraAccordion> = ({ sections }) => {
 
   const renderContent = (camera: ICamera) => (
     <View>
-      {camera.defects.map((defect) => (
-        <Text key={defect.id}>{defect.name}</Text>
-      ))}
+      <View style={styles.defects}>
+        {camera.defects.map((defect: IDefect) => (
+          <Defect key={defect.id} defect={defect} textBtn="Скрыть" />
+        ))}
+      </View>
     </View>
   );
 
