@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { IButton } from "./types";
-import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 
 const Button: FC<IButton> = ({
@@ -12,7 +12,7 @@ const Button: FC<IButton> = ({
 }) => {
   const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={onPress}
       style={[
         styles.btn,
@@ -22,7 +22,7 @@ const Button: FC<IButton> = ({
       ]}
     >
       {children}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
