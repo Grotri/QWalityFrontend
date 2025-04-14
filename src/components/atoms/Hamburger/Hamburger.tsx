@@ -9,10 +9,10 @@ import { IHamburger } from "./types";
 import { styles } from "./styles";
 
 const Hamburger: FC<IHamburger> = ({ active }) => {
-  const progress = useSharedValue(1);
+  const progress = useSharedValue(0);
 
   useEffect(() => {
-    const next = active ? 0 : 1;
+    const next = active ? 1 : 0;
     progress.value = withTiming(next, { duration: 300 });
   }, [active]);
 

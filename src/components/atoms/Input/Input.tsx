@@ -17,22 +17,28 @@ const Input: FC<IInput> = ({
   inputMode = "text",
   maxLength,
   secureTextEntry = false,
+  placeholderTextColor,
+  rightIcon,
 }) => {
   return (
     <View style={[styles.container, customStyles]}>
       {label && <Text style={[styles.label, customLabelStyles]}>{label}</Text>}
-      <TextInput
-        style={[styles.input, customInputStyles]}
-        onChangeText={onChangeText}
-        value={value}
-        placeholder={placeholder}
-        keyboardType={keyboardType}
-        keyboardAppearance={keyboardAppearance}
-        inputMode={inputMode}
-        maxLength={maxLength}
-        cursorColor={palette.black}
-        secureTextEntry={secureTextEntry}
-      />
+      <View>
+        <TextInput
+          style={[styles.input, customInputStyles]}
+          onChangeText={onChangeText}
+          value={value}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderTextColor}
+          keyboardType={keyboardType}
+          keyboardAppearance={keyboardAppearance}
+          inputMode={inputMode}
+          maxLength={maxLength}
+          cursorColor={palette.black}
+          secureTextEntry={secureTextEntry}
+        />
+        {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
+      </View>
     </View>
   );
 };
