@@ -58,14 +58,7 @@ const Settings = () => {
             isOpen={isFirstDDOpen}
             wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
             dropdownStyle={styles.dropdownStyle}
-            arrowDownIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
-            arrowUpIconComponent={
-              <ArrowBottomIcon
-                stroke={2}
-                height={9}
-                style={{ transform: [{ scaleY: -1 }] }}
-              />
-            }
+            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
           />
         </View>
         <View style={styles.dropdownWrapper}>
@@ -78,14 +71,7 @@ const Settings = () => {
             isOpen={isSecondDDOpen}
             wrapperStyle={styles.wrapperStyle}
             dropdownStyle={styles.dropdownStyle}
-            arrowDownIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
-            arrowUpIconComponent={
-              <ArrowBottomIcon
-                stroke={2}
-                height={9}
-                style={{ transform: [{ scaleY: -1 }] }}
-              />
-            }
+            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
           />
         </View>
         <Button

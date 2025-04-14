@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
@@ -6,24 +6,35 @@ import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import { questions } from "../../../constants/questions";
 import { IQuestionSection } from "./types";
-import { ArrowTopFAQIcon, MessageIcon } from "../../../../assets/icons";
+import { ArrowAccordionIcon, MessageIcon } from "../../../../assets/icons";
+import { useSharedValue, withTiming } from "react-native-reanimated";
+import IconRotated from "../../atoms/IconRotated";
 
 const FAQ = () => {
   const { navigate } = useMainNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
+  const rotations = useRef(questions.map(() => useSharedValue(0))).current;
 
-  const renderHeader = (question: IQuestionSection) => {
-    const active =
-      activeSections.length > 0 &&
-      questions[activeSections[0]].id === question.id;
+  const handleSectionChange = (sections: number[]) => {
+    const newActiveIndex = sections[0];
 
-    return (
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{question.title}</Text>
-        <ArrowTopFAQIcon style={!active && { transform: [{ scaleY: -1 }] }} />
-      </View>
-    );
+    rotations.forEach((rotation, index) => {
+      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
+    });
+
+    setActiveSections(sections);
   };
+
+  const renderHeader = (question: IQuestionSection, index: number) => (
+    <View style={styles.header}>
+      <Text style={styles.headerText}>{question.title}</Text>
+      <IconRotated
+        icon={<ArrowAccordionIcon />}
+        rotation={rotations[index]}
+        isActive={activeSections.includes(index)}
+      />
+    </View>
+  );
 
   const renderContent = (question: IQuestionSection) => {
     return (
@@ -56,7 +67,7 @@ const FAQ = () => {
           activeSections={activeSections}
           renderHeader={renderHeader}
           renderContent={renderContent}
-          onChange={setActiveSections}
+          onChange={handleSectionChange}
           touchableComponent={Pressable}
         />
       </View>

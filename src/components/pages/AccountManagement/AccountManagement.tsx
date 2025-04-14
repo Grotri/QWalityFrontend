@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
@@ -12,12 +12,25 @@ import { roles } from "../../../constants/roles";
 import Button from "../../atoms/Button";
 import { palette } from "../../../constants/palette";
 import { users } from "../../../constants/users";
+import { useSharedValue, withTiming } from "react-native-reanimated";
+import IconRotated from "../../atoms/IconRotated";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [sections, setSections] = useState<IUserSection[]>([...users]);
   const [isDdOpen, setIsDdOpen] = useState<boolean>(false);
+  const rotations = useRef(sections.map(() => useSharedValue(0))).current;
+
+  const handleSectionChange = (sections: number[]) => {
+    const newActiveIndex = sections[0];
+
+    rotations.forEach((rotation, index) => {
+      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
+    });
+
+    setActiveSections(sections);
+  };
 
   const closeDd = () => {
     if (isDdOpen) {
@@ -29,21 +42,19 @@ const AccountManagement = () => {
     closeDd();
   }, [activeSections]);
 
-  const renderHeader = (section: IUserSection) => {
-    const active =
-      activeSections.length > 0 &&
-      sections[activeSections[0]].title === section.title;
-
-    return (
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <ProfileIconSmall />
-          <Text style={styles.headerText}>{section.title}</Text>
-        </View>
-        <ArrowTopIcon style={!active && { transform: [{ scaleY: -1 }] }} />
+  const renderHeader = (section: IUserSection, index: number) => (
+    <View style={styles.header}>
+      <View style={styles.headerLeft}>
+        <ProfileIconSmall />
+        <Text style={styles.headerText}>{section.title}</Text>
       </View>
-    );
-  };
+      <IconRotated
+        icon={<ArrowTopIcon style={{ transform: [{ scaleY: -1 }] }} />}
+        rotation={rotations[index]}
+        isActive={activeSections.includes(index)}
+      />
+    </View>
+  );
 
   const renderContent = (section: IUserSection) => {
     return (
@@ -93,7 +104,7 @@ const AccountManagement = () => {
           label="Роль"
           wrapperStyle={[
             styles.dropdownWrapper,
-            { marginBottom: isDdOpen ? 100 : 18 },
+            { marginBottom: isDdOpen ? 132 : 18 },
           ]}
           labelStyle={styles.inputLabel}
           dropdownStyle={styles.dropdown}
@@ -125,7 +136,7 @@ const AccountManagement = () => {
             activeSections={activeSections}
             renderHeader={renderHeader}
             renderContent={renderContent}
-            onChange={setActiveSections}
+            onChange={handleSectionChange}
             touchableComponent={Pressable}
           />
         </View>

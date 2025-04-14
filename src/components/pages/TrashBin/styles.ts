@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
   },
   modal: {
-    width: "90%",
+    width: "100%",
     borderRadius: 14,
     backgroundColor: palette.subScreenPopupBg,
     padding: 12,
