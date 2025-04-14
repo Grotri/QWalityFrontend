@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./styles";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
 import Input from "../../atoms/Input";
@@ -37,9 +37,9 @@ const Login = () => {
         <Button color="welcomeBrightBlue" style={styles.loginBtn}>
           <Text style={styles.loginBtnText}>Войти</Text>
         </Button>
-        <Pressable onPress={() => navigate("ForgotPassword")}>
+        <Button onPress={() => navigate("ForgotPassword")}>
           <Text style={styles.textUnderlined}>Забыли пароль?</Text>
-        </Pressable>
+        </Button>
       </View>
     </GradientPageTemplate>
   );

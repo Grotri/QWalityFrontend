@@ -5,16 +5,16 @@ import { styles } from "./styles";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { CrossIcon, TrashBinIcon } from "../../../../assets/icons";
 import { trashBinItems } from "../../../constants/trashBinItems";
-import { ITrashBinItem } from "./types";
 import Button from "../../atoms/Button";
 import BlurView from "../../atoms/BlurView";
 import Modal from "../../atoms/Modal";
 import DatePicker from "../../atoms/DatePicker";
 import { palette } from "../../../constants/palette";
+import { IDefect } from "../Main/types";
 
 const TrashBin = () => {
   const { navigate } = useMainNavigation();
-  const [trashItems, setTrashItems] = useState<ITrashBinItem[]>([
+  const [trashItems, setTrashItems] = useState<IDefect[]>([
     ...trashBinItems,
   ]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const TrashBin = () => {
       }
     >
       <View style={styles.wrapper}>
-        {trashItems.map((item: ITrashBinItem) => (
+        {trashItems.map((item: IDefect) => (
           <View key={item.id} style={styles.itemWrapper}>
             <View style={styles.trashBinItem}>
               <View style={styles.image}>

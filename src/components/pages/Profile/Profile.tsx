@@ -108,9 +108,15 @@ const Profile = () => {
             </Button>
             <View style={styles.supportTextWrapper}>
               <Text style={styles.supportText}>Нет доступа к почте?</Text>
-              <Text style={[styles.supportText, styles.supportTextUnderlined]}>
-                Обратитесь в тех. поддержку
-              </Text>
+              <Button
+                onPress={() => alert("Обратиться в поддержку пока невозможно.")}
+              >
+                <Text
+                  style={[styles.supportText, styles.supportTextUnderlined]}
+                >
+                  Обратитесь в тех. поддержку
+                </Text>
+              </Button>
             </View>
           </>
         )}

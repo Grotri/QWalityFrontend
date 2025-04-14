@@ -1,6 +1,6 @@
-import { ITrashBinItem } from "../components/pages/TrashBin/types";
+import { IDefect } from "../components/pages/Main/types";
 
-export const trashBinItems: ITrashBinItem[] = [
+export const trashBinItems: IDefect[] = [
   {
     id: "0",
     name: "Скол",

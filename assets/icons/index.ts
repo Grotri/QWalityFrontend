@@ -1,8 +1,9 @@
+export { default as ArrowAccordionIcon } from "./ArrowAccordionIcon";
 export { default as ArrowBottomIcon } from "./ArrowBottomIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";
 export { default as ArrowRightIcon } from "./ArrowRightIcon";
-export { default as ArrowTopFAQIcon } from "./ArrowTopFAQIcon";
 export { default as ArrowTopIcon } from "./ArrowTopIcon";
+export { default as CameraIcon } from "./CameraIcon";
 export { default as CheckIcon } from "./CheckIcon";
 export { default as CrossIcon } from "./CrossIcon";
 export { default as HelpIcon } from "./HelpIcon";
@@ -11,6 +12,7 @@ export { default as MenuProfileIcon } from "./MenuProfileIcon";
 export { default as MessageIcon } from "./MessageIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as ProfileIconSmall } from "./ProfileIconSmall";
+export { default as SearchIcon } from "./SearchIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as SolarPanelIcon } from "./SolarPanelIcon";
 export { default as TooltipIcon } from "./TooltipIcon";

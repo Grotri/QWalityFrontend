@@ -4,7 +4,7 @@ import Svg, { Path } from "react-native-svg";
 import { IIcon } from "./types";
 import { palette } from "../../src/constants/palette";
 
-const ArrowTopFAQIcon: FC<IIcon> = ({
+const ArrowAccordionIcon: FC<IIcon> = ({
   color = palette.white,
   style,
   width = 26,
@@ -22,9 +22,9 @@ const ArrowTopFAQIcon: FC<IIcon> = ({
       stroke={color}
       strokeLinecap="round"
       strokeWidth={stroke}
-      d="m2 15.5 9.387-12.8a2 2 0 0 1 3.226 0L24 15.5"
+      d="M2 1.5l9.387 12.8a2 2 0 0 0 3.226 0L24 1.5"
     />
   </Svg>
 );
 
-export default ArrowTopFAQIcon;
+export default ArrowAccordionIcon;

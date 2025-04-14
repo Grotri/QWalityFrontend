@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren, useState } from "react";
 import {
   View,
   ScrollView,
@@ -13,6 +13,7 @@ import Header from "../../molecules/Header";
 import { IPageTemplate } from "./types";
 import { styles } from "./styles";
 import Menu from "../../molecules/Menu";
+import BlurView from "../../atoms/BlurView";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
@@ -25,6 +26,13 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   hasMenu = false,
 }) => {
   const insets = useSafeAreaInsets();
+  const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(false);
+
+  const closeMenu = () => {
+    if (isMenuExpanded) {
+      setIsMenuExpanded(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +46,9 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
           underlined={underlined}
         />
       )}
-      {hasMenu && <Menu />}
+      {hasMenu && (
+        <Menu isExpanded={isMenuExpanded} setIsExpanded={setIsMenuExpanded} />
+      )}
       <TouchableWithoutFeedback
         onPress={() => {
           Keyboard.dismiss();
@@ -53,9 +63,13 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
             nestedScrollEnabled
           >
             {children}
+            {isMenuExpanded && <BlurView onPress={closeMenu} />}
           </ScrollView>
         ) : (
-          <View style={styles.scrollContainer}>{children}</View>
+          <View style={styles.scrollContainer}>
+            {children}
+            {isMenuExpanded && <BlurView onPress={closeMenu} />}
+          </View>
         )}
       </TouchableWithoutFeedback>
       {bottomIcon && <View style={styles.bottomIcon}>{bottomIcon}</View>}

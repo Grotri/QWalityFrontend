@@ -1,16 +1,15 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import { menuItems } from "../../../constants/menuItems";
 import { Pressable, Text, View } from "react-native";
 import MenuItem from "../../atoms/MenuItem";
-import { IMenuItem } from "./types";
+import { IMenu, IMenuItem } from "./types";
 import { styles } from "./styles";
 import { LogoIcon, MenuProfileIcon } from "../../../../assets/icons";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import Hamburger from "../../atoms/Hamburger/Hamburger";
 
-const Menu = () => {
+const Menu: FC<IMenu> = ({ isExpanded, setIsExpanded }) => {
   const { navigate } = useMainNavigation();
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const toggle = () => {
     setIsExpanded(!isExpanded);

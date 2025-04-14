@@ -14,8 +14,7 @@ export interface IDropdown {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
   borderColor?: string;
-  arrowDownIconComponent?: JSX.Element;
-  arrowUpIconComponent?: JSX.Element;
+  arrowIconComponent?: JSX.Element;
 }
 
 export interface IDropdownData {
