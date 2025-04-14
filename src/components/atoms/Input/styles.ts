@@ -26,4 +26,10 @@ export const styles = StyleSheet.create({
     textAlignVertical: "center",
     includeFontPadding: false,
   },
+  rightIcon: {
+    position: "absolute",
+    right: 8,
+    top: "50%",
+    transform: [{ translateY: "-50%" }],
+  },
 });

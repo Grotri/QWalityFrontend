@@ -11,6 +11,7 @@ export { default as MenuProfileIcon } from "./MenuProfileIcon";
 export { default as MessageIcon } from "./MessageIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as ProfileIconSmall } from "./ProfileIconSmall";
+export { default as SearchIcon } from "./SearchIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as SolarPanelIcon } from "./SolarPanelIcon";
 export { default as TooltipIcon } from "./TooltipIcon";

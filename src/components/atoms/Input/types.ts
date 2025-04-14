@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   InputModeOptions,
   KeyboardTypeOptions,
@@ -18,4 +19,6 @@ export interface IInput {
   inputMode?: InputModeOptions;
   maxLength?: number;
   secureTextEntry?: boolean;
+  placeholderTextColor?: string;
+  rightIcon?: ReactNode;
 }
