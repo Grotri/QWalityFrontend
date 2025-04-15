@@ -20,6 +20,8 @@ const Main = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
+  const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
+    useState<boolean>(false);
 
   const onlineCameras = cameras.filter((camera) => camera.online);
   const offlineCameras = cameras.filter((camera) => !camera.online);
@@ -64,7 +66,11 @@ const Main = () => {
   );
 
   const renderContent = (section: (typeof sections)[number]) => (
-    <CameraAccordion sections={section.cameras} />
+    <CameraAccordion
+      sections={section.cameras}
+      isSettingsCameraModalOpen={isSettingsCameraModalOpen}
+      setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
+    />
   );
 
   return (
@@ -81,7 +87,7 @@ const Main = () => {
           <Text style={styles.plusBtnText}>Добавить камеру</Text>
         </Pressable>
       }
-      isBlurOn={isAddCameraModalOpen}
+      isBlurOn={isAddCameraModalOpen || isSettingsCameraModalOpen}
     >
       <View style={styles.wrapper}>
         <Accordion

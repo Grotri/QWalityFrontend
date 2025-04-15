@@ -8,13 +8,15 @@ const Radio: FC<IRadio> = ({
   isChecked = false,
   setIsChecked,
   style,
+  labelStyle,
+  radioWrapperStyle,
 }) => (
   <Pressable onPress={setIsChecked} style={[styles.wrapper, style]}>
-    <View style={styles.radioWrapper}>
+    <View style={[styles.radioWrapper, radioWrapperStyle]}>
       <View style={styles.radio}>
         {isChecked && <View style={styles.radioChecked} />}
       </View>
-      <Text style={styles.radioText}>{label}</Text>
+      <Text style={[styles.radioText, labelStyle]}>{label}</Text>
     </View>
   </Pressable>
 );

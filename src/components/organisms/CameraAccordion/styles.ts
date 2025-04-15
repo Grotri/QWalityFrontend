@@ -56,7 +56,6 @@ export const styles = StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 50,
-    backgroundColor: palette.mainText,
   },
   stateName: {
     color: palette.mainText,
@@ -68,8 +67,40 @@ export const styles = StyleSheet.create({
     lineHeight: 19,
     fontFamily: fonts.regular,
   },
+  contentWrapper: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 16,
+  },
+  settingsWrapper: {
+    width: "100%",
+    alignItems: "center",
+    gap: 6,
+  },
+  settingsIcons: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+  icon: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  iconTitle: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontFamily: fonts.regular,
+    color: palette.mainText,
+  },
+  horizontalLine: {
+    height: 2,
+    width: "80%",
+    borderRadius: 50,
+    backgroundColor: palette.splitBar,
+    opacity: 0.8,
+  },
   defects: {
-    padding: 16,
     gap: 12,
-  }
+  },
 });
