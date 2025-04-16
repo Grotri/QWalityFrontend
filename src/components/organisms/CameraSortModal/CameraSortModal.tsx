@@ -15,7 +15,7 @@ const CameraSortModal: FC<ICameraSortModal> = ({ isOpen, setIsOpen }) => {
 
   const closeModal = () => {
     setIsOpen(false);
-
+    setOption("type");
     if (isDDOpen) {
       setIsDDOpen(false);
     }

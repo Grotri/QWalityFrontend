@@ -6,6 +6,8 @@ export interface ICameraAccordion {
   setIsSettingsCameraModalOpen: (isOpen: boolean) => void;
   isSortCameraModalOpen: boolean;
   setIsSortCameraModalOpen: (isOpen: boolean) => void;
+  isFilterCameraModalOpen: boolean;
+  setIsFilterCameraModalOpen: (isOpen: boolean) => void;
   selectedDefect: IDefect | null;
   setSelectedDefect: (defect: IDefect | null) => void;
 }

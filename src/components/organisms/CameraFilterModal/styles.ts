@@ -27,8 +27,38 @@ export const styles = StyleSheet.create({
     color: palette.mainText,
   },
   content: {
-    paddingHorizontal: 8,
-    gap: 26,
+    paddingHorizontal: 16,
+    gap: 16,
+    width: "100%",
+  },
+  radioWrapper: {
+    gap: 8,
+  },
+  radioWrapperStyle: {
+    gap: 4,
+  },
+  radio: {
+    flex: 0,
+  },
+  labelStyle: {
+    fontSize: 14,
+    lineHeight: 19,
+    fontFamily: fonts.semibold,
+  },
+  row: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 13,
+  },
+  datePickerStyle: {
+    backgroundColor: palette.subDropdownListBgTransparent,
+  },
+  dash: {
+    width: 16,
+    height: 3,
+    borderRadius: 50,
+    backgroundColor: palette.dashBg,
   },
   dropdown: {
     backgroundColor: palette.subDropdownListBgTransparent,

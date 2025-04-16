@@ -19,6 +19,7 @@ import Button from "../../atoms/Button";
 import CameraSettingsModal from "../CameraSettingsModal";
 import DefectSaveModal from "../DefectSaveModal";
 import CameraSortModal from "../CameraSortModal";
+import CameraFilterModal from "../CameraFilterModal";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -26,6 +27,8 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   setIsSettingsCameraModalOpen,
   isSortCameraModalOpen,
   setIsSortCameraModalOpen,
+  isFilterCameraModalOpen,
+  setIsFilterCameraModalOpen,
   selectedDefect,
   setSelectedDefect,
 }) => {
@@ -106,7 +109,12 @@ const CameraAccordion: FC<ICameraAccordion> = ({
               <SortIcon />
               <Text style={styles.iconTitle}>Сортировать</Text>
             </Button>
-            <Button style={styles.icon}>
+            <Button
+              style={styles.icon}
+              onPress={() => {
+                setIsFilterCameraModalOpen(true);
+              }}
+            >
               <FilterIcon />
               <Text style={styles.iconTitle}>Фильтровать</Text>
             </Button>
@@ -133,6 +141,10 @@ const CameraAccordion: FC<ICameraAccordion> = ({
       <CameraSortModal
         isOpen={isSortCameraModalOpen}
         setIsOpen={setIsSortCameraModalOpen}
+      />
+      <CameraFilterModal
+        isOpen={isFilterCameraModalOpen}
+        setIsOpen={setIsFilterCameraModalOpen}
       />
       <DefectSaveModal
         defect={selectedDefect}

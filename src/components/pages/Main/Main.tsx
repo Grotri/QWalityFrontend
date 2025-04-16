@@ -25,6 +25,8 @@ const Main = () => {
     useState<boolean>(false);
   const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
     useState<boolean>(false);
+  const [isFilterCameraModalOpen, setIsFilterCameraModalOpen] =
+    useState<boolean>(false);
   const [selectedDefect, setSelectedDefect] = useState<IDefect | null>(null);
 
   const onlineCameras = cameras.filter((camera) => camera.online);
@@ -76,6 +78,8 @@ const Main = () => {
       setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
       isSortCameraModalOpen={isSortCameraModalOpen}
       setIsSortCameraModalOpen={setIsSortCameraModalOpen}
+      isFilterCameraModalOpen={isFilterCameraModalOpen}
+      setIsFilterCameraModalOpen={setIsFilterCameraModalOpen}
       selectedDefect={selectedDefect}
       setSelectedDefect={setSelectedDefect}
     />
@@ -99,6 +103,7 @@ const Main = () => {
         isAddCameraModalOpen ||
         isSettingsCameraModalOpen ||
         isSortCameraModalOpen ||
+        isFilterCameraModalOpen ||
         !!selectedDefect
       }
     >

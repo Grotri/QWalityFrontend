@@ -5,7 +5,7 @@ import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import { formatDate } from "../../../helpers/formatDate";
 
-const DatePicker: FC<IDatePicker> = ({ date, setDate }) => {
+const DatePicker: FC<IDatePicker> = ({ date, setDate, datePickerStyle }) => {
   const [show, setShow] = useState<boolean>(false);
   const defaultDate = new Date();
 
@@ -24,7 +24,7 @@ const DatePicker: FC<IDatePicker> = ({ date, setDate }) => {
   return (
     <View style={styles.wrapper}>
       <Pressable onPress={showDatepicker}>
-        <View style={styles.datePicker}>
+        <View style={[styles.datePicker, datePickerStyle]}>
           <Text style={styles.date}>
             {date ? formatDate(date) : "DD.MM.YYYY"}
           </Text>
