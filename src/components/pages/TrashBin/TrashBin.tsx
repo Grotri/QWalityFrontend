@@ -6,7 +6,6 @@ import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { CrossIcon, TrashBinIcon } from "../../../../assets/icons";
 import { trashBinItems } from "../../../constants/trashBinItems";
 import Button from "../../atoms/Button";
-import BlurView from "../../atoms/BlurView";
 import Modal from "../../atoms/Modal";
 import DatePicker from "../../atoms/DatePicker";
 import { palette } from "../../../constants/palette";
@@ -30,6 +29,7 @@ const TrashBin = () => {
       headerText="Корзина"
       underlined
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
+      isWholeBlurOn={isModalOpen}
       bottomIcon={
         <Pressable style={styles.clearBtn} onPress={() => setIsModalOpen(true)}>
           <View style={styles.circle}>
@@ -44,7 +44,6 @@ const TrashBin = () => {
           <Defect key={item.id} defect={item} textBtn="Восстановить" />
         ))}
       </View>
-      {isModalOpen && <BlurView />}
       <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen}>
         <View style={styles.modal}>
           <View style={styles.crossIconWrapper}>

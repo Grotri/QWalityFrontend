@@ -8,4 +8,6 @@ export interface IPageTemplate {
   underlined?: boolean;
   bottomIcon?: ReactNode;
   hasMenu?: boolean;
+  isBlurOn?: boolean;
+  isWholeBlurOn?: boolean;
 }
