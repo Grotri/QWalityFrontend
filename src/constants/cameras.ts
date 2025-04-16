@@ -1,5 +1,15 @@
 import { ICamera } from "../components/pages/Main/types";
 
+export const initialCamera: ICamera = {
+  id: "",
+  online: true,
+  title: "",
+  defectsCount: 0,
+  uptime: "",
+  defects: [],
+  link: "",
+};
+
 export const cameras: ICamera[] = [
   {
     id: "0",
@@ -16,18 +26,18 @@ export const cameras: ICamera[] = [
       },
       {
         id: "d2",
-        name: "Скол",
-        date: "13:21:03 12.03.2025",
+        name: "Скол_test",
+        date: "08:21:03 12.03.2025",
       },
       {
         id: "d3",
-        name: "Скол",
-        date: "13:21:03 12.03.2025",
+        name: "Скол_test_1",
+        date: "14:21:03 12.03.2025",
       },
       {
         id: "d4",
-        name: "Скол",
-        date: "13:21:03 12.03.2025",
+        name: "Скол_test_2",
+        date: "19:21:03 12.03.2025",
       },
       {
         id: "d5",

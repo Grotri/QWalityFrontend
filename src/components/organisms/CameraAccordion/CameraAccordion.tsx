@@ -17,11 +17,14 @@ import Defect from "../../molecules/Defect";
 import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
 import CameraSettingsFolder from "../CameraSettingsFolder";
+import DefectSaveModal from "../DefectSaveModal";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
   isSettingsCameraModalOpen,
   setIsSettingsCameraModalOpen,
+  selectedDefect,
+  setSelectedDefect,
 }) => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const rotations = useRef(sections.map(() => useSharedValue(0))).current;
@@ -104,17 +107,25 @@ const CameraAccordion: FC<ICameraAccordion> = ({
         </View>
         <View style={styles.defects}>
           {camera.defects.map((defect: IDefect) => (
-            <Defect key={defect.id} defect={defect} textBtn="Скрыть" />
+            <Defect
+              key={defect.id}
+              defect={defect}
+              textBtn="Скрыть"
+              setSelectedDefect={setSelectedDefect}
+              pressableIcon
+            />
           ))}
         </View>
       </View>
-      {isSettingsCameraModalOpen && (
-        <CameraSettingsFolder
-          isOpen={isSettingsCameraModalOpen}
-          setIsOpen={setIsSettingsCameraModalOpen}
-          camera={sections[activeSections[0]]}
-        />
-      )}
+      <CameraSettingsFolder
+        isOpen={isSettingsCameraModalOpen}
+        setIsOpen={setIsSettingsCameraModalOpen}
+        camera={sections[activeSections[0]]}
+      />
+      <DefectSaveModal
+        defect={selectedDefect}
+        onClose={() => setSelectedDefect(null)}
+      />
     </Fragment>
   );
 

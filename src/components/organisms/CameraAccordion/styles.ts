@@ -71,6 +71,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     gap: 16,
+    backgroundColor: palette.subFolderBg,
   },
   settingsWrapper: {
     width: "100%",
