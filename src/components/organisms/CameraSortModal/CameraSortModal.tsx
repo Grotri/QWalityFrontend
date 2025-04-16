@@ -1,0 +1,58 @@
+import React, { FC, useState } from "react";
+import { ICameraSortModal } from "./types";
+import { Text, View } from "react-native";
+import Modal from "../../atoms/Modal";
+import { styles } from "./styles";
+import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
+import Dropdown from "../../atoms/Dropdown";
+import { ESortOptions } from "./enums";
+import { palette } from "../../../constants/palette";
+import Button from "../../atoms/Button";
+
+const CameraSortModal: FC<ICameraSortModal> = ({ isOpen, setIsOpen }) => {
+  const [isDDOpen, setIsDDOpen] = useState<boolean>(false);
+  const [option, setOption] = useState<keyof typeof ESortOptions>("type");
+
+  const closeModal = () => {
+    setIsOpen(false);
+
+    if (isDDOpen) {
+      setIsDDOpen(false);
+    }
+  };
+
+  return (
+    <Modal
+      isVisible={isOpen}
+      setIsVisible={closeModal}
+      onPress={() => setIsDDOpen(false)}
+    >
+      <View style={styles.modal}>
+        <View style={styles.crossIconWrapper}>
+          <CrossIcon style={styles.crossIcon} onClick={closeModal} />
+          <Text style={styles.modalTitle}>Сортировать</Text>
+        </View>
+        <View style={styles.content}>
+          <Dropdown
+            data={Object.entries(ESortOptions).map(([key, value]) => ({
+              value: key,
+              label: value,
+            }))}
+            value={option}
+            setValue={(item) => setOption(item as keyof typeof ESortOptions)}
+            isOpen={isDDOpen}
+            setIsOpen={setIsDDOpen}
+            dropdownStyle={styles.dropdown}
+            borderColor={palette.subDropdownListBgTransparent}
+            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+          />
+          <Button style={styles.btn} color="modal" onPress={closeModal}>
+            <Text style={styles.btnText}>Применить</Text>
+          </Button>
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export default CameraSortModal;

@@ -23,6 +23,8 @@ const Main = () => {
     useState<boolean>(false);
   const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
     useState<boolean>(false);
+  const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
+    useState<boolean>(false);
   const [selectedDefect, setSelectedDefect] = useState<IDefect | null>(null);
 
   const onlineCameras = cameras.filter((camera) => camera.online);
@@ -72,6 +74,8 @@ const Main = () => {
       sections={section.cameras}
       isSettingsCameraModalOpen={isSettingsCameraModalOpen}
       setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
+      isSortCameraModalOpen={isSortCameraModalOpen}
+      setIsSortCameraModalOpen={setIsSortCameraModalOpen}
       selectedDefect={selectedDefect}
       setSelectedDefect={setSelectedDefect}
     />
@@ -92,7 +96,10 @@ const Main = () => {
         </Pressable>
       }
       isBlurOn={
-        isAddCameraModalOpen || isSettingsCameraModalOpen || !!selectedDefect
+        isAddCameraModalOpen ||
+        isSettingsCameraModalOpen ||
+        isSortCameraModalOpen ||
+        !!selectedDefect
       }
     >
       <View style={styles.wrapper}>

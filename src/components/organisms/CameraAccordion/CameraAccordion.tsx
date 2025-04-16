@@ -16,13 +16,16 @@ import IconRotated from "../../atoms/IconRotated";
 import Defect from "../../molecules/Defect";
 import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
-import CameraSettingsFolder from "../CameraSettingsFolder";
+import CameraSettingsModal from "../CameraSettingsModal";
 import DefectSaveModal from "../DefectSaveModal";
+import CameraSortModal from "../CameraSortModal";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
   isSettingsCameraModalOpen,
   setIsSettingsCameraModalOpen,
+  isSortCameraModalOpen,
+  setIsSortCameraModalOpen,
   selectedDefect,
   setSelectedDefect,
 }) => {
@@ -94,7 +97,12 @@ const CameraAccordion: FC<ICameraAccordion> = ({
               <SettingsIcon width={19} height={19} stroke={2} />
               <Text style={styles.iconTitle}>Настроить</Text>
             </Button>
-            <Button style={styles.icon}>
+            <Button
+              style={styles.icon}
+              onPress={() => {
+                setIsSortCameraModalOpen(true);
+              }}
+            >
               <SortIcon />
               <Text style={styles.iconTitle}>Сортировать</Text>
             </Button>
@@ -117,10 +125,14 @@ const CameraAccordion: FC<ICameraAccordion> = ({
           ))}
         </View>
       </View>
-      <CameraSettingsFolder
+      <CameraSettingsModal
         isOpen={isSettingsCameraModalOpen}
         setIsOpen={setIsSettingsCameraModalOpen}
         camera={sections[activeSections[0]]}
+      />
+      <CameraSortModal
+        isOpen={isSortCameraModalOpen}
+        setIsOpen={setIsSortCameraModalOpen}
       />
       <DefectSaveModal
         defect={selectedDefect}

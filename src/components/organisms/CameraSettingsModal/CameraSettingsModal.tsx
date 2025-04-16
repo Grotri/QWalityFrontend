@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { ICameraSettingsFolder } from "./types";
+import { ICameraSettingsModal } from "./types";
 import { Text, View } from "react-native";
 import Modal from "../../atoms/Modal";
 import { styles } from "./styles";
@@ -10,7 +10,7 @@ import Button from "../../atoms/Button";
 import { ICamera } from "../../pages/Main/types";
 import { initialCamera } from "../../../constants/cameras";
 
-const CameraSettingsFolder: FC<ICameraSettingsFolder> = ({
+const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   isOpen,
   setIsOpen,
   camera,
@@ -145,4 +145,4 @@ const CameraSettingsFolder: FC<ICameraSettingsFolder> = ({
   );
 };
 
-export default CameraSettingsFolder;
+export default CameraSettingsModal;

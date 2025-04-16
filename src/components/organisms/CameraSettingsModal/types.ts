@@ -1,6 +1,6 @@
 import { ICamera } from "../../pages/Main/types";
 
-export interface ICameraSettingsFolder {
+export interface ICameraSettingsModal {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   camera: ICamera;
