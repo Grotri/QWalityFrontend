@@ -12,7 +12,6 @@ import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
 import { roles } from "../../../constants/roles";
 import Modal from "../../atoms/Modal";
-import BlurView from "../../atoms/BlurView";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { formats } from "../../../constants/formats";
@@ -65,6 +64,7 @@ const Admin = () => {
       headerText="Админ панель"
       underlined
       onHeaderClick={() => navigate("Profile", { direction: "backward" })}
+      isWholeBlurOn={isMainModalOpened}
     >
       <View>
         <View style={styles.adminWrapper}>
@@ -147,7 +147,6 @@ const Admin = () => {
           </Button>
           <Text style={styles.statistics}>3/15 аккаунтов</Text>
         </View>
-        {isMainModalOpened && <BlurView />}
         <Modal
           isVisible={isMainModalOpened}
           setIsVisible={setIsMainModalOpened}

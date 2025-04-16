@@ -4,15 +4,24 @@ import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import { cameras } from "../../../constants/cameras";
-import { ArrowAccordionIcon, SearchIcon } from "../../../../assets/icons";
+import {
+  ArrowAccordionIcon,
+  PlusIcon,
+  SearchIcon,
+} from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import { palette } from "../../../constants/palette";
 import CameraAccordion from "../../organisms/CameraAccordion";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
+import AddCameraModal from "../../organisms/AddCameraModal";
 
 const Main = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
+  const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
+    useState<boolean>(false);
+  const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
+    useState<boolean>(false);
 
   const onlineCameras = cameras.filter((camera) => camera.online);
   const offlineCameras = cameras.filter((camera) => !camera.online);
@@ -57,11 +66,29 @@ const Main = () => {
   );
 
   const renderContent = (section: (typeof sections)[number]) => (
-    <CameraAccordion sections={section.cameras} />
+    <CameraAccordion
+      sections={section.cameras}
+      isSettingsCameraModalOpen={isSettingsCameraModalOpen}
+      setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
+    />
   );
 
   return (
-    <PageTemplate hasMenu>
+    <PageTemplate
+      hasMenu
+      bottomIcon={
+        <Pressable
+          style={styles.plusBtn}
+          onPress={() => setIsAddCameraModalOpen(true)}
+        >
+          <View style={styles.circle}>
+            <PlusIcon />
+          </View>
+          <Text style={styles.plusBtnText}>Добавить камеру</Text>
+        </Pressable>
+      }
+      isBlurOn={isAddCameraModalOpen || isSettingsCameraModalOpen}
+    >
       <View style={styles.wrapper}>
         <Accordion
           sections={sections}
@@ -72,6 +99,10 @@ const Main = () => {
           touchableComponent={Pressable}
         />
       </View>
+      <AddCameraModal
+        isOpen={isAddCameraModalOpen}
+        setIsOpen={setIsAddCameraModalOpen}
+      />
     </PageTemplate>
   );
 };

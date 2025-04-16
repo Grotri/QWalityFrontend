@@ -6,17 +6,15 @@ import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { CrossIcon, TrashBinIcon } from "../../../../assets/icons";
 import { trashBinItems } from "../../../constants/trashBinItems";
 import Button from "../../atoms/Button";
-import BlurView from "../../atoms/BlurView";
 import Modal from "../../atoms/Modal";
 import DatePicker from "../../atoms/DatePicker";
 import { palette } from "../../../constants/palette";
 import { IDefect } from "../Main/types";
+import Defect from "../../molecules/Defect";
 
 const TrashBin = () => {
   const { navigate } = useMainNavigation();
-  const [trashItems, setTrashItems] = useState<IDefect[]>([
-    ...trashBinItems,
-  ]);
+  const [trashItems, setTrashItems] = useState<IDefect[]>([...trashBinItems]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -31,6 +29,7 @@ const TrashBin = () => {
       headerText="Корзина"
       underlined
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
+      isWholeBlurOn={isModalOpen}
       bottomIcon={
         <Pressable style={styles.clearBtn} onPress={() => setIsModalOpen(true)}>
           <View style={styles.circle}>
@@ -42,23 +41,9 @@ const TrashBin = () => {
     >
       <View style={styles.wrapper}>
         {trashItems.map((item: IDefect) => (
-          <View key={item.id} style={styles.itemWrapper}>
-            <View style={styles.trashBinItem}>
-              <View style={styles.image}>
-                <Text style={styles.imageText}>.jpg</Text>
-              </View>
-              <View>
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemDate}>{item.date}</Text>
-              </View>
-            </View>
-            <Button>
-              <Text style={styles.btnText}>Восстановить</Text>
-            </Button>
-          </View>
+          <Defect key={item.id} defect={item} textBtn="Восстановить" />
         ))}
       </View>
-      {isModalOpen && <BlurView />}
       <Modal isVisible={isModalOpen} setIsVisible={setIsModalOpen}>
         <View style={styles.modal}>
           <View style={styles.crossIconWrapper}>

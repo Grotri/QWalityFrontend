@@ -8,7 +8,6 @@ import { settingsItems } from "./types";
 import { ArrowBottomIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import Modal from "../../atoms/Modal";
-import BlurView from "../../atoms/BlurView";
 import useAuthStore from "../../../hooks/useAuthStore";
 import Input from "../../atoms/Input";
 
@@ -46,6 +45,7 @@ const Settings = () => {
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
       mustScroll={false}
       onTouchablePress={closeDD}
+      isWholeBlurOn={isExitModalOpen || isDeleteModalOpen}
     >
       <View style={styles.wrapper}>
         <View style={styles.dropdownWrapper}>
@@ -90,7 +90,6 @@ const Settings = () => {
         </Button>
         <Text style={styles.version}>QWality Release v1.0.0</Text>
       </View>
-      {(isExitModalOpen || isDeleteModalOpen) && <BlurView />}
       <Modal isVisible={isExitModalOpen} setIsVisible={setIsExitModalOpen}>
         <View style={styles.modal}>
           <Text style={styles.modalText}>Вы точно хотите выйти?</Text>

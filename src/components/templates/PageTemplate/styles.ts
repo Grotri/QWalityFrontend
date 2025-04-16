@@ -25,4 +25,13 @@ export const styles = StyleSheet.create({
     left: 0,
     zIndex: -1000,
   },
+  fixBottom: {
+    backgroundColor: palette.bg,
+    position: "absolute",
+    top: "auto",
+    right: 0,
+    left: 0,
+    bottom: 0,
+    zIndex: -1000,
+  },
 });

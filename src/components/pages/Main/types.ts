@@ -11,4 +11,5 @@ export interface ICamera {
   defectsCount: number;
   uptime: string;
   defects: IDefect[];
+  link: string;
 }

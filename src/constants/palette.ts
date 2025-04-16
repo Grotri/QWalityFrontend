@@ -39,6 +39,7 @@ export const palette = {
   gradientLightBlue: "#4DEDFF",
   gradientBlue: "#053D8F",
   subscriptionCardBg: "rgba(0, 0, 0, 0.4)",
+  greenOnline: "#33c558",
 
   // Main Screen Popups Section
   bgMainScreenPopup: baseColors.blue2,
