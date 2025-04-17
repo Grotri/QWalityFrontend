@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./styles";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { CrossIcon, TrashBinIcon } from "../../../../assets/icons";
@@ -11,6 +11,7 @@ import DatePicker from "../../atoms/DatePicker";
 import { palette } from "../../../constants/palette";
 import { IDefect } from "../Main/types";
 import Defect from "../../molecules/Defect";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
 
 const TrashBin = () => {
   const { navigate } = useMainNavigation();
@@ -31,12 +32,12 @@ const TrashBin = () => {
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
       isWholeBlurOn={isModalOpen}
       bottomIcon={
-        <Pressable style={styles.clearBtn} onPress={() => setIsModalOpen(true)}>
-          <View style={styles.circle}>
-            <TrashBinIcon width={36} height={36} />
-          </View>
-          <Text style={styles.clearBtnText}>Очистить</Text>
-        </Pressable>
+        <BottomFixIcon
+          icon={<TrashBinIcon width={36} height={36} />}
+          text="Очистить"
+          onPress={() => setIsModalOpen(true)}
+          gap={2}
+        />
       }
     >
       <View style={styles.wrapper}>

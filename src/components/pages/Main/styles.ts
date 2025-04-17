@@ -36,23 +36,4 @@ export const styles = StyleSheet.create({
     paddingRight: 28,
     color: palette.mainText,
   },
-  plusBtn: {
-    alignItems: "center",
-    backgroundColor: palette.bg,
-    padding: 4,
-  },
-  circle: {
-    height: 52,
-    width: 52,
-    backgroundColor: palette.edgeBtnBg,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  plusBtnText: {
-    color: palette.mainText,
-    lineHeight: 19,
-    maxWidth: 72,
-    textAlign: "center",
-  },
 });

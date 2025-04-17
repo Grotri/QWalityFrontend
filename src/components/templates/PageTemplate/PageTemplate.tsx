@@ -53,38 +53,45 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
         {hasMenu && (
           <Menu isExpanded={isMenuExpanded} setIsExpanded={setIsMenuExpanded} />
         )}
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss();
-            if (onTouchablePress) {
-              onTouchablePress();
-            }
-          }}
-        >
-          {mustScroll ? (
-            <ScrollView
-              contentContainerStyle={styles.scrollContainer}
-              nestedScrollEnabled
-            >
-              {children}
-              {(isMenuExpanded || isBlurOn) && <BlurView onPress={closeMenu} />}
-            </ScrollView>
-          ) : (
-            <View style={styles.scrollContainer}>{children}</View>
+        <Fragment>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss();
+              if (onTouchablePress) {
+                onTouchablePress();
+              }
+            }}
+          >
+            {mustScroll ? (
+              <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                nestedScrollEnabled
+              >
+                {children}
+                {bottomIcon && <View style={styles.bottomIconContainer} />}
+                {Platform.OS !== "ios" && (isMenuExpanded || isBlurOn) && (
+                  <BlurView onPress={closeMenu} />
+                )}
+              </ScrollView>
+            ) : (
+              <View style={styles.scrollContainer}>{children}</View>
+            )}
+          </TouchableWithoutFeedback>
+          {bottomIcon && (
+            <View style={[styles.bottomIcon, { bottom: insets.bottom + 12 }]}>
+              {bottomIcon}
+              {Platform.OS !== "ios" && (isMenuExpanded || isBlurOn) && (
+                <BlurView onPress={closeMenu} />
+              )}
+            </View>
           )}
-        </TouchableWithoutFeedback>
-        {(isMenuExpanded || isBlurOn) && Platform.OS === "ios" && (
-          <BlurView
-            customIOSStyles={[styles.fixBottom, { height: insets.bottom }]}
-            onPress={closeMenu}
-          />
-        )}
-        {bottomIcon && (
-          <View style={styles.bottomIcon}>
-            {bottomIcon}
-            {(isMenuExpanded || isBlurOn) && <BlurView onPress={closeMenu} />}
-          </View>
-        )}
+          {Platform.OS === "ios" && (isMenuExpanded || isBlurOn) && (
+            <BlurView
+              onPress={closeMenu}
+              customIOSStyles={{ top: 73 + insets.top }}
+            />
+          )}
+        </Fragment>
       </SafeAreaView>
       {isWholeBlurOn && <BlurView />}
     </Fragment>

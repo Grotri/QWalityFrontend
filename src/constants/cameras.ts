@@ -356,4 +356,39 @@ export const cameras: ICamera[] = [
       },
     ],
   },
+  {
+    id: "3",
+    online: true,
+    title: "Камера 3",
+    link: "https://swagatyt.gg/heatvision1",
+    defectsCount: 5,
+    uptime: "1д 16ч 3м",
+    defects: [
+      {
+        id: "_d1",
+        name: "Скол",
+        date: "13:21:03 12.03.2025",
+      },
+      {
+        id: "_d2",
+        name: "Скол_test",
+        date: "08:21:03 12.03.2025",
+      },
+      {
+        id: "_d3",
+        name: "Скол_test_1",
+        date: "14:21:03 12.03.2025",
+      },
+      {
+        id: "_d4",
+        name: "Скол_test_2",
+        date: "19:21:03 12.03.2025",
+      },
+      {
+        id: "_d5",
+        name: "Скол",
+        date: "13:21:03 12.03.2025",
+      },
+    ],
+  },
 ];

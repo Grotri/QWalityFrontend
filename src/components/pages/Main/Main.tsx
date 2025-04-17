@@ -16,6 +16,7 @@ import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
 import { IDefect } from "./types";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
 
 const Main = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -89,15 +90,11 @@ const Main = () => {
     <PageTemplate
       hasMenu
       bottomIcon={
-        <Pressable
-          style={styles.plusBtn}
+        <BottomFixIcon
+          icon={<PlusIcon />}
+          text="Добавить камеру"
           onPress={() => setIsAddCameraModalOpen(true)}
-        >
-          <View style={styles.circle}>
-            <PlusIcon />
-          </View>
-          <Text style={styles.plusBtnText}>Добавить камеру</Text>
-        </Pressable>
+        />
       }
       isBlurOn={
         isAddCameraModalOpen ||

@@ -6,16 +6,15 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: palette.bg,
   },
-  flex: {
-    flex: 1,
-  },
   scrollContainer: {
     flexGrow: 1,
   },
   bottomIcon: {
     position: "absolute",
-    bottom: 12,
     right: 12,
+  },
+  bottomIconContainer: {
+    height: 120,
   },
   fixBackground: {
     backgroundColor: palette.blue2,
@@ -23,15 +22,6 @@ export const styles = StyleSheet.create({
     top: 0,
     right: 0,
     left: 0,
-    zIndex: -1000,
-  },
-  fixBottom: {
-    backgroundColor: palette.bg,
-    position: "absolute",
-    top: "auto",
-    right: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: -1000,
+    zIndex: 1000,
   },
 });

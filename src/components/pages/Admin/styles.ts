@@ -11,7 +11,9 @@ export const styles = StyleSheet.create({
   },
   subTitle: {
     color: palette.mainText,
-    fontFamily: fonts.semibold,
+    fontFamily: fonts.bold,
+    fontSize: 16,
+    lineHeight: 21,
     marginBottom: 8,
   },
   sliderWrapper: {
@@ -51,22 +53,37 @@ export const styles = StyleSheet.create({
   },
   confirmationInput: {
     backgroundColor: palette.textFieldInFolderBg,
-    height: 25,
+    height: 32,
     color: palette.mainText,
     fontFamily: fonts.semibold,
   },
   confirmationInputLabel: {
     color: palette.subTextMainScreenPopup,
+    fontSize: 16,
+    lineHeight: 20,
   },
   dropdownWrapper: {
-    width: "70%",
+    paddingHorizontal: 12,
     marginBottom: 28,
+  },
+  dropdownLabelStyle: {
+    fontSize: 16,
+    lineHeight: 19,
+  },
+  dropdownMainStyle: {
+    height: 32,
+    borderRadius: 10,
+    backgroundColor: palette.textFieldInFolderBg,
+  },
+  selectedMainTextStyle: {
+    fontSize: 16,
+    lineHeight: 20,
   },
   btn: {
     marginBottom: 20,
-    height: 28,
-    borderRadius: 6,
-    minWidth: "70%",
+    height: 35,
+    borderRadius: 12,
+    minWidth: "72%",
   },
   btnText: {
     fontSize: 16,
@@ -75,14 +92,11 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
   },
   statistics: {
-    fontSize: 12,
-    lineHeight: 16,
     color: palette.supportTransparentText,
-    marginTop: -8,
   },
   modals: {
     width: "100%",
-    gap: 20,
+    gap: 12,
   },
   modal: {
     borderRadius: 14,
@@ -102,7 +116,7 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     lineHeight: 27,
-    fontFamily: fonts.semibold,
+    fontFamily: fonts.bold,
     color: palette.mainText,
   },
   modalContent: {
@@ -134,7 +148,7 @@ export const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    lineHeight: 16,
+    lineHeight: 21,
     fontFamily: fonts.semibold,
   },
   btnModal: {

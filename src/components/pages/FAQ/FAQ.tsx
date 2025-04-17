@@ -9,6 +9,7 @@ import { IQuestionSection } from "./types";
 import { ArrowAccordionIcon, MessageIcon } from "../../../../assets/icons";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
 
 const FAQ = () => {
   const { navigate } = useMainNavigation();
@@ -49,15 +50,11 @@ const FAQ = () => {
       headerText="Помощь"
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
       bottomIcon={
-        <Pressable
-          style={styles.support}
+        <BottomFixIcon
+          icon={<MessageIcon />}
+          text="Обратиться в поддержку"
           onPress={() => alert("Обратиться в поддержку пока невозможно.")}
-        >
-          <View style={styles.circle}>
-            <MessageIcon />
-          </View>
-          <Text style={styles.supportText}>Обратиться в поддержку</Text>
-        </Pressable>
+        />
       }
     >
       <View style={styles.managerWrapper}>

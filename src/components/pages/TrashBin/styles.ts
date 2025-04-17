@@ -10,27 +10,6 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
     gap: 8,
   },
-  clearBtn: {
-    alignItems: "center",
-    backgroundColor: palette.bg,
-    padding: 4,
-    gap: 2,
-  },
-  circle: {
-    height: 52,
-    width: 52,
-    backgroundColor: palette.edgeBtnBg,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  clearBtnText: {
-    color: palette.mainText,
-    fontSize: 12,
-    lineHeight: 16,
-    textAlign: "center",
-    fontFamily: fonts.semibold,
-  },
   modal: {
     width: "100%",
     borderRadius: 14,
