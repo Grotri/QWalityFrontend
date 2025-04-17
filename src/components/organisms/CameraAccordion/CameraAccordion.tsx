@@ -16,14 +16,27 @@ import IconRotated from "../../atoms/IconRotated";
 import Defect from "../../molecules/Defect";
 import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
-import CameraSettingsFolder from "../CameraSettingsFolder";
+import CameraSettingsModal from "../CameraSettingsModal";
+import DefectSaveModal from "../DefectSaveModal";
+import CameraSortModal from "../CameraSortModal";
+import CameraFilterModal from "../CameraFilterModal";
+import CameraPagination from "../../molecules/CameraPagination";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
   isSettingsCameraModalOpen,
   setIsSettingsCameraModalOpen,
+  isSortCameraModalOpen,
+  setIsSortCameraModalOpen,
+  isFilterCameraModalOpen,
+  setIsFilterCameraModalOpen,
+  selectedDefect,
+  setSelectedDefect,
 }) => {
+  const DEFAULT_PAGE_CAPACITY = 5;
   const [activeSections, setActiveSections] = useState<number[]>([]);
+  const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
+
   const rotations = useRef(sections.map(() => useSharedValue(0))).current;
 
   const handleSectionChange = (sections: number[]) => {
@@ -34,6 +47,19 @@ const CameraAccordion: FC<ICameraAccordion> = ({
     });
 
     setActiveSections(sections);
+  };
+
+  const handlePageChange = (cameraId: string, newPage: number) => {
+    setCameraPages({ ...cameraPages, [cameraId]: newPage });
+  };
+
+  const getPagedDefects = (
+    defects: IDefect[],
+    page: number,
+    pageSize = DEFAULT_PAGE_CAPACITY
+  ) => {
+    const start = (page - 1) * pageSize;
+    return defects.slice(start, start + pageSize);
   };
 
   const renderHeader = (camera: ICamera, index: number) => (
@@ -77,46 +103,89 @@ const CameraAccordion: FC<ICameraAccordion> = ({
     </View>
   );
 
-  const renderContent = (camera: ICamera) => (
-    <Fragment>
-      <View style={styles.contentWrapper}>
-        <View style={styles.settingsWrapper}>
-          <View style={styles.settingsIcons}>
-            <Button
-              style={styles.icon}
-              onPress={() => {
-                setIsSettingsCameraModalOpen(true);
-              }}
-            >
-              <SettingsIcon width={19} height={19} stroke={2} />
-              <Text style={styles.iconTitle}>Настроить</Text>
-            </Button>
-            <Button style={styles.icon}>
-              <SortIcon />
-              <Text style={styles.iconTitle}>Сортировать</Text>
-            </Button>
-            <Button style={styles.icon}>
-              <FilterIcon />
-              <Text style={styles.iconTitle}>Фильтровать</Text>
-            </Button>
+  const renderContent = (camera: ICamera) => {
+    const page = cameraPages[camera.id] || 1;
+    const pagedDefects = getPagedDefects(camera.defects, page);
+
+    return (
+      <Fragment>
+        <View style={styles.contentWrapper}>
+          <View style={styles.settingsWrapper}>
+            <View style={styles.settingsIcons}>
+              <Button
+                style={styles.icon}
+                onPress={() => {
+                  setIsSettingsCameraModalOpen(true);
+                }}
+              >
+                <SettingsIcon width={19} height={19} stroke={2} />
+                <Text style={styles.iconTitle}>Настроить</Text>
+              </Button>
+              <Button
+                style={styles.icon}
+                onPress={() => {
+                  setIsSortCameraModalOpen(true);
+                }}
+              >
+                <SortIcon />
+                <Text style={styles.iconTitle}>Сортировать</Text>
+              </Button>
+              <Button
+                style={styles.icon}
+                onPress={() => {
+                  setIsFilterCameraModalOpen(true);
+                }}
+              >
+                <FilterIcon />
+                <Text style={styles.iconTitle}>Фильтровать</Text>
+              </Button>
+            </View>
+            <View style={styles.horizontalLine} />
           </View>
-          <View style={styles.horizontalLine} />
+          <View
+            style={[
+              styles.defects,
+              camera.defectsCount <= DEFAULT_PAGE_CAPACITY && {
+                marginBottom: 4,
+              },
+            ]}
+          >
+            {pagedDefects.map((defect: IDefect) => (
+              <Defect
+                key={defect.id}
+                defect={defect}
+                textBtn="Скрыть"
+                setSelectedDefect={setSelectedDefect}
+                pressableIcon
+              />
+            ))}
+          </View>
+          <CameraPagination
+            total={camera.defects.length}
+            current={page}
+            onPageChange={(newPage) => handlePageChange(camera.id, newPage)}
+          />
         </View>
-        <View style={styles.defects}>
-          {camera.defects.map((defect: IDefect) => (
-            <Defect key={defect.id} defect={defect} textBtn="Скрыть" />
-          ))}
-        </View>
-      </View>
-      {isSettingsCameraModalOpen && (
-        <CameraSettingsFolder
+        <CameraSettingsModal
           isOpen={isSettingsCameraModalOpen}
           setIsOpen={setIsSettingsCameraModalOpen}
           camera={sections[activeSections[0]]}
         />
-      )}
-    </Fragment>
-  );
+        <CameraSortModal
+          isOpen={isSortCameraModalOpen}
+          setIsOpen={setIsSortCameraModalOpen}
+        />
+        <CameraFilterModal
+          isOpen={isFilterCameraModalOpen}
+          setIsOpen={setIsFilterCameraModalOpen}
+        />
+        <DefectSaveModal
+          defect={selectedDefect}
+          onClose={() => setSelectedDefect(null)}
+        />
+      </Fragment>
+    );
+  };
 
   return (
     <Accordion

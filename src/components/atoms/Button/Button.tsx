@@ -9,11 +9,13 @@ const Button: FC<IButton> = ({
   style,
   color,
   customColor,
+  disabled,
 }) => {
   const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
   return (
     <TouchableOpacity
       onPress={onPress}
+      disabled={disabled}
       style={[
         styles.btn,
         buttonColorStyle,

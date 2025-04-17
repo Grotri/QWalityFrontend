@@ -15,6 +15,7 @@ import CameraAccordion from "../../organisms/CameraAccordion";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
+import { IDefect } from "./types";
 
 const Main = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
@@ -22,6 +23,11 @@ const Main = () => {
     useState<boolean>(false);
   const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
     useState<boolean>(false);
+  const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
+    useState<boolean>(false);
+  const [isFilterCameraModalOpen, setIsFilterCameraModalOpen] =
+    useState<boolean>(false);
+  const [selectedDefect, setSelectedDefect] = useState<IDefect | null>(null);
 
   const onlineCameras = cameras.filter((camera) => camera.online);
   const offlineCameras = cameras.filter((camera) => !camera.online);
@@ -70,6 +76,12 @@ const Main = () => {
       sections={section.cameras}
       isSettingsCameraModalOpen={isSettingsCameraModalOpen}
       setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
+      isSortCameraModalOpen={isSortCameraModalOpen}
+      setIsSortCameraModalOpen={setIsSortCameraModalOpen}
+      isFilterCameraModalOpen={isFilterCameraModalOpen}
+      setIsFilterCameraModalOpen={setIsFilterCameraModalOpen}
+      selectedDefect={selectedDefect}
+      setSelectedDefect={setSelectedDefect}
     />
   );
 
@@ -87,7 +99,13 @@ const Main = () => {
           <Text style={styles.plusBtnText}>Добавить камеру</Text>
         </Pressable>
       }
-      isBlurOn={isAddCameraModalOpen || isSettingsCameraModalOpen}
+      isBlurOn={
+        isAddCameraModalOpen ||
+        isSettingsCameraModalOpen ||
+        isSortCameraModalOpen ||
+        isFilterCameraModalOpen ||
+        !!selectedDefect
+      }
     >
       <View style={styles.wrapper}>
         <Accordion
