@@ -69,8 +69,8 @@ export const styles = StyleSheet.create({
   },
   contentWrapper: {
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    gap: 16,
+    paddingVertical: 12,
+    gap: 20,
     backgroundColor: palette.subFolderBg,
   },
   settingsWrapper: {

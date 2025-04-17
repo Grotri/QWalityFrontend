@@ -8,4 +8,5 @@ export interface IIcon {
   opacity?: number;
   onClick?: (event: GestureResponderEvent) => void;
   stroke?: number;
+  disabled?: boolean;
 }
