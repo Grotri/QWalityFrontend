@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   createBtn: {
     height: 34,
     borderRadius: 8,
-    width: "90%",
+    width: "84%",
     minWidth: "80%",
   },
   createBtnText: {
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
   checkboxWrapper: {
     width: "100%",
     paddingRight: 12,
-    paddingLeft: 20,
+    paddingLeft: 12,
     marginTop: 20,
   },
   checkbox: {

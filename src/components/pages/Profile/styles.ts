@@ -24,16 +24,18 @@ export const styles = StyleSheet.create({
   },
   cardPointData: {
     color: palette.mainText,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 21,
     fontFamily: fonts.semibold,
   },
   btn: {
-    width: "62%",
+    width: "64%",
     height: 35,
     borderRadius: 12,
   },
   btnText: {
     fontSize: 16,
+    lineHeight: 21,
     color: palette.mainText,
     fontFamily: fonts.bold,
   },
@@ -41,7 +43,9 @@ export const styles = StyleSheet.create({
     backgroundColor: palette.textFieldInFolderBg,
     borderRadius: 6,
     paddingHorizontal: 4,
-    height: 19,
+    height: 22,
+    fontSize: 16,
+    lineHeight: 21,
     color: palette.mainText,
     fontFamily: fonts.semibold,
     marginTop: 1,
@@ -62,6 +66,8 @@ export const styles = StyleSheet.create({
     height: 27,
     color: palette.mainText,
     fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 21,
   },
   confirmationInputLabel: {
     fontSize: 12,
@@ -76,8 +82,9 @@ export const styles = StyleSheet.create({
   },
   codeBtnText: {
     color: palette.mainText,
-    fontSize: 12,
+    fontSize: 16,
     lineHeight: 18,
+    fontFamily: fonts.semibold,
   },
   supportTextWrapper: {
     alignItems: "center",

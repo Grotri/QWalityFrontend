@@ -5,7 +5,11 @@ import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import { IUserSection } from "./types";
-import { ArrowTopIcon, ProfileIconSmall } from "../../../../assets/icons";
+import {
+  ArrowBottomIcon,
+  ArrowTopIcon,
+  ProfileIconSmall,
+} from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
 import { roles } from "../../../constants/roles";
@@ -71,6 +75,7 @@ const AccountManagement = () => {
           }
           customInputStyles={styles.input}
           customLabelStyles={styles.inputLabel}
+          cursorColor={palette.subTextMainScreenPopup}
         />
         <Input
           label="Пароль"
@@ -85,6 +90,7 @@ const AccountManagement = () => {
           secureTextEntry
           customInputStyles={styles.input}
           customLabelStyles={styles.inputLabel}
+          cursorColor={palette.subTextMainScreenPopup}
         />
         <Dropdown
           data={roles.map((role) => ({
@@ -104,12 +110,14 @@ const AccountManagement = () => {
           label="Роль"
           wrapperStyle={[
             styles.dropdownWrapper,
-            { marginBottom: isDdOpen ? 132 : 18 },
+            { marginBottom: isDdOpen ? 140 : 36 },
           ]}
           labelStyle={styles.inputLabel}
           dropdownStyle={styles.dropdown}
+          selectedTextStyle={styles.selectedTextStyle}
           itemContainerStyle={styles.itemContainerStyle}
           borderColor={palette.textFieldInFolderBg}
+          arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
         />
         <View style={styles.btns}>
           <Button color="management" style={styles.btn}>

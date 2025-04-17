@@ -21,4 +21,5 @@ export interface IInput {
   secureTextEntry?: boolean;
   placeholderTextColor?: string;
   rightIcon?: ReactNode;
+  cursorColor?: string;
 }

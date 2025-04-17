@@ -4,7 +4,7 @@ import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
   modal: {
-    width: "100%",
+    width: "94%",
     borderRadius: 12,
     backgroundColor: palette.bgMainScreenPopup,
     padding: 12,

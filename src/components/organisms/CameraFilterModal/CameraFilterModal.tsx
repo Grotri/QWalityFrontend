@@ -90,6 +90,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({ isOpen, setIsOpen }) => {
               isOpen={isDDOpen}
               setIsOpen={setIsDDOpen}
               dropdownStyle={styles.dropdown}
+              selectedTextStyle={styles.selectedTextStyle}
               borderColor={palette.subDropdownListBgTransparent}
               arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
             />

@@ -4,9 +4,20 @@ import { default as NativeModal } from "react-native-modal";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
 import { TouchableWithoutFeedback } from "react-native";
 
-const Modal: FC<IModal> = ({ children, isVisible, setIsVisible, onPress }) => {
+const Modal: FC<IModal> = ({
+  children,
+  isVisible,
+  setIsVisible,
+  onPress,
+  onBackdropPress,
+}) => {
   const handlePress = () => {
-    setIsVisible(false);
+    if (setIsVisible) {
+      setIsVisible(false);
+    }
+    if (onBackdropPress) {
+      onBackdropPress();
+    }
     if (onPress) {
       onPress();
     }

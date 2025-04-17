@@ -5,7 +5,11 @@ import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { Slider } from "@miblanchard/react-native-slider";
 import { palette } from "../../../constants/palette";
-import { CrossIcon, TooltipIcon } from "../../../../assets/icons";
+import {
+  ArrowBottomIcon,
+  CrossIcon,
+  TooltipIcon,
+} from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
@@ -103,6 +107,7 @@ const Admin = () => {
             onChangeText={(text) => setLogin(text)}
             inputMode="email"
             maxLength={254}
+            cursorColor={palette.subTextMainScreenPopup}
             customStyles={styles.confirmationInputWrapper}
             customInputStyles={styles.confirmationInput}
             customLabelStyles={styles.confirmationInputLabel}
@@ -112,6 +117,7 @@ const Admin = () => {
             value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry
+            cursorColor={palette.subTextMainScreenPopup}
             customStyles={styles.confirmationInputWrapper}
             customInputStyles={styles.confirmationInput}
             customLabelStyles={styles.confirmationInputLabel}
@@ -125,8 +131,12 @@ const Admin = () => {
             setValue={setRole}
             label="Роль"
             wrapperStyle={styles.dropdownWrapper}
+            labelStyle={styles.dropdownLabelStyle}
+            dropdownStyle={styles.dropdownMainStyle}
+            selectedTextStyle={styles.selectedMainTextStyle}
             isOpen={isRoleDdOpen}
             setIsOpen={setIsRoleDdOpen}
+            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
           />
           <Button color="blue" style={styles.btn}>
             <Text style={styles.btnText}>Создать суб-аккаунт</Text>
@@ -208,6 +218,9 @@ const Admin = () => {
                     dropdownStyle={styles.dropdownStyle}
                     selectedTextStyle={styles.selectedTextStyle}
                     borderColor={palette.dateAndListSelectsPopupBg}
+                    arrowIconComponent={
+                      <ArrowBottomIcon stroke={2} height={9} />
+                    }
                   />
                   <View style={styles.empty} />
                   <View style={styles.flex} />

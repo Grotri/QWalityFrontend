@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   modal: {
-    width: "100%",
+    width: "94%",
     borderRadius: 14,
     backgroundColor: palette.subScreenPopupBg,
     padding: 12,

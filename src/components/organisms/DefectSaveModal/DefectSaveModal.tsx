@@ -18,7 +18,7 @@ const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
   }, [defect]);
 
   return (
-    <Modal isVisible={!!defect} setIsVisible={() => {}} onPress={onClose}>
+    <Modal isVisible={!!defect} onPress={onClose}>
       <View style={styles.modal}>
         <View style={styles.mainInfo}>
           <Text style={styles.title}>Хотите скачать изображение?</Text>

@@ -24,8 +24,10 @@ import CameraPagination from "../../molecules/CameraPagination";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
-  isSettingsCameraModalOpen,
-  setIsSettingsCameraModalOpen,
+  selectedCamera,
+  setSelectedCamera,
+  isHistoryModalOpen,
+  setIsHistoryModalOpen,
   isSortCameraModalOpen,
   setIsSortCameraModalOpen,
   isFilterCameraModalOpen,
@@ -115,7 +117,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
               <Button
                 style={styles.icon}
                 onPress={() => {
-                  setIsSettingsCameraModalOpen(true);
+                  setSelectedCamera(camera);
                 }}
               >
                 <SettingsIcon width={19} height={19} stroke={2} />
@@ -167,9 +169,10 @@ const CameraAccordion: FC<ICameraAccordion> = ({
           />
         </View>
         <CameraSettingsModal
-          isOpen={isSettingsCameraModalOpen}
-          setIsOpen={setIsSettingsCameraModalOpen}
-          camera={sections[activeSections[0]]}
+          camera={selectedCamera}
+          setCamera={setSelectedCamera}
+          isHistoryModalOpen={isHistoryModalOpen}
+          setIsHistoryModalOpen={setIsHistoryModalOpen}
         />
         <CameraSortModal
           isOpen={isSortCameraModalOpen}

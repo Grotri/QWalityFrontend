@@ -4,7 +4,7 @@ import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
   modals: {
-    width: "100%",
+    width: "94%",
     gap: 16,
   },
   modal: {
@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
   customInputStyles: {
     backgroundColor: palette.textFieldBgMainScreenPopup,
     color: palette.mainText,
+    fontFamily: fonts.semibold,
   },
   customLabelStyles: {
     color: palette.subTextMainScreenPopup,
@@ -81,7 +82,7 @@ export const styles = StyleSheet.create({
   btn: {
     flex: 1,
     borderRadius: 8,
-    paddingVertical: 4,
+    height: 27,
   },
   btnText: {
     fontFamily: fonts.semibold,
@@ -108,5 +109,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 42,
+  },
+  btnBolderText: {
+    fontFamily: fonts.bold,
+    color: palette.mainText,
+    fontSize: 16,
+    lineHeight: 21,
   },
 });

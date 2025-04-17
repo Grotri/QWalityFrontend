@@ -6,6 +6,7 @@ import PageTemplate from "../../templates/PageTemplate";
 import { ProfileIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import Input from "../../atoms/Input";
+import { palette } from "../../../constants/palette";
 
 const Profile = () => {
   const { navigate } = useMainNavigation();
@@ -34,6 +35,7 @@ const Profile = () => {
                 customInputStyles={styles.input}
                 inputMode="email"
                 maxLength={254}
+                cursorColor={palette.subTextMainScreenPopup}
               />
             )}
           </View>
@@ -50,6 +52,7 @@ const Profile = () => {
                 value={inn}
                 onChangeText={(val) => setInn(val)}
                 customInputStyles={styles.input}
+                cursorColor={palette.subTextMainScreenPopup}
               />
             )}
           </View>
@@ -84,6 +87,7 @@ const Profile = () => {
                 inputMode="numeric"
                 keyboardType="numeric"
                 maxLength={6}
+                cursorColor={palette.subTextMainScreenPopup}
                 customStyles={styles.confirmationInputWrapper}
                 customInputStyles={styles.confirmationInput}
                 customLabelStyles={styles.confirmationInputLabel}

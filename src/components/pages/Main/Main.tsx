@@ -15,15 +15,17 @@ import CameraAccordion from "../../organisms/CameraAccordion";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
-import { IDefect } from "./types";
+import { ICamera, IDefect } from "./types";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 
 const Main = () => {
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
-  const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
-    useState<boolean>(false);
+  const [selectedCamera, setSelectedCamera] = useState<ICamera | null>(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<boolean | null>(
+    null
+  );
   const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
     useState<boolean>(false);
   const [isFilterCameraModalOpen, setIsFilterCameraModalOpen] =
@@ -61,6 +63,7 @@ const Main = () => {
             customStyles={styles.input}
             customInputStyles={styles.customInputStyles}
             rightIcon={<SearchIcon />}
+            cursorColor={palette.subTextMainScreenPopup}
           />
         )}
       </View>
@@ -75,8 +78,10 @@ const Main = () => {
   const renderContent = (section: (typeof sections)[number]) => (
     <CameraAccordion
       sections={section.cameras}
-      isSettingsCameraModalOpen={isSettingsCameraModalOpen}
-      setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
+      selectedCamera={selectedCamera}
+      setSelectedCamera={setSelectedCamera}
+      isHistoryModalOpen={isHistoryModalOpen}
+      setIsHistoryModalOpen={setIsHistoryModalOpen}
       isSortCameraModalOpen={isSortCameraModalOpen}
       setIsSortCameraModalOpen={setIsSortCameraModalOpen}
       isFilterCameraModalOpen={isFilterCameraModalOpen}
@@ -98,7 +103,7 @@ const Main = () => {
       }
       isBlurOn={
         isAddCameraModalOpen ||
-        isSettingsCameraModalOpen ||
+        !!selectedCamera ||
         isSortCameraModalOpen ||
         isFilterCameraModalOpen ||
         !!selectedDefect

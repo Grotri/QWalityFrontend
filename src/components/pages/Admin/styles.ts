@@ -95,7 +95,7 @@ export const styles = StyleSheet.create({
     color: palette.supportTransparentText,
   },
   modals: {
-    width: "100%",
+    width: "92%",
     gap: 12,
   },
   modal: {

@@ -358,7 +358,7 @@ export const cameras: ICamera[] = [
   },
   {
     id: "3",
-    online: true,
+    online: false,
     title: "Камера 3",
     link: "https://swagatyt.gg/heatvision1",
     defectsCount: 5,

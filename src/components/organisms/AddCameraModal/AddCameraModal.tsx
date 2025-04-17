@@ -6,6 +6,7 @@ import { styles } from "./styles";
 import { CrossIcon } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Button from "../../atoms/Button";
+import { palette } from "../../../constants/palette";
 
 const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
   return (
@@ -24,12 +25,14 @@ const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
             customLabelStyles={styles.customLabelStyles}
             customStyles={styles.customStyles}
             customInputStyles={styles.customInputStyles}
+            cursorColor={palette.subTextMainScreenPopup}
           />
           <Input
             label="Ссылка на камеру"
             customLabelStyles={styles.customLabelStyles}
             customStyles={styles.customStyles}
             customInputStyles={styles.customInputStyles}
+            cursorColor={palette.subTextMainScreenPopup}
           />
           <Button style={styles.btn} color="modal">
             <Text style={styles.btnText}>Добавить</Text>

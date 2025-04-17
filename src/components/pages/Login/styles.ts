@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   loginBtn: {
     height: 34,
     borderRadius: 8,
-    width: "90%",
+    width: "84%",
     minWidth: "80%",
     marginBottom: 12,
   },

@@ -19,6 +19,7 @@ const Input: FC<IInput> = ({
   secureTextEntry = false,
   placeholderTextColor,
   rightIcon,
+  cursorColor = palette.black,
 }) => {
   return (
     <View style={[styles.container, customStyles]}>
@@ -34,7 +35,7 @@ const Input: FC<IInput> = ({
           keyboardAppearance={keyboardAppearance}
           inputMode={inputMode}
           maxLength={maxLength}
-          cursorColor={palette.black}
+          cursorColor={cursorColor}
           secureTextEntry={secureTextEntry}
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}

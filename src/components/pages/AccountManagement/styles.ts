@@ -37,32 +37,34 @@ export const styles = StyleSheet.create({
   input: {
     backgroundColor: palette.textFieldInFolderBg,
     borderRadius: 6,
-    paddingHorizontal: 8,
-    height: 20,
+    paddingHorizontal: 6,
+    height: 22,
     color: palette.mainText,
     fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 21,
     marginBottom: 4,
     width: "60%",
   },
   inputLabel: {
     color: palette.labelTransparentText,
-    fontSize: 12,
-    lineHeight: 16,
   },
   dropdownWrapper: {
     width: "60%",
   },
-  dropdownLabel: {
-    color: palette.labelTransparentText,
-    fontSize: 12,
-    lineHeight: 16,
-  },
   dropdown: {
     backgroundColor: palette.textFieldInFolderBg,
-    height: 20,
+    height: 22,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+  },
+  selectedTextStyle: {
+    fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 21,
   },
   itemContainerStyle: {
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   btns: {
     width: "100%",
@@ -71,14 +73,12 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   btn: {
-    width: "28%",
-    height: 20,
+    width: "30%",
+    height: 22,
     borderRadius: 6,
   },
   btnText: {
-    color: palette.subTextMainScreenPopup,
-    fontSize: 12,
-    lineHeight: 16,
+    color: palette.mainText,
     fontFamily: fonts.semibold,
   },
 });

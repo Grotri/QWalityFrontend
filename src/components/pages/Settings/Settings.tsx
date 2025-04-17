@@ -121,10 +121,11 @@ const Settings = () => {
               label="Код подтверждения"
               value={code}
               onChangeText={setCode}
+              customStyles={styles.customStyles}
               customInputStyles={styles.customInputStyles}
               customLabelStyles={styles.customLabelStyles}
             />
-            <Button style={styles.modalBtn} color="blue">
+            <Button style={styles.codeBtn} color="blue">
               <Text style={styles.modalBtnCodeText}>Отправить код</Text>
             </Button>
           </View>
@@ -133,7 +134,7 @@ const Settings = () => {
               <Text style={styles.modalBtnText}>Удалить</Text>
             </Button>
             <Button
-              style={styles.modalBtn}
+              style={styles.codeBtn}
               color="blue"
               onPress={() => setIsDeleteModalOpen(false)}
             >

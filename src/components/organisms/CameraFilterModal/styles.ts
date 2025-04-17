@@ -4,7 +4,7 @@ import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
   modal: {
-    width: "100%",
+    width: "94%",
     borderRadius: 12,
     backgroundColor: palette.bgMainScreenPopup,
     padding: 12,
@@ -63,6 +63,10 @@ export const styles = StyleSheet.create({
   dropdown: {
     backgroundColor: palette.subDropdownListBgTransparent,
     height: 27,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    lineHeight: 20,
   },
   btn: {
     borderRadius: 8,
