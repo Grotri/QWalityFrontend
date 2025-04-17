@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import { styles } from "./styles";
 import HomeListPoint from "../../atoms/HomeListPoint/HomeListPoint";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
@@ -8,14 +8,52 @@ import { LogoIcon, SolarPanelIcon, WaveIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
 
+let hasScrolledOnce = false;
+
 const Home = () => {
   const { navigate } = useAuthNavigation();
+  const scrollRef = useRef<ScrollView>(null);
+
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (hasScrolledOnce) return;
+    hasScrolledOnce = true;
+
+    const timer = setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }, 1000);
+
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 5000);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    scrollRef.current?.scrollToEnd({ animated: true });
+
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      setIsVisible(false);
+    }, 1000);
+  }, [isVisible]);
 
   return (
-    <GradientPageTemplate>
+    <GradientPageTemplate ref={scrollRef}>
       <View style={styles.wrapper}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Добро пожаловать в QWality</Text>
+          <Text
+            style={[styles.headerTitle, screenWidth <= 360 && { fontSize: 20 }]}
+          >
+            Добро пожаловать в QWality
+          </Text>
           <LogoIcon width={screenWidth * 0.25} />
         </View>
         <View style={styles.line} />
