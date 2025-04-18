@@ -3,6 +3,7 @@ import { IInput } from "./types";
 import { Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 import { palette } from "../../../constants/palette";
+import * as NavigationBar from "expo-navigation-bar";
 
 const Input: FC<IInput> = ({
   value,
@@ -20,13 +21,18 @@ const Input: FC<IInput> = ({
   placeholderTextColor,
   rightIcon,
   cursorColor = palette.black,
+  errorText,
 }) => {
   return (
     <View style={[styles.container, customStyles]}>
       {label && <Text style={[styles.label, customLabelStyles]}>{label}</Text>}
       <View>
         <TextInput
-          style={[styles.input, customInputStyles]}
+          style={[
+            styles.input,
+            errorText && styles.inputError,
+            customInputStyles,
+          ]}
           onChangeText={onChangeText}
           value={value}
           placeholder={placeholder}
@@ -37,9 +43,11 @@ const Input: FC<IInput> = ({
           maxLength={maxLength}
           cursorColor={cursorColor}
           secureTextEntry={secureTextEntry}
+          onKeyPress={() => NavigationBar.setVisibilityAsync("hidden")}
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
       </View>
+      {errorText && <Text style={styles.error}>{errorText}</Text>}
     </View>
   );
 };

@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 16,
-    alignItems: "flex-end",
   },
   confirmationInput: {
     width: "50%",
@@ -30,6 +29,7 @@ export const styles = StyleSheet.create({
     width: "50%",
     flex: 1,
     borderRadius: 8,
+    marginTop: 21,
   },
   codeBtnText: {
     color: palette.mainText,
@@ -66,10 +66,17 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  checkboxContainerError: {
+    borderWidth: 1,
+    borderColor: palette.error,
+  },
   checkboxText: {
     color: palette.mainText,
     lineHeight: 19,
     flex: 1,
+  },
+  checkboxTextError: {
+    color: palette.error,
   },
   checkboxTextUnderlined: {
     textDecorationLine: "underline",

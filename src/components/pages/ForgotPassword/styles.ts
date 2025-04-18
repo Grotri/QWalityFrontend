@@ -19,7 +19,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 16,
-    alignItems: "flex-end",
   },
   confirmationInput: {
     width: "50%",
@@ -30,6 +29,7 @@ export const styles = StyleSheet.create({
     width: "50%",
     flex: 1,
     borderRadius: 8,
+    marginTop: 21,
   },
   codeBtnText: {
     color: palette.mainText,

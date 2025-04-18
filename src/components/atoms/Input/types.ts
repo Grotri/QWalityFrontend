@@ -22,4 +22,5 @@ export interface IInput {
   placeholderTextColor?: string;
   rightIcon?: ReactNode;
   cursorColor?: string;
+  errorText?: string;
 }

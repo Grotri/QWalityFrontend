@@ -26,10 +26,21 @@ export const styles = StyleSheet.create({
     textAlignVertical: "center",
     includeFontPadding: false,
   },
+  inputError: {
+    borderBottomWidth: 2,
+    borderColor: palette.error,
+  },
   rightIcon: {
     position: "absolute",
     right: 8,
     top: "50%",
     transform: [{ translateY: "-50%" }],
+  },
+  error: {
+    paddingLeft: 4,
+    fontSize: 12,
+    lineHeight: 16,
+    color: palette.error,
+    fontFamily: fonts.semibold,
   },
 });
