@@ -1,16 +1,21 @@
 import React, { useRef, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
 import { styles } from "./styles";
 import SliderCard from "../../organisms/SliderCard";
+import Button from "../../atoms/Button";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { slidersInfo } from "../../../constants/slider";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 
-const Subscription = () => {
-  const { setUserField } = useAuthStore();
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
+const SubscriptionChange = () => {
+  const { navigate } = useMainNavigation();
+  const { user, setUserField, logout } = useAuthStore();
+  const [currentSlide, setCurrentSlide] = useState<number>(
+    user.subscription ? +user.subscription : 0
+  );
   const flatListRef = useRef<FlatList>(null);
 
   const scrollToIndex = (index: number) => {
@@ -23,6 +28,7 @@ const Subscription = () => {
   return (
     <GradientPageTemplate
       headerText="Выберите уровень подписки"
+      onHeaderClick={() => navigate("Profile", { direction: "backward" })}
       mustScroll={false}
     >
       <View style={styles.wrapper}>
@@ -39,11 +45,15 @@ const Subscription = () => {
             renderItem={({ item }) => (
               <SliderCard
                 id={item.id}
+                currentId={user.subscription ? +user.subscription : undefined}
                 title={item.title}
                 description={item.description}
                 radioLabels={item.radioLabels}
                 price={item.price}
-                onPress={() => setUserField("subscription", item.id.toString())}
+                onPress={() => {
+                  setUserField("subscription", item.id.toString());
+                  navigate("Profile", { direction: "backward" });
+                }}
               />
             )}
             keyExtractor={({ id }) => id.toString()}
@@ -73,9 +83,12 @@ const Subscription = () => {
             />
           ))}
         </View>
+        <Button color="welcomeBlue" style={styles.cancelBtn} onPress={logout}>
+          <Text style={styles.cancelBtnText}>Отменить подписку</Text>
+        </Button>
       </View>
     </GradientPageTemplate>
   );
 };
 
-export default Subscription;
+export default SubscriptionChange;

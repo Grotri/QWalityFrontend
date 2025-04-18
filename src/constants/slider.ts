@@ -1,4 +1,4 @@
-import { ISliderCard } from "../../organisms/SliderCard/types";
+import { ISliderCard } from "../components/organisms/SliderCard/types";
 
 export type ISlider = ISliderCard;
 

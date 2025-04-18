@@ -14,18 +14,21 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     position: "relative",
-    height: 30,
   },
   headerTextWrapper: {
     position: "absolute",
     left: "50%",
     transform: [{ translateX: "-50%" }],
   },
+  shortHeaderTextWrapper: {
+    width: "84%",
+  },
   headerText: {
     color: palette.mainText,
     fontFamily: fonts.bold,
     fontSize: 20,
     lineHeight: 27,
+    textAlign: "center",
   },
   line: {
     backgroundColor: palette.blue3,

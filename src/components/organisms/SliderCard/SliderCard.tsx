@@ -5,9 +5,11 @@ import { styles } from "./styles";
 import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
+import { palette } from "../../../constants/palette";
 
 const SliderCard: FC<ISliderCard> = ({
   id,
+  currentId,
   title,
   description,
   radioLabels,
@@ -42,13 +44,19 @@ const SliderCard: FC<ISliderCard> = ({
         </View>
         <View style={styles.bottomView}>
           <Text style={styles.price}>{price} руб. в месяц</Text>
-          <Button
-            color="welcomeBrightBlue"
-            style={styles.btn}
-            onPress={onPress}
-          >
-            <Text style={styles.btnText}>Выбрать</Text>
-          </Button>
+          {currentId !== undefined && currentId === id ? (
+            <View style={[styles.btn, { backgroundColor: palette.blue }]}>
+              <Text style={styles.btnText}>Выбрано</Text>
+            </View>
+          ) : (
+            <Button
+              color="welcomeBrightBlue"
+              style={styles.btn}
+              onPress={onPress}
+            >
+              <Text style={styles.btnText}>Выбрать</Text>
+            </Button>
+          )}
         </View>
       </View>
     </View>

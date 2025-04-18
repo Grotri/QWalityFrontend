@@ -5,6 +5,7 @@ import { fonts } from "../../../constants/fonts";
 export const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    paddingBottom: 28,
     alignItems: "center",
   },
   flatWrapper: {
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    marginBottom: 28,
+    marginBottom: "7%",
   },
   dot: {
     backgroundColor: palette.welcomeScreenScrollNonActivePoint,
