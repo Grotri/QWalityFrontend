@@ -11,10 +11,14 @@ export const styles = StyleSheet.create({
   },
   bottomIcon: {
     position: "absolute",
-    right: 12,
+    right: 0,
+    bottom: 0,
+    width: 130,
+    height: 130,
+    justifyContent: "center",
   },
   bottomIconContainer: {
-    height: 120,
+    height: 128,
   },
   fixBackground: {
     backgroundColor: palette.blue2,

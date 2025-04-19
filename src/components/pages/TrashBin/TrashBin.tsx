@@ -37,6 +37,8 @@ const TrashBin = () => {
           text="Очистить"
           onPress={() => setIsModalOpen(true)}
           gap={2}
+          marginRight={24}
+          marginBottom={28}
         />
       }
     >

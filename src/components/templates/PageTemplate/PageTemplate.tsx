@@ -78,7 +78,7 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
             )}
           </TouchableWithoutFeedback>
           {bottomIcon && (
-            <View style={[styles.bottomIcon, { bottom: insets.bottom + 12 }]}>
+            <View style={styles.bottomIcon}>
               {bottomIcon}
               {Platform.OS !== "ios" && (isMenuExpanded || isBlurOn) && (
                 <BlurView onPress={closeMenu} />

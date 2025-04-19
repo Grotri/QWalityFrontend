@@ -5,4 +5,6 @@ export interface IBottomFixIcon {
   text: string;
   onPress: () => void;
   gap?: number;
+  marginRight: number;
+  marginBottom: number;
 }

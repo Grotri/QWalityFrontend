@@ -45,6 +45,8 @@ const FAQ = () => {
           icon={<MessageIcon />}
           text="Обратиться в поддержку"
           onPress={() => alert("Обратиться в поддержку пока невозможно.")}
+          marginRight={12}
+          marginBottom={28}
         />
       }
     >

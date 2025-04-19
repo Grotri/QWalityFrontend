@@ -89,6 +89,8 @@ const Main = () => {
           icon={<PlusIcon />}
           text="Добавить камеру"
           onPress={() => setIsAddCameraModalOpen(true)}
+          marginRight={20}
+          marginBottom={28}
         />
       }
       isBlurOn={

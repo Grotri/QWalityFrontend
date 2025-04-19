@@ -1,19 +1,21 @@
 import { StyleSheet } from "react-native";
 import { palette } from "../../../constants/palette";
+import { fonts } from "../../../constants/fonts";
 
 export const styles = StyleSheet.create({
   wrapper: {
     position: "relative",
+    width: 130,
+    height: 130,
+    justifyContent: "flex-end",
   },
   gradient: {
     position: "absolute",
-    top: "50%",
-    left: "50%",
     zIndex: -1,
   },
   btn: {
     alignItems: "center",
-    padding: 4,
+    alignSelf: "flex-end",
   },
   circle: {
     height: 52,
@@ -25,8 +27,10 @@ export const styles = StyleSheet.create({
   },
   btnText: {
     color: palette.mainText,
-    lineHeight: 19,
-    maxWidth: 90,
+    lineHeight: 16,
+    fontSize: 12,
+    maxWidth: 74,
+    fontFamily: fonts.semibold,
     textAlign: "center",
   },
 });
