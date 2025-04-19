@@ -63,4 +63,12 @@ export const styles = StyleSheet.create({
   emptyText: {
     color: palette.supportTransparentText,
   },
+  noDefects: {
+    marginTop: 20,
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
+    alignSelf: "center",
+  },
 });

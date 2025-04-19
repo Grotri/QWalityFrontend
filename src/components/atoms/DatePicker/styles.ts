@@ -19,4 +19,18 @@ export const styles = StyleSheet.create({
     lineHeight: 21,
     fontFamily: fonts.semibold,
   },
+  modalOverlay: {
+    flex: 1,
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    padding: 0,
+    margin: 0,
+    alignItems: "center",
+  },
 });

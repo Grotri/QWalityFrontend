@@ -3,6 +3,7 @@ import { IDefectItem } from "./types";
 import { Text, View } from "react-native";
 import Button from "../../atoms/Button";
 import { styles } from "./styles";
+import { convertISODate } from "../../../helpers/formatDate";
 
 const Defect: FC<IDefectItem> = ({
   defect,
@@ -33,7 +34,7 @@ const Defect: FC<IDefectItem> = ({
         )}
         <View>
           <Text style={styles.itemName}>{name}</Text>
-          <Text style={styles.itemDate}>{date}</Text>
+          <Text style={styles.itemDate}>{convertISODate(date)}</Text>
         </View>
       </View>
       <Button onPress={onPress}>

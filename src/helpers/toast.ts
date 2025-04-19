@@ -6,15 +6,19 @@ import { TextStyle, ViewStyle } from "react-native";
 const MAX_TOASTS = 2;
 let activeToastIds: string[] = [];
 
+const baseToastStyles = {
+  indicator: { backgroundColor: palette.mainText },
+  text: {
+    color: palette.mainText,
+    fontFamily: fonts.bold,
+    fontSize: 16,
+  } as TextStyle,
+};
+
 const handleToast = (
   type: "success" | "error",
   message: string,
-  baseStyles?: {
-    pressable?: ViewStyle;
-    view?: ViewStyle;
-    text?: TextStyle;
-    indicator?: ViewStyle;
-  },
+  backgroundColor: string,
   options?: ToastOptions
 ) => {
   const duration = options?.duration ?? 1400;
@@ -26,7 +30,13 @@ const handleToast = (
 
   const id = toast[type](message, {
     duration,
-    styles: baseStyles,
+    styles: {
+      ...baseToastStyles,
+      pressable: {
+        backgroundColor,
+        borderRadius: 12,
+      } as ViewStyle,
+    },
     ...options,
   });
 
@@ -37,36 +47,11 @@ const handleToast = (
   }, duration);
 };
 
-export const showSuccessToast = (message: string, options?: ToastOptions) => {
-  handleToast(
-    "success",
-    message,
-    {
-      indicator: { backgroundColor: palette.mainText },
-      text: {
-        color: palette.mainText,
-        fontFamily: fonts.bold,
-        fontSize: 16,
-      },
-      pressable: { backgroundColor: palette.greenOnline, borderRadius: 12 },
-    },
-    options
-  );
-};
+export const showSuccessToast = (msg: string, opts?: ToastOptions) =>
+  handleToast("success", msg, palette.greenOnline, opts);
 
-export const showErrorToast = (message: string, options?: ToastOptions) => {
-  handleToast(
-    "error",
-    message,
-    {
-      indicator: { backgroundColor: palette.mainText },
-      text: {
-        color: palette.mainText,
-        fontFamily: fonts.bold,
-        fontSize: 16,
-      },
-      pressable: { backgroundColor: palette.red, borderRadius: 12 },
-    },
-    options
-  );
-};
+export const showErrorToast = (msg: string, opts?: ToastOptions) =>
+  handleToast("error", msg, palette.red, opts);
+
+export const showInfoToast = (msg: string, opts?: ToastOptions) =>
+  handleToast("success", msg, palette.info, opts);

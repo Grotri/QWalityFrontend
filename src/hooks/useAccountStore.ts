@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
 import { IAccount, initialAccounts } from "../constants/account";
-import { showErrorToast, showSuccessToast } from "../helpers/toast";
+import { showErrorToast, showInfoToast, showSuccessToast } from "../helpers/toast";
 import { roles } from "../constants/roles";
 import { EErrors } from "../constants/errors";
 import { emailPattern } from "../constants/patterns";
@@ -113,7 +113,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
         showErrorToast("Сначала корректно заполните поля формы");
       }
     } else {
-      showErrorToast("Вы не поменяли данные");
+      showInfoToast("Вы не поменяли данные");
     }
   },
 
