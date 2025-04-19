@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useRef, useState } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { ICameraAccordion } from "./types";
 import Accordion from "react-native-collapsible/Accordion";
 import { Pressable, Text, View } from "react-native";
@@ -11,7 +11,6 @@ import {
   SortIcon,
 } from "../../../../assets/icons";
 import { styles } from "./styles";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
 import Defect from "../../molecules/Defect";
 import { palette } from "../../../constants/palette";
@@ -39,15 +38,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
 
-  const rotations = useRef(sections.map(() => useSharedValue(0))).current;
-
   const handleSectionChange = (sections: number[]) => {
-    const newActiveIndex = sections[0];
-
-    rotations.forEach((rotation, index) => {
-      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
-    });
-
     setActiveSections(sections);
   };
 
@@ -99,7 +90,6 @@ const CameraAccordion: FC<ICameraAccordion> = ({
       </View>
       <IconRotated
         icon={<ArrowAccordionIcon />}
-        rotation={rotations[index]}
         isActive={activeSections.includes(index)}
       />
     </View>

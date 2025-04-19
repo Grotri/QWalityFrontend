@@ -3,12 +3,19 @@ import { IIconRotated } from "./types";
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
-const IconRotated: FC<IIconRotated> = ({ icon, rotation, isActive }) => {
+const IconRotated: FC<IIconRotated> = ({
+  icon,
+  isActive,
+  rotation: customRotation,
+}) => {
+  const rotation = customRotation ? customRotation : useSharedValue<number>(0);
+
   useEffect(() => {
-    rotation.value = withTiming(isActive ? 1 : 0);
+    rotation.value = withTiming(isActive ? 1 : 0, { duration: 300 });
   }, [isActive]);
 
   const animatedStyle = useAnimatedStyle(() => {
