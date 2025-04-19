@@ -9,6 +9,7 @@ import { EErrors } from "../../../constants/errors";
 import { emailPattern } from "../../../constants/patterns";
 import { IErrors, initialErrors } from "./types";
 import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
+import InputPassword from "../../atoms/InputPassword";
 
 const ForgotPassword = () => {
   const { navigate } = useAuthNavigation();
@@ -82,14 +83,13 @@ const ForgotPassword = () => {
               <Text style={styles.codeBtnText}>Отправить код</Text>
             </Button>
           </View>
-          <Input
+          <InputPassword
             label="Новый пароль"
             value={password}
             onChangeText={(password) => {
               setPassword(password);
               setErrors({ ...errors, password: "" });
             }}
-            secureTextEntry
             errorText={errors.password}
           />
         </View>

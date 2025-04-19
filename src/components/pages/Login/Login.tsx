@@ -10,6 +10,7 @@ import { EErrors } from "../../../constants/errors";
 import { emailPattern } from "../../../constants/patterns";
 import { showErrorToast } from "../../../helpers/toast";
 import useAuthStore from "../../../hooks/useAuthStore";
+import InputPassword from "../../atoms/InputPassword";
 
 const Login = () => {
   const { navigate } = useAuthNavigation();
@@ -63,14 +64,13 @@ const Login = () => {
             maxLength={254}
             errorText={errors.email}
           />
-          <Input
+          <InputPassword
             label="Пароль"
             value={password}
             onChangeText={(password) => {
               setPassword(password);
               setErrors({ ...errors, password: "" });
             }}
-            secureTextEntry
             errorText={errors.password}
           />
         </View>

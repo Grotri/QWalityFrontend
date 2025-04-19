@@ -18,6 +18,7 @@ import { IAccount } from "../../../constants/account";
 import uuid from "react-native-uuid";
 import Slider from "../../atoms/Slider";
 import GetReportModal from "../../organisms/GetReportModal";
+import InputPassword from "../../atoms/InputPassword";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
@@ -115,7 +116,7 @@ const Admin = () => {
             customInputStyles={styles.confirmationInput}
             customLabelStyles={styles.confirmationInputLabel}
           />
-          <Input
+          <InputPassword
             label="Пароль"
             value={password}
             onChangeText={(password) => {
@@ -123,11 +124,11 @@ const Admin = () => {
               setErrors({ ...errors, password: "" });
             }}
             errorText={errors.password}
-            secureTextEntry
             cursorColor={palette.subTextMainScreenPopup}
             customStyles={styles.confirmationInputWrapper}
             customInputStyles={styles.confirmationInput}
             customLabelStyles={styles.confirmationInputLabel}
+            iconColor={palette.mainText}
           />
           <Dropdown
             data={roles.map((role) => ({

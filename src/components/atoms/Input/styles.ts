@@ -30,6 +30,9 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: palette.error,
   },
+  inputIcon: {
+    paddingRight: 44,
+  },
   rightIcon: {
     position: "absolute",
     right: 8,

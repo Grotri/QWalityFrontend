@@ -9,4 +9,5 @@ export interface IIcon {
   onClick?: (event: GestureResponderEvent) => void;
   stroke?: number;
   disabled?: boolean;
+  isActive?: boolean;
 }

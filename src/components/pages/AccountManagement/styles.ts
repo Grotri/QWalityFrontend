@@ -35,6 +35,10 @@ export const styles = StyleSheet.create({
     padding: 8,
     gap: 2,
   },
+  inputWrapperStyles: {
+    width: "60%",
+    height: 22,
+  },
   input: {
     backgroundColor: palette.textFieldInFolderBg,
     borderRadius: 6,
@@ -45,7 +49,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     marginBottom: 4,
-    width: "60%",
+    width: "100%",
+    paddingRight: 36,
   },
   inputLabel: {
     color: palette.labelTransparentText,

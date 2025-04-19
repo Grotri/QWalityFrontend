@@ -17,6 +17,7 @@ import { palette } from "../../../constants/palette";
 import IconRotated from "../../atoms/IconRotated";
 import { IAccount } from "../../../constants/account";
 import useAccountStore from "../../../hooks/useAccountStore";
+import InputPassword from "../../atoms/InputPassword";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
@@ -92,24 +93,27 @@ const AccountManagement = () => {
             changeError(index, "login", "");
           }}
           customInputStyles={styles.input}
+          customInputWrapperStyles={styles.inputWrapperStyles}
           customLabelStyles={styles.inputLabel}
           errorStyles={styles.errorStyles}
           cursorColor={palette.subTextMainScreenPopup}
           errorText={error.login}
         />
-        <Input
+        <InputPassword
           label="Пароль"
           value={section.password}
           onChangeText={(password) => {
             changeAccountField(section.id, "password", password);
             changeError(index, "password", "");
           }}
-          secureTextEntry
           customInputStyles={styles.input}
+          customInputWrapperStyles={styles.inputWrapperStyles}
           customLabelStyles={styles.inputLabel}
           errorStyles={styles.errorStyles}
           cursorColor={palette.subTextMainScreenPopup}
           errorText={error.password}
+          iconColor={palette.mainText}
+          iconSize={18}
         />
         <Dropdown
           data={roles.map((role) => ({

@@ -11,6 +11,7 @@ const Input: FC<IInput> = ({
   customStyles,
   customInputStyles,
   customLabelStyles,
+  customInputWrapperStyles,
   onChangeText,
   placeholder,
   keyboardType = "default",
@@ -27,11 +28,12 @@ const Input: FC<IInput> = ({
   return (
     <View style={[styles.container, customStyles]}>
       {label && <Text style={[styles.label, customLabelStyles]}>{label}</Text>}
-      <View>
+      <View style={customInputWrapperStyles}>
         <TextInput
           style={[
             styles.input,
             errorText && styles.inputError,
+            !!rightIcon && styles.inputIcon,
             customInputStyles,
           ]}
           onChangeText={onChangeText}

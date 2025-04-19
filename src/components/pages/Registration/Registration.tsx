@@ -7,6 +7,7 @@ import Button from "../../atoms/Button";
 import { CheckIcon } from "../../../../assets/icons";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
 import useAuthStore from "../../../hooks/useAuthStore";
+import InputPassword from "../../atoms/InputPassword";
 
 const Registration = () => {
   const { navigate } = useAuthNavigation();
@@ -79,14 +80,13 @@ const Registration = () => {
               <Text style={styles.codeBtnText}>Отправить код</Text>
             </Button>
           </View>
-          <Input
+          <InputPassword
             label="Пароль"
             value={user.password}
             onChangeText={(password) => {
               setUserField("password", password);
               setErrorsField("password", "");
             }}
-            secureTextEntry
             errorText={errors.password}
           />
         </View>

@@ -4,13 +4,15 @@ import {
   KeyboardTypeOptions,
   StyleProp,
   TextStyle,
+  ViewStyle,
 } from "react-native";
 
 export interface IInput {
   value?: string;
   label?: string;
-  customStyles?: StyleProp<TextStyle>;
-  customInputStyles?: StyleProp<TextStyle>;
+  customStyles?: StyleProp<ViewStyle>;
+  customInputWrapperStyles?: StyleProp<ViewStyle>;
+  customInputStyles?: StyleProp<ViewStyle>;
   customLabelStyles?: StyleProp<TextStyle>;
   errorStyles?: StyleProp<TextStyle>;
   onChangeText?: (text: string) => void;
