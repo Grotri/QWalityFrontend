@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Navigation } from "./src/navigation";
 import * as Font from "expo-font";
-import { View, StyleSheet, ActivityIndicator, AppState } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  AppState,
+  Platform,
+} from "react-native";
 import { palette } from "./src/constants/palette";
 import * as NavigationBar from "expo-navigation-bar";
 
@@ -52,7 +58,10 @@ const App = () => {
     };
 
     loadFont();
-    setupNavigationBar();
+    
+    if (Platform.OS === "android") {
+      setupNavigationBar();
+    }
   }, []);
 
   if (!areFontsLoaded) {

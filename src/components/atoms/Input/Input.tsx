@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { IInput } from "./types";
-import { Text, TextInput, View } from "react-native";
+import { Platform, Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 import { palette } from "../../../constants/palette";
 import * as NavigationBar from "expo-navigation-bar";
@@ -43,7 +43,11 @@ const Input: FC<IInput> = ({
           maxLength={maxLength}
           cursorColor={cursorColor}
           secureTextEntry={secureTextEntry}
-          onKeyPress={() => NavigationBar.setVisibilityAsync("hidden")}
+          onKeyPress={() => {
+            if (Platform.OS === "android") {
+              NavigationBar.setVisibilityAsync("hidden");
+            }
+          }}
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
       </View>
