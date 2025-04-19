@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: palette.folderOrHighlightedSectionBg,
     borderRadius: 10,
     padding: 8,
+    gap: 2,
   },
   input: {
     backgroundColor: palette.textFieldInFolderBg,
@@ -48,6 +49,9 @@ export const styles = StyleSheet.create({
   },
   inputLabel: {
     color: palette.labelTransparentText,
+  },
+  errorStyles: {
+    lineHeight: 12,
   },
   dropdownWrapper: {
     width: "60%",

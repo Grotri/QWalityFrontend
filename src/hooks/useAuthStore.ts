@@ -5,7 +5,7 @@ import { EErrors } from "../constants/errors";
 import { showErrorToast, showSuccessToast } from "../helpers/toast";
 import { emailPattern } from "../constants/patterns";
 
-interface IUser {
+export interface IUser {
   id: string;
   inn: string;
   email: string;
@@ -13,7 +13,7 @@ interface IUser {
   subscription?: string;
 }
 
-const initialUser: IUser = {
+export const initialUser: IUser = {
   id: "",
   inn: "",
   email: "",
@@ -39,6 +39,7 @@ const initialErrors: IErrors = {
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
   setUserField: (field: keyof IUser, value: string) => void;
+  setUser: (newUser: IUser) => void;
   clearUser: () => void;
   errors: IErrors;
   setErrorsField: (field: keyof IErrors, error: string) => void;
@@ -56,6 +57,8 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
   user: { ...initialUser },
 
   clearUser: () => set({ user: { ...initialUser } }),
+
+  setUser: (newUser) => set({ user: { ...newUser } }),
 
   setUserField: (field, value) =>
     set((state) => ({

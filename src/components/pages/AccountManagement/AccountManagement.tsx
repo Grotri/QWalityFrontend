@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
-import { IUserSection } from "./types";
 import {
   ArrowBottomIcon,
   ArrowTopIcon,
@@ -15,25 +14,38 @@ import Dropdown from "../../atoms/Dropdown";
 import { roles } from "../../../constants/roles";
 import Button from "../../atoms/Button";
 import { palette } from "../../../constants/palette";
-import { users } from "../../../constants/users";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
+import { IAccount } from "../../../constants/account";
+import useAccountStore from "../../../hooks/useAccountStore";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
+  const {
+    accounts,
+    changeAccount,
+    deleteAccount,
+    errors,
+    changeError,
+    refreshErrors,
+  } = useAccountStore();
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const [sections, setSections] = useState<IUserSection[]>([...users]);
+  const [sections, setSections] = useState<IAccount[]>([...accounts]);
   const [isDdOpen, setIsDdOpen] = useState<boolean>(false);
-  const rotations = useRef(sections.map(() => useSharedValue(0))).current;
 
   const handleSectionChange = (sections: number[]) => {
-    const newActiveIndex = sections[0];
-
-    rotations.forEach((rotation, index) => {
-      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
-    });
-
     setActiveSections(sections);
+  };
+
+  const changeAccountField = (
+    id: string,
+    field: keyof IAccount,
+    value: string
+  ) => {
+    setSections(
+      sections.map((account) =>
+        account.id === id ? { ...account, [field]: value } : account
+      )
+    );
   };
 
   const closeDd = () => {
@@ -46,51 +58,58 @@ const AccountManagement = () => {
     closeDd();
   }, [activeSections]);
 
-  const renderHeader = (section: IUserSection, index: number) => (
+  useEffect(() => {
+    setSections([...accounts]);
+  }, [accounts]);
+
+  useEffect(() => {
+    refreshErrors();
+  }, []);
+
+  const renderHeader = (section: IAccount, index: number) => (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
         <ProfileIconSmall />
-        <Text style={styles.headerText}>{section.title}</Text>
+        <Text style={styles.headerText}>{section.name}</Text>
       </View>
       <IconRotated
         icon={<ArrowTopIcon style={{ transform: [{ scaleY: -1 }] }} />}
-        rotation={rotations[index]}
         isActive={activeSections.includes(index)}
       />
     </View>
   );
 
-  const renderContent = (section: IUserSection) => {
+  const renderContent = (section: IAccount, index: number) => {
+    const error = errors[index] || { login: "", password: "" };
+
     return (
       <View style={styles.content}>
         <Input
           label="Логин"
           value={section.login}
-          onChangeText={(val) =>
-            setSections(
-              sections.map((sec) =>
-                sec.id === section.id ? { ...sec, login: val } : sec
-              )
-            )
-          }
+          onChangeText={(login) => {
+            changeAccountField(section.id, "login", login);
+            changeError(index, "login", "");
+          }}
           customInputStyles={styles.input}
           customLabelStyles={styles.inputLabel}
+          errorStyles={styles.errorStyles}
           cursorColor={palette.subTextMainScreenPopup}
+          errorText={error.login}
         />
         <Input
           label="Пароль"
           value={section.password}
-          onChangeText={(val) =>
-            setSections(
-              sections.map((sec) =>
-                sec.id === section.id ? { ...sec, password: val } : sec
-              )
-            )
-          }
+          onChangeText={(password) => {
+            changeAccountField(section.id, "password", password);
+            changeError(index, "password", "");
+          }}
           secureTextEntry
           customInputStyles={styles.input}
           customLabelStyles={styles.inputLabel}
+          errorStyles={styles.errorStyles}
           cursorColor={palette.subTextMainScreenPopup}
+          errorText={error.password}
         />
         <Dropdown
           data={roles.map((role) => ({
@@ -98,13 +117,7 @@ const AccountManagement = () => {
             label: role.name,
           }))}
           value={section.role}
-          setValue={(item) =>
-            setSections(
-              sections.map((sec) =>
-                sec.id === section.id ? { ...sec, role: item } : sec
-              )
-            )
-          }
+          setValue={(role) => changeAccountField(section.id, "role", role)}
           isOpen={isDdOpen}
           setIsOpen={setIsDdOpen}
           label="Роль"
@@ -120,10 +133,21 @@ const AccountManagement = () => {
           arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
         />
         <View style={styles.btns}>
-          <Button color="management" style={styles.btn}>
+          <Button
+            color="management"
+            style={styles.btn}
+            onPress={() => changeAccount(index, section)}
+          >
             <Text style={styles.btnText}>Изменить</Text>
           </Button>
-          <Button color="red" style={styles.btn}>
+          <Button
+            color="red"
+            style={styles.btn}
+            onPress={() => {
+              deleteAccount(index);
+              setActiveSections([]);
+            }}
+          >
             <Text style={styles.btnText}>Удалить</Text>
           </Button>
         </View>

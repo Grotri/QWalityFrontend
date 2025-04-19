@@ -9,6 +9,7 @@ import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { slidersInfo } from "../../../constants/slider";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import { showSuccessToast } from "../../../helpers/toast";
 
 const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
@@ -53,6 +54,7 @@ const SubscriptionChange = () => {
                 onPress={() => {
                   setUserField("subscription", item.id.toString());
                   navigate("Profile", { direction: "backward" });
+                  showSuccessToast("Вы успешно поменяли уровень подписки");
                 }}
               />
             )}

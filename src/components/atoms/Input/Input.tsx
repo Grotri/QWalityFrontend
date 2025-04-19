@@ -22,6 +22,7 @@ const Input: FC<IInput> = ({
   rightIcon,
   cursorColor = palette.black,
   errorText,
+  errorStyles,
 }) => {
   return (
     <View style={[styles.container, customStyles]}>
@@ -51,7 +52,9 @@ const Input: FC<IInput> = ({
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
       </View>
-      {errorText && <Text style={styles.error}>{errorText}</Text>}
+      {errorText && (
+        <Text style={[styles.error, errorStyles]}>{errorText}</Text>
+      )}
     </View>
   );
 };

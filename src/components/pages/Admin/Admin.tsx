@@ -3,61 +3,72 @@ import { Text, View } from "react-native";
 import { styles } from "./styles";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
-import { Slider } from "@miblanchard/react-native-slider";
 import { palette } from "../../../constants/palette";
-import {
-  ArrowBottomIcon,
-  CrossIcon,
-  TooltipIcon,
-} from "../../../../assets/icons";
-import { screenWidth } from "../../../constants/screenSize";
+import { ArrowBottomIcon } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
 import { roles } from "../../../constants/roles";
-import Modal from "../../atoms/Modal";
-import Radio from "../../atoms/Radio";
-import DatePicker from "../../atoms/DatePicker";
-import { formats } from "../../../constants/formats";
+import { IErrors, initialErrors } from "./types";
+import { EErrors } from "../../../constants/errors";
+import { emailPattern } from "../../../constants/patterns";
+import { showErrorToast } from "../../../helpers/toast";
+import useAccountStore from "../../../hooks/useAccountStore";
+import { IAccount } from "../../../constants/account";
+import uuid from "react-native-uuid";
+import Slider from "../../atoms/Slider";
+import GetReportModal from "../../organisms/GetReportModal";
 
 const Admin = () => {
-  const initialConfidence = 0.75;
   const { navigate } = useMainNavigation();
-  const [confidence, setConfidence] = useState<number>(initialConfidence);
+  const { addAccount } = useAccountStore();
+  const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
   const [role, setRole] = useState<string>("0");
   const [isMainModalOpened, setIsMainModalOpened] = useState<boolean>(false);
-  const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
-  const [type, setType] = useState<"report" | "log">("report");
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [format, setFormat] = useState<string>("0");
   const [isRoleDdOpen, setIsRoleDdOpen] = useState<boolean>(false);
-  const [isFormatDdOpen, setIsFormatDdOpen] = useState<boolean>(false);
-
-  const sliderWidth = screenWidth - 54 * 2;
-  const tooltipWidth = 39;
-  const thumbWidth = 15;
-  const percentageOffset =
-    confidence * (sliderWidth - thumbWidth) + thumbWidth / 2 - tooltipWidth / 2;
-
-  const closeModals = () => {
-    if (isSubModalOpened) {
-      setIsSubModalOpened(false);
-    }
-    setIsMainModalOpened(false);
-    if (isFormatDdOpen) {
-      setIsFormatDdOpen(false);
-    }
-  };
 
   const closeDropdowns = () => {
     if (isRoleDdOpen) {
       setIsRoleDdOpen(false);
     }
-    if (isFormatDdOpen) {
-      setIsFormatDdOpen(false);
+  };
+
+  const validate = (): boolean => {
+    const newErrors: IErrors = {
+      name: !name.trim() ? EErrors.required : "",
+      login: !login.trim()
+        ? EErrors.required
+        : !emailPattern.test(login.trim())
+        ? "Введите корректный email"
+        : "",
+      password: !password.trim()
+        ? EErrors.required
+        : password.trim().length < 8
+        ? "Пароль должен содержать не менее 8 символов"
+        : "",
+    };
+    setErrors(newErrors);
+    return Object.values(newErrors).every((error) => !error);
+  };
+
+  const createSubAccount = () => {
+    const account: IAccount = {
+      id: uuid.v4(),
+      name,
+      login,
+      password,
+      role,
+    };
+    if (validate()) {
+      addAccount(account);
+      setLogin("");
+      setPassword("");
+      setName("");
+    } else {
+      showErrorToast("Сначала заполните поля формы");
     }
   };
 
@@ -73,38 +84,30 @@ const Admin = () => {
       <View>
         <View style={styles.adminWrapper}>
           <Text style={styles.subTitle}>Уверенность нейросети</Text>
-          <View style={styles.sliderWrapper}>
-            <Slider
-              containerStyle={styles.slider}
-              trackStyle={styles.sliderTrack}
-              thumbStyle={styles.sliderThumb}
-              value={initialConfidence}
-              onValueChange={(val) => setConfidence(+val[0].toFixed(2))}
-              minimumValue={0}
-              maximumValue={1}
-              step={0.01}
-              trackClickable={true}
-              minimumTrackTintColor={palette.textFieldInFolderBg}
-              maximumTrackTintColor="#3154AC"
-              thumbTintColor="#D9D9D9"
-            />
-            <View
-              style={[
-                styles.tooltipWrapper,
-                { top: 28, left: percentageOffset },
-              ]}
-            >
-              <TooltipIcon />
-              <Text style={styles.tooltipText}>
-                {+(confidence * 100).toFixed(0)}%
-              </Text>
-            </View>
-          </View>
+          <Slider />
           <Text style={styles.subTitle}>Регистрация суб-аккаунта</Text>
+          <Input
+            label="Имя пользователя"
+            value={name}
+            onChangeText={(name) => {
+              setName(name);
+              setErrors({ ...errors, name: "" });
+            }}
+            errorText={errors.name}
+            maxLength={254}
+            cursorColor={palette.subTextMainScreenPopup}
+            customStyles={styles.confirmationInputWrapper}
+            customInputStyles={styles.confirmationInput}
+            customLabelStyles={styles.confirmationInputLabel}
+          />
           <Input
             label="Логин"
             value={login}
-            onChangeText={(text) => setLogin(text)}
+            onChangeText={(login) => {
+              setLogin(login);
+              setErrors({ ...errors, login: "" });
+            }}
+            errorText={errors.login}
             inputMode="email"
             maxLength={254}
             cursorColor={palette.subTextMainScreenPopup}
@@ -115,7 +118,11 @@ const Admin = () => {
           <Input
             label="Пароль"
             value={password}
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(password) => {
+              setPassword(password);
+              setErrors({ ...errors, password: "" });
+            }}
+            errorText={errors.password}
             secureTextEntry
             cursorColor={palette.subTextMainScreenPopup}
             customStyles={styles.confirmationInputWrapper}
@@ -138,7 +145,7 @@ const Admin = () => {
             setIsOpen={setIsRoleDdOpen}
             arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
           />
-          <Button color="blue" style={styles.btn}>
+          <Button color="blue" style={styles.btn} onPress={createSubAccount}>
             <Text style={styles.btnText}>Создать суб-аккаунт</Text>
           </Button>
           <Button
@@ -157,123 +164,10 @@ const Admin = () => {
           </Button>
           <Text style={styles.statistics}>3/15 аккаунтов</Text>
         </View>
-        <Modal
-          isVisible={isMainModalOpened}
-          setIsVisible={setIsMainModalOpened}
-          onPress={() => {
-            if (isFormatDdOpen) {
-              setIsFormatDdOpen(false);
-            }
-          }}
-        >
-          <View style={styles.modals}>
-            <View style={styles.modal}>
-              <View style={styles.crossIconWrapper}>
-                <CrossIcon
-                  style={styles.crossIcon}
-                  onClick={() => setIsMainModalOpened(false)}
-                />
-                <Text style={styles.modalTitle}>Получить отчет</Text>
-              </View>
-              <View style={styles.modalContent}>
-                <View style={styles.row}>
-                  <Radio
-                    label="Отчет"
-                    isChecked={type === "report"}
-                    setIsChecked={() => {
-                      setType("report");
-                    }}
-                  />
-                  <View style={styles.empty} />
-                  <Radio
-                    label="Лог"
-                    isChecked={type === "log"}
-                    setIsChecked={() => {
-                      setType("log");
-                    }}
-                  />
-                </View>
-                <View style={styles.row}>
-                  <DatePicker
-                    date={startDate}
-                    setDate={(date) => setStartDate(date)}
-                  />
-                  <View style={styles.dash} />
-                  <DatePicker
-                    date={endDate}
-                    setDate={(date) => setEndDate(date)}
-                  />
-                </View>
-                <View style={styles.row}>
-                  <Dropdown
-                    data={formats.map((format) => ({
-                      value: format.id,
-                      label: format.name,
-                    }))}
-                    value={format}
-                    setValue={setFormat}
-                    isOpen={isFormatDdOpen}
-                    setIsOpen={setIsFormatDdOpen}
-                    wrapperStyle={styles.flex}
-                    dropdownStyle={styles.dropdownStyle}
-                    selectedTextStyle={styles.selectedTextStyle}
-                    borderColor={palette.dateAndListSelectsPopupBg}
-                    arrowIconComponent={
-                      <ArrowBottomIcon stroke={2} height={9} />
-                    }
-                  />
-                  <View style={styles.empty} />
-                  <View style={styles.flex} />
-                </View>
-                <View style={styles.row}>
-                  <Button
-                    color="red"
-                    style={styles.btnModal}
-                    onPress={() => setIsSubModalOpened(true)}
-                  >
-                    <Text style={styles.btnModalText}>Удалить лог</Text>
-                  </Button>
-                  <View style={styles.empty} />
-                  <Button
-                    customColor={palette.modalBtn}
-                    style={styles.btnModal}
-                    onPress={closeModals}
-                  >
-                    <Text style={styles.btnModalText}>Скачать</Text>
-                  </Button>
-                </View>
-              </View>
-            </View>
-            {isSubModalOpened && (
-              <View style={styles.modal}>
-                <Text style={styles.subModalTitle}>
-                  Вы точно хотите удалить лог?
-                </Text>
-                <View style={styles.modalContent}>
-                  <View style={styles.row}>
-                    <Button
-                      color="red"
-                      style={styles.btnModal}
-                      onPress={closeModals}
-                    >
-                      <Text style={styles.btnModalTextBold}>Да</Text>
-                    </Button>
-                    <View style={styles.empty} />
-                    <Button
-                      customColor={palette.modalBtn}
-                      style={styles.btnModal}
-                      onPress={() => {
-                        setIsSubModalOpened(false);
-                      }}
-                    >
-                      <Text style={styles.btnModalTextBold}>Нет</Text>
-                    </Button>
-                  </View>
-                </View>
-              </View>
-            )}
-          </View>
-        </Modal>
+        <GetReportModal
+          isOpen={isMainModalOpened}
+          setIsOpen={setIsMainModalOpened}
+        />
       </View>
     </PageTemplate>
   );
