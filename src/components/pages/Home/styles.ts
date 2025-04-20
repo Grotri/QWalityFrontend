@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.black,
     fontSize: 22,
     lineHeight: 30,
-    width: "65%",
+    width: "66%",
   },
   line: {
     width: "30%",
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   welcomeText: {
-    width: "90%",
+    width: "88%",
     color: palette.welcomeScreenMainText,
     fontFamily: fonts.bold,
     fontSize: 16,
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
   },
   improveText: {
     textAlign: "center",
-    width: 200,
+    width: "60%",
     color: palette.welcomeScreenImproveText,
     fontFamily: fonts.bold,
     fontSize: 14,
@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
   brightBlueBtn: {
     padding: 8,
     borderRadius: 14,
-    width: "86%",
+    width: "100%",
     minWidth: "70%",
   },
   brightBlueBtnText: {
@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
   blueBtn: {
     padding: 8,
     borderRadius: 14,
-    width: "74%",
+    width: "80%",
     minWidth: "60%",
   },
   blueBtnText: {

@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
-import { cameras } from "../../../constants/cameras";
 import {
   ArrowAccordionIcon,
   PlusIcon,
@@ -12,22 +11,33 @@ import {
 import Input from "../../atoms/Input";
 import { palette } from "../../../constants/palette";
 import CameraAccordion from "../../organisms/CameraAccordion";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
-import { IDefect } from "./types";
+import { ICamera, IDefect } from "./types";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
+import useCamerasStore from "../../../hooks/useCamerasStore";
 
 const Main = () => {
+  const { cameras: camerasInfo } = useCamerasStore();
+  const [cameras, setCameras] = useState<ICamera[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
-  const [isSettingsCameraModalOpen, setIsSettingsCameraModalOpen] =
-    useState<boolean>(false);
+  const [selectedCamera, setSelectedCamera] = useState<ICamera | null>(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<boolean | null>(
+    null
+  );
   const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
+    useState<boolean>(false);
+  const [isSortOflCameraModalOpen, setIsSortOflCameraModalOpen] =
     useState<boolean>(false);
   const [isFilterCameraModalOpen, setIsFilterCameraModalOpen] =
     useState<boolean>(false);
+  const [isFilterCameraOflModalOpen, setIsFilterCameraOflModalOpen] =
+    useState<boolean>(false);
   const [selectedDefect, setSelectedDefect] = useState<IDefect | null>(null);
+  const [onlineSearch, setOnlineSearch] = useState<string>("");
+  const [offlineSearch, setOfflineSearch] = useState<string>("");
 
   const onlineCameras = cameras.filter((camera) => camera.online);
   const offlineCameras = cameras.filter((camera) => !camera.online);
@@ -37,17 +47,14 @@ const Main = () => {
     { title: `Offline (${offlineCameras.length})`, cameras: offlineCameras },
   ];
 
-  const rotations = useRef(sections.map(() => useSharedValue(0))).current;
-
   const handleSectionChange = (sections: number[]) => {
-    const newActiveIndex = sections[0];
-
-    rotations.forEach((rotation, index) => {
-      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
-    });
-
     setActiveSections(sections);
   };
+
+  useEffect(() => {
+    setCameras([...camerasInfo]);
+    setIsAddCameraModalOpen(false);
+  }, [camerasInfo]);
 
   const renderHeader = (section: (typeof sections)[number], index: number) => (
     <View style={styles.header}>
@@ -57,53 +64,89 @@ const Main = () => {
           <Input
             placeholder="Поиск..."
             placeholderTextColor={palette.mainText}
+            value={index === 0 ? onlineSearch : offlineSearch}
+            onChangeText={(text) =>
+              index === 0 ? setOnlineSearch(text) : setOfflineSearch(text)
+            }
             customStyles={styles.input}
             customInputStyles={styles.customInputStyles}
             rightIcon={<SearchIcon />}
+            cursorColor={palette.subTextMainScreenPopup}
+            onPress={() => setActiveSections([index === 0 ? 0 : 1])}
           />
         )}
       </View>
       <IconRotated
         icon={<ArrowAccordionIcon />}
-        rotation={rotations[index]}
         isActive={activeSections.includes(index)}
       />
     </View>
   );
 
-  const renderContent = (section: (typeof sections)[number]) => (
-    <CameraAccordion
-      sections={section.cameras}
-      isSettingsCameraModalOpen={isSettingsCameraModalOpen}
-      setIsSettingsCameraModalOpen={setIsSettingsCameraModalOpen}
-      isSortCameraModalOpen={isSortCameraModalOpen}
-      setIsSortCameraModalOpen={setIsSortCameraModalOpen}
-      isFilterCameraModalOpen={isFilterCameraModalOpen}
-      setIsFilterCameraModalOpen={setIsFilterCameraModalOpen}
-      selectedDefect={selectedDefect}
-      setSelectedDefect={setSelectedDefect}
-    />
-  );
+  const renderContent = (section: (typeof sections)[number], index: number) => {
+    const searchText = index === 0 ? onlineSearch : offlineSearch;
+    const filteredCameras = section.cameras.filter((camera) =>
+      camera.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    if (filteredCameras.length === 0) {
+      return (
+        <View style={styles.emptyList}>
+          <Text style={styles.emptyText}>
+            {searchText
+              ? "Нет камер по заданному поиску"
+              : "Камер в данной категории нет"}
+          </Text>
+        </View>
+      );
+    }
+
+    return (
+      <CameraAccordion
+        sections={filteredCameras}
+        selectedCamera={selectedCamera}
+        setSelectedCamera={setSelectedCamera}
+        isHistoryModalOpen={isHistoryModalOpen}
+        setIsHistoryModalOpen={setIsHistoryModalOpen}
+        isSortCameraModalOpen={
+          index === 0 ? isSortCameraModalOpen : isSortOflCameraModalOpen
+        }
+        setIsSortCameraModalOpen={
+          index === 0 ? setIsSortCameraModalOpen : setIsSortOflCameraModalOpen
+        }
+        isFilterCameraModalOpen={
+          index === 0 ? isFilterCameraModalOpen : isFilterCameraOflModalOpen
+        }
+        setIsFilterCameraModalOpen={
+          index === 0
+            ? setIsFilterCameraModalOpen
+            : setIsFilterCameraOflModalOpen
+        }
+        selectedDefect={selectedDefect}
+        setSelectedDefect={setSelectedDefect}
+      />
+    );
+  };
 
   return (
     <PageTemplate
       hasMenu
       bottomIcon={
-        <Pressable
-          style={styles.plusBtn}
+        <BottomFixIcon
+          icon={<PlusIcon />}
+          text="Добавить камеру"
           onPress={() => setIsAddCameraModalOpen(true)}
-        >
-          <View style={styles.circle}>
-            <PlusIcon />
-          </View>
-          <Text style={styles.plusBtnText}>Добавить камеру</Text>
-        </Pressable>
+          marginRight={20}
+          marginBottom={28}
+        />
       }
       isBlurOn={
         isAddCameraModalOpen ||
-        isSettingsCameraModalOpen ||
+        !!selectedCamera ||
         isSortCameraModalOpen ||
+        isSortOflCameraModalOpen ||
         isFilterCameraModalOpen ||
+        isFilterCameraOflModalOpen ||
         !!selectedDefect
       }
     >

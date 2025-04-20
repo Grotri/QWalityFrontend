@@ -1,7 +1,8 @@
 import { ICamera } from "../../pages/Main/types";
 
 export interface ICameraSettingsModal {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  camera: ICamera;
+  camera: ICamera | null;
+  setCamera: (camera: ICamera | null) => void;
+  isHistoryModalOpen: boolean | null;
+  setIsHistoryModalOpen: (isOpen: boolean | null) => void;
 }

@@ -8,41 +8,14 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 54,
     width: "100%",
     alignItems: "center",
+    paddingBottom: 28,
   },
   subTitle: {
     color: palette.mainText,
-    fontFamily: fonts.semibold,
-    marginBottom: 8,
-  },
-  sliderWrapper: {
-    width: "100%",
-    position: "relative",
-    marginBottom: 36,
-  },
-  slider: {
-    width: "100%",
-  },
-  sliderTrack: {
-    height: 7,
-    borderRadius: 6,
-  },
-  sliderThumb: {
-    boxShadow: "0px 0px 4px 1px rgba(0, 0, 0, 0.25)",
-    width: 15,
-    height: 15,
-  },
-  tooltipWrapper: {
-    alignSelf: "flex-start",
-    position: "absolute",
-  },
-  tooltipText: {
-    color: palette.mainText,
-    fontFamily: fonts.semibold,
-    lineHeight: 20,
-    width: "100%",
-    textAlign: "center",
-    position: "absolute",
-    bottom: 2,
+    fontFamily: fonts.bold,
+    fontSize: 16,
+    lineHeight: 21,
+    marginBottom: 12,
   },
   confirmationInputWrapper: {
     width: "100%",
@@ -51,22 +24,37 @@ export const styles = StyleSheet.create({
   },
   confirmationInput: {
     backgroundColor: palette.textFieldInFolderBg,
-    height: 25,
+    height: 32,
     color: palette.mainText,
     fontFamily: fonts.semibold,
   },
   confirmationInputLabel: {
     color: palette.subTextMainScreenPopup,
+    fontSize: 16,
+    lineHeight: 20,
   },
   dropdownWrapper: {
-    width: "70%",
+    paddingHorizontal: 12,
     marginBottom: 28,
+  },
+  dropdownLabelStyle: {
+    fontSize: 16,
+    lineHeight: 19,
+  },
+  dropdownMainStyle: {
+    height: 32,
+    borderRadius: 10,
+    backgroundColor: palette.textFieldInFolderBg,
+  },
+  selectedMainTextStyle: {
+    fontSize: 16,
+    lineHeight: 20,
   },
   btn: {
     marginBottom: 20,
-    height: 28,
-    borderRadius: 6,
-    minWidth: "70%",
+    height: 35,
+    borderRadius: 12,
+    minWidth: "72%",
   },
   btnText: {
     fontSize: 16,
@@ -75,89 +63,6 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
   },
   statistics: {
-    fontSize: 12,
-    lineHeight: 16,
     color: palette.supportTransparentText,
-    marginTop: -8,
-  },
-  modals: {
-    width: "100%",
-    gap: 20,
-  },
-  modal: {
-    borderRadius: 14,
-    backgroundColor: palette.subScreenPopupBg,
-    padding: 12,
-    alignItems: "center",
-  },
-  crossIconWrapper: {
-    width: "100%",
-    position: "relative",
-    alignItems: "center",
-  },
-  crossIcon: {
-    position: "absolute",
-    left: 0,
-  },
-  modalTitle: {
-    fontSize: 20,
-    lineHeight: 27,
-    fontFamily: fonts.semibold,
-    color: palette.mainText,
-  },
-  modalContent: {
-    paddingHorizontal: "6%",
-    marginTop: 16,
-    gap: 20,
-  },
-  row: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 13,
-  },
-  empty: {
-    width: 16,
-  },
-  dash: {
-    width: 16,
-    height: 3,
-    borderRadius: 50,
-    backgroundColor: palette.dashBg,
-  },
-  flex: {
-    flex: 1,
-  },
-  dropdownStyle: {
-    height: 27,
-    backgroundColor: palette.dateAndListSelectsPopupBg,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-    lineHeight: 16,
-    fontFamily: fonts.semibold,
-  },
-  btnModal: {
-    flex: 1,
-    borderRadius: 8,
-    height: 27,
-  },
-  btnModalText: {
-    color: palette.mainText,
-    fontSize: 16,
-    lineHeight: 21,
-    fontFamily: fonts.semibold,
-  },
-  subModalTitle: {
-    color: palette.mainText,
-    fontSize: 16,
-    lineHeight: 21,
-    fontFamily: fonts.bold,
-  },
-  btnModalTextBold: {
-    color: palette.mainText,
-    fontSize: 16,
-    lineHeight: 21,
-    fontFamily: fonts.bold,
   },
 });

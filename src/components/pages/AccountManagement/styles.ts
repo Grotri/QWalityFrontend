@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   managerWrapper: {
     flex: 1,
     marginTop: 8,
+    marginBottom: 28,
     paddingHorizontal: 34,
     width: "100%",
     alignItems: "center",
@@ -33,36 +34,47 @@ export const styles = StyleSheet.create({
     backgroundColor: palette.folderOrHighlightedSectionBg,
     borderRadius: 10,
     padding: 8,
+    gap: 2,
+  },
+  inputWrapperStyles: {
+    width: "64%",
+    height: 22,
   },
   input: {
     backgroundColor: palette.textFieldInFolderBg,
     borderRadius: 6,
-    paddingHorizontal: 8,
-    height: 20,
+    paddingHorizontal: 6,
+    height: 22,
     color: palette.mainText,
     fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 21,
     marginBottom: 4,
-    width: "60%",
+    width: "100%",
+    paddingRight: 36,
   },
   inputLabel: {
     color: palette.labelTransparentText,
-    fontSize: 12,
-    lineHeight: 16,
+  },
+  errorStyles: {
+    lineHeight: 12,
   },
   dropdownWrapper: {
-    width: "60%",
-  },
-  dropdownLabel: {
-    color: palette.labelTransparentText,
-    fontSize: 12,
-    lineHeight: 16,
+    width: "64%",
   },
   dropdown: {
     backgroundColor: palette.textFieldInFolderBg,
-    height: 20,
+    height: 22,
+    borderRadius: 6,
+    paddingHorizontal: 6,
+  },
+  selectedTextStyle: {
+    fontFamily: fonts.semibold,
+    fontSize: 16,
+    lineHeight: 21,
   },
   itemContainerStyle: {
-    paddingVertical: 8,
+    paddingVertical: 6,
   },
   btns: {
     width: "100%",
@@ -71,14 +83,19 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   btn: {
-    width: "28%",
-    height: 20,
+    width: "30%",
+    height: 22,
     borderRadius: 6,
   },
   btnText: {
-    color: palette.subTextMainScreenPopup,
-    fontSize: 12,
+    color: palette.mainText,
+    fontFamily: fonts.semibold,
+  },
+  noAccounts: {
+    marginTop: 28,
+    fontSize: 16,
     lineHeight: 16,
     fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
   },
 });

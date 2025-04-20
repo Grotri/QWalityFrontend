@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 import { IInput } from "./types";
-import { Text, TextInput, View } from "react-native";
+import { Platform, Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 import { palette } from "../../../constants/palette";
+import * as NavigationBar from "expo-navigation-bar";
 
 const Input: FC<IInput> = ({
   value,
@@ -10,7 +11,9 @@ const Input: FC<IInput> = ({
   customStyles,
   customInputStyles,
   customLabelStyles,
+  customInputWrapperStyles,
   onChangeText,
+  onPress,
   placeholder,
   keyboardType = "default",
   keyboardAppearance = "default",
@@ -19,14 +22,23 @@ const Input: FC<IInput> = ({
   secureTextEntry = false,
   placeholderTextColor,
   rightIcon,
+  cursorColor = palette.black,
+  errorText,
+  errorStyles,
 }) => {
   return (
     <View style={[styles.container, customStyles]}>
       {label && <Text style={[styles.label, customLabelStyles]}>{label}</Text>}
-      <View>
+      <View style={customInputWrapperStyles}>
         <TextInput
-          style={[styles.input, customInputStyles]}
+          style={[
+            styles.input,
+            errorText && styles.inputError,
+            !!rightIcon && styles.inputIcon,
+            customInputStyles,
+          ]}
           onChangeText={onChangeText}
+          onPress={onPress}
           value={value}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
@@ -34,11 +46,19 @@ const Input: FC<IInput> = ({
           keyboardAppearance={keyboardAppearance}
           inputMode={inputMode}
           maxLength={maxLength}
-          cursorColor={palette.black}
+          cursorColor={cursorColor}
           secureTextEntry={secureTextEntry}
+          onKeyPress={() => {
+            if (Platform.OS === "android") {
+              NavigationBar.setVisibilityAsync("hidden");
+            }
+          }}
         />
         {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
       </View>
+      {errorText && (
+        <Text style={[styles.error, errorStyles]}>{errorText}</Text>
+      )}
     </View>
   );
 };

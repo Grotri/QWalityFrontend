@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Keyboard, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
 import Input from "../../atoms/Input";
@@ -7,26 +7,29 @@ import Button from "../../atoms/Button";
 import { CheckIcon } from "../../../../assets/icons";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
 import useAuthStore from "../../../hooks/useAuthStore";
-import uuid from "react-native-uuid";
+import InputPassword from "../../atoms/InputPassword";
 
 const Registration = () => {
   const { navigate } = useAuthNavigation();
-  const { setUser } = useAuthStore();
+  const {
+    errors,
+    clearErrors,
+    setErrorsField,
+    user,
+    setUserField,
+    clearUser,
+    register,
+  } = useAuthStore();
 
-  const [inn, setInn] = useState<number | null>();
-  const [email, setEmail] = useState<string>("");
-  const [code, setCode] = useState<number | null>();
-  const [password, setPassword] = useState<string>("");
+  const [code, setCode] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const register = () => {
-    setUser({
-      id: uuid.v4(),
-      inn: inn ? inn.toString() : "",
-      email,
-      password,
-    });
-  };
+  useEffect(() => {
+    clearUser();
+    setCode("");
+    setIsChecked(false);
+    clearErrors();
+  }, []);
 
   return (
     <GradientPageTemplate
@@ -38,57 +41,87 @@ const Registration = () => {
         <View style={styles.fields}>
           <Input
             label="ИНН"
-            value={inn?.toString()}
-            onChangeText={(text) => setInn(text === "" ? null : +text)}
+            value={user.inn}
+            onChangeText={(inn) => {
+              setUserField("inn", inn);
+              setErrorsField("inn", "");
+            }}
             inputMode="numeric"
             maxLength={12}
             keyboardType="numeric"
+            errorText={errors.inn}
           />
           <Input
             label="Почта"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
+            value={user.email}
+            onChangeText={(email) => {
+              setUserField("email", email);
+              setErrorsField("email", "");
+            }}
             inputMode="email"
             maxLength={254}
+            errorText={errors.email}
           />
           <View style={styles.confirmationWrapper}>
             <Input
               label="Код подтверждения"
-              value={code?.toString()}
-              onChangeText={(text) => setCode(text === "" ? null : +text)}
+              value={code}
+              onChangeText={(code) => {
+                setCode(code);
+                setErrorsField("code", "");
+              }}
               inputMode="numeric"
               keyboardType="numeric"
               maxLength={6}
               customStyles={styles.confirmationInput}
+              errorText={errors.code}
             />
             <Button style={styles.codeBtn} color="blueTransparent">
               <Text style={styles.codeBtnText}>Отправить код</Text>
             </Button>
           </View>
-          <Input
+          <InputPassword
             label="Пароль"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            inputMode="text"
-            secureTextEntry
+            value={user.password}
+            onChangeText={(password) => {
+              setUserField("password", password);
+              setErrorsField("password", "");
+            }}
+            errorText={errors.password}
           />
         </View>
         <Button
           color="welcomeBrightBlue"
           style={styles.createBtn}
-          onPress={register}
+          onPress={() => {
+            Keyboard.dismiss();
+            register(code, isChecked);
+          }}
         >
           <Text style={styles.createBtnText}>Создать аккаунт</Text>
         </Button>
         <View style={styles.checkboxWrapper}>
           <Pressable
-            onPress={() => setIsChecked(!isChecked)}
+            onPress={() => {
+              setIsChecked(!isChecked);
+              setErrorsField("agreement", "");
+            }}
             style={styles.checkbox}
           >
-            <View style={styles.checkboxContainer}>
+            <View
+              style={[
+                styles.checkboxContainer,
+                !!errors.agreement && styles.checkboxContainerError,
+              ]}
+            >
               {isChecked && <CheckIcon />}
             </View>
-            <Text style={styles.checkboxText}>
+            <Text
+              style={[
+                styles.checkboxText,
+                !!errors.agreement && styles.checkboxTextError,
+              ]}
+            >
               Я принимаю{" "}
               <Text style={styles.checkboxTextUnderlined}>
                 условия пользовательского соглашения

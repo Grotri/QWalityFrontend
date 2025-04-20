@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { menuItems } from "../../../constants/menuItems";
 import { Pressable, Text, View } from "react-native";
-import MenuItem from "../../atoms/MenuItem";
+import MenuItem from "../../molecules/MenuItem";
 import { IMenu, IMenuItem } from "./types";
 import { styles } from "./styles";
 import { LogoIcon, MenuProfileIcon } from "../../../../assets/icons";

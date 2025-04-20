@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   cameraNameWrapper: {
-    marginRight: 8,
+    width: "44%",
   },
   cameraName: {
     flexDirection: "row",
@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   cameraTitle: {
+    width: "72%",
     color: palette.mainText,
     fontSize: 16,
     lineHeight: 21,
@@ -94,6 +95,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     color: palette.mainText,
   },
+  activeOption: {
+    color: palette.brightBlue,
+  },
   horizontalLine: {
     height: 2,
     width: "80%",
@@ -103,5 +107,12 @@ export const styles = StyleSheet.create({
   },
   defects: {
     gap: 12,
+  },
+  noDefects: {
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
+    alignSelf: "center",
   },
 });

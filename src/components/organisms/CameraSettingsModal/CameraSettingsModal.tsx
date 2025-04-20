@@ -9,55 +9,77 @@ import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import { ICamera } from "../../pages/Main/types";
 import { initialCamera } from "../../../constants/cameras";
+import { palette } from "../../../constants/palette";
+import useCamerasStore from "../../../hooks/useCamerasStore";
 
 const CameraSettingsModal: FC<ICameraSettingsModal> = ({
-  isOpen,
-  setIsOpen,
   camera,
+  setCamera,
+  isHistoryModalOpen,
+  setIsHistoryModalOpen,
 }) => {
+  const {
+    errors,
+    setErrorsField,
+    editCamera,
+    refreshErrors,
+    deleteCamera,
+    deleteHistory,
+  } = useCamerasStore();
   const [cameraInfo, setCameraInfo] = useState<ICamera>({ ...initialCamera });
   const { title, link, online } = cameraInfo;
 
-  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<boolean>(false);
-  const [isCameraModalOpen, setIsCameraModalOpen] = useState<boolean>(false);
-
   const openHistoryModal = () => {
     setIsHistoryModalOpen(true);
-    if (isCameraModalOpen) {
-      setIsCameraModalOpen(false);
-    }
   };
 
   const openCameraModal = () => {
-    setIsCameraModalOpen(true);
-    if (isHistoryModalOpen) {
-      setIsHistoryModalOpen(false);
-    }
+    setIsHistoryModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsHistoryModalOpen(null);
+    setCamera(null);
   };
 
   useEffect(() => {
     if (camera) {
-      setCameraInfo(camera);
+      refreshErrors();
+      setCameraInfo({ ...camera });
     }
   }, [camera]);
 
   return (
-    <Modal isVisible={isOpen} setIsVisible={setIsOpen}>
+    <Modal isVisible={!!camera} onBackdropPress={closeModal}>
       <View style={styles.modals}>
         <View style={styles.modal}>
           <View style={styles.crossIconWrapper}>
-            <CrossIcon
-              style={styles.crossIcon}
-              onClick={() => setIsOpen(false)}
+            <CrossIcon style={styles.crossIcon} onClick={closeModal} />
+            <Input
+              value={title}
+              onChangeText={(title) => {
+                setCameraInfo({ ...cameraInfo, title });
+                setErrorsField("name", "");
+              }}
+              customStyles={styles.customTitleStyles}
+              customInputStyles={styles.customTitleInputStyles}
+              cursorColor={palette.subTextMainScreenPopup}
+              maxLength={15}
+              errorText={errors.name}
             />
-            <Text style={styles.modalTitle}>{title}</Text>
           </View>
           <Input
             label="Ссылка на камеру"
             value={link}
+            onChangeText={(link) => {
+              setCameraInfo({ ...cameraInfo, link });
+              setErrorsField("link", "");
+            }}
             customLabelStyles={styles.customLabelStyles}
             customStyles={styles.customStyles}
             customInputStyles={styles.customInputStyles}
+            cursorColor={palette.subTextMainScreenPopup}
+            errorText={errors.link}
           />
           <View style={styles.stateWrapper}>
             <Text style={styles.stateText}>Состояние</Text>
@@ -67,12 +89,18 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
                 labelStyle={styles.radioLabelStyle}
                 radioWrapperStyle={styles.radioWrapperStyle}
                 isChecked={online}
+                setIsChecked={() =>
+                  setCameraInfo({ ...cameraInfo, online: true })
+                }
               />
               <Radio
                 label="Offline"
                 labelStyle={styles.radioLabelStyle}
                 radioWrapperStyle={styles.radioWrapperStyle}
                 isChecked={!online}
+                setIsChecked={() =>
+                  setCameraInfo({ ...cameraInfo, online: false })
+                }
               />
             </View>
           </View>
@@ -88,54 +116,42 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
             <Button
               style={styles.fullBtn}
               color="modal"
-              onPress={() => setIsOpen(false)}
+              onPress={() => {
+                editCamera(cameraInfo, setCamera);
+                setIsHistoryModalOpen(null);
+              }}
             >
               <Text style={styles.fullBtnText}>Сохранить</Text>
             </Button>
           </View>
         </View>
-        {isHistoryModalOpen && (
+        {isHistoryModalOpen !== null && (
           <View style={styles.modal}>
             <Text style={styles.smallModalTitle}>
-              Вы точно хотите удалить историю?
+              Вы точно хотите удалить{" "}
+              {isHistoryModalOpen ? "историю" : "камеру"}?
             </Text>
             <View style={styles.smallModalBtns}>
               <Button
                 style={styles.btn}
                 color="red"
-                onPress={() => setIsOpen(false)}
+                onPress={() => {
+                  if (!isHistoryModalOpen) {
+                    deleteCamera(cameraInfo);
+                  } else {
+                    deleteHistory(cameraInfo.id);
+                  }
+                  closeModal();
+                }}
               >
-                <Text style={styles.btnText}>Да</Text>
+                <Text style={styles.btnBolderText}>Да</Text>
               </Button>
               <Button
                 style={styles.btn}
                 color="modal"
-                onPress={() => setIsHistoryModalOpen(false)}
+                onPress={() => setIsHistoryModalOpen(null)}
               >
-                <Text style={styles.btnText}>Нет</Text>
-              </Button>
-            </View>
-          </View>
-        )}
-        {isCameraModalOpen && (
-          <View style={styles.modal}>
-            <Text style={styles.smallModalTitle}>
-              Вы точно хотите удалить камеру?
-            </Text>
-            <View style={styles.smallModalBtns}>
-              <Button
-                style={styles.btn}
-                color="red"
-                onPress={() => setIsOpen(false)}
-              >
-                <Text style={styles.btnText}>Да</Text>
-              </Button>
-              <Button
-                style={styles.btn}
-                color="modal"
-                onPress={() => setIsCameraModalOpen(false)}
-              >
-                <Text style={styles.btnText}>Нет</Text>
+                <Text style={styles.btnBolderText}>Нет</Text>
               </Button>
             </View>
           </View>

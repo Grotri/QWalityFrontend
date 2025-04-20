@@ -1,7 +1,14 @@
 import React, { FC, useState } from "react";
 import { IDatePicker } from "./types";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Pressable, Text, View } from "react-native";
+import {
+  Modal,
+  Platform,
+  Pressable,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { styles } from "./styles";
 import { formatDate } from "../../../helpers/formatDate";
 
@@ -17,8 +24,19 @@ const DatePicker: FC<IDatePicker> = ({ date, setDate, datePickerStyle }) => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onIOSChange = (event: any, selectedDate: any) => {
+    if (event.type === "set") {
+      setDate(selectedDate);
+    }
+  };
+
   const showDatepicker = () => {
     setShow(true);
+  };
+
+  const closeDatepicker = () => {
+    setShow(false);
   };
 
   return (
@@ -30,15 +48,32 @@ const DatePicker: FC<IDatePicker> = ({ date, setDate, datePickerStyle }) => {
           </Text>
         </View>
       </Pressable>
-      {show && (
-        <DateTimePicker
-          value={date || defaultDate}
-          mode="date"
-          is24Hour={true}
-          onChange={onChange}
-          locale="ru"
-        />
-      )}
+      {show &&
+        (Platform.OS === "android" ? (
+          <DateTimePicker
+            value={date || defaultDate}
+            mode="date"
+            display="default"
+            is24Hour={true}
+            onChange={onChange}
+            locale="ru"
+          />
+        ) : (
+          <Modal transparent visible={show} animationType="slide">
+            <TouchableWithoutFeedback onPress={closeDatepicker}>
+              <View style={styles.modalOverlay} />
+            </TouchableWithoutFeedback>
+            <View style={styles.modalContent}>
+              <DateTimePicker
+                value={date || defaultDate}
+                mode="date"
+                display="spinner"
+                onChange={onIOSChange}
+                locale="ru"
+              />
+            </View>
+          </Modal>
+        ))}
     </View>
   );
 };

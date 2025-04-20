@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from "react";
+import React, { PropsWithChildren, forwardRef, Ref } from "react";
 import {
   View,
   ScrollView,
@@ -12,32 +12,43 @@ import { IGradientPageTemplate } from "./types";
 import { styles } from "./styles";
 import Header from "../../molecules/Header";
 
-const GradientPageTemplate: FC<PropsWithChildren & IGradientPageTemplate> = ({
-  children,
-  mustScroll = true,
-  headerText,
-  onHeaderClick,
-  underlined = false,
-}) => (
-  <SafeAreaView style={styles.container}>
-    <RadialGradientBg screenWidth={screenWidth} screenHeight={screenHeight} />
-    {headerText && (
-      <Header
-        headerText={headerText}
-        onClick={onHeaderClick}
-        underlined={underlined}
-      />
-    )}
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      {mustScroll ? (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={styles.scrollContainer}>{children}</View>
+const GradientPageTemplate = forwardRef(
+  (
+    {
+      children,
+      mustScroll = true,
+      headerText,
+      onHeaderClick,
+      underlined = false,
+    }: PropsWithChildren<IGradientPageTemplate>,
+    scrollRef: Ref<ScrollView>
+  ) => (
+    <SafeAreaView style={styles.container}>
+      <RadialGradientBg screenWidth={screenWidth} screenHeight={screenHeight} />
+      {headerText && (
+        <Header
+          headerText={headerText}
+          onClick={onHeaderClick}
+          underlined={underlined}
+        />
       )}
-    </TouchableWithoutFeedback>
-  </SafeAreaView>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {mustScroll ? (
+          <ScrollView
+            ref={scrollRef}
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
+        ) : (
+          <View style={styles.scrollContainer}>{children}</View>
+        )}
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
+  )
 );
+
+GradientPageTemplate.displayName = "GradientPageTemplate";
 
 export default GradientPageTemplate;

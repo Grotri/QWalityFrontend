@@ -5,7 +5,6 @@ import { fonts } from "../../../constants/fonts";
 export const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    paddingBottom: 28,
     alignItems: "center",
   },
   flatWrapper: {
@@ -18,6 +17,7 @@ export const styles = StyleSheet.create({
     zIndex: 2,
     top: "50%",
     transform: [{ translateY: "-50%" }],
+    paddingVertical: 12,
   },
   rightIcon: {
     position: "absolute",
@@ -25,12 +25,13 @@ export const styles = StyleSheet.create({
     top: "50%",
     transform: [{ translateY: "-50%" }, { scaleX: -1 }],
     zIndex: 2,
+    paddingVertical: 12,
   },
   dots: {
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-    marginBottom: "7%",
+    marginBottom: 28,
   },
   dot: {
     backgroundColor: palette.welcomeScreenScrollNonActivePoint,

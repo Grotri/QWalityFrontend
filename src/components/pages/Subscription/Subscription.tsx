@@ -1,13 +1,12 @@
 import React, { useRef, useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
 import { styles } from "./styles";
 import SliderCard from "../../organisms/SliderCard";
-import { slidersInfo } from "./types";
-import Button from "../../atoms/Button";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
+import { slidersInfo } from "../../../constants/slider";
 
 const Subscription = () => {
   const { setUserField } = useAuthStore();
@@ -74,9 +73,6 @@ const Subscription = () => {
             />
           ))}
         </View>
-        <Button color="welcomeBlue" style={styles.cancelBtn}>
-          <Text style={styles.cancelBtnText}>Отменить подписку</Text>
-        </Button>
       </View>
     </GradientPageTemplate>
   );

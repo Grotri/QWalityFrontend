@@ -36,23 +36,15 @@ export const styles = StyleSheet.create({
     paddingRight: 28,
     color: palette.mainText,
   },
-  plusBtn: {
+  emptyList: {
+    backgroundColor: palette.subBg,
+    padding: 12,
     alignItems: "center",
-    backgroundColor: palette.bg,
-    padding: 4,
   },
-  circle: {
-    height: 52,
-    width: 52,
-    backgroundColor: palette.edgeBtnBg,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  plusBtnText: {
-    color: palette.mainText,
-    lineHeight: 19,
-    maxWidth: 72,
-    textAlign: "center",
+  emptyText: {
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
   },
 });

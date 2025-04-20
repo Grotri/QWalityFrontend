@@ -4,4 +4,5 @@ export const initialDefect: IDefect = {
   id: "",
   name: "",
   date: "",
+  isDeleted: false,
 };

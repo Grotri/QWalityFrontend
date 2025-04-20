@@ -58,6 +58,9 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     height: 31,
     width: "100%",
+    alignItems: "center",
+    textAlign: "center",
+    justifyContent: "center",
   },
   btnText: {
     color: palette.mainText,

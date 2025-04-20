@@ -39,23 +39,12 @@ export const styles = StyleSheet.create({
     color: palette.mainText,
     fontFamily: fonts.semibold,
   },
-  support: {
-    alignItems: "center",
-    backgroundColor: palette.bg,
-    padding: 4,
-  },
-  circle: {
-    height: 52,
-    width: 52,
-    backgroundColor: palette.edgeBtnBg,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  supportText: {
-    color: palette.mainText,
-    lineHeight: 19,
-    maxWidth: 90,
-    textAlign: "center",
+  noQuestions: {
+    alignSelf: "center",
+    marginTop: 28,
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
   },
 });

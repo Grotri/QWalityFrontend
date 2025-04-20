@@ -9,6 +9,8 @@ export const baseColors = {
   red: "#EC4F4F",
   blueTransparent: "rgba(21, 116, 224, 0.6)",
   brightBlueTransparent: "rgba(0, 200, 255, 0.85)",
+  error: "rgb(255, 0, 0)",
+  info: "rgb(255, 136, 0)",
 };
 
 export const palette = {
@@ -70,4 +72,5 @@ export const palette = {
   dashBg: "#B5CAFF",
   modalBtn: "#4B74DD",
   trashItemImageBg: "#BCBCBC",
+  datePickerBg: "rgba(0, 0, 0, 0.2)",
 };

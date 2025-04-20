@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
   customInputStyles: {
     backgroundColor: palette.textFieldBgMainScreenPopup,
     color: palette.mainText,
+    fontFamily: fonts.semibold,
   },
   customLabelStyles: {
     color: palette.subTextMainScreenPopup,
@@ -44,7 +45,7 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginTop: 18,
     borderRadius: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     paddingBottom: 2,
   },
   btnText: {

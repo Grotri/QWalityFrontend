@@ -7,6 +7,7 @@ export { default as ArrowTopIcon } from "./ArrowTopIcon";
 export { default as CameraIcon } from "./CameraIcon";
 export { default as CheckIcon } from "./CheckIcon";
 export { default as CrossIcon } from "./CrossIcon";
+export { default as EyeIcon } from "./EyeIcon";
 export { default as FilterIcon } from "./FilterIcon";
 export { default as HelpIcon } from "./HelpIcon";
 export { default as LogoIcon } from "./LogoIcon";

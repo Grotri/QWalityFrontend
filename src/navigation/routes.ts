@@ -8,10 +8,15 @@ import Main from "../components/pages/Main";
 import Profile from "../components/pages/Profile";
 import Registration from "../components/pages/Registration";
 import Settings from "../components/pages/Settings";
+import SubscriptionChange from "../components/pages/SubscriptionChange";
 import TrashBin from "../components/pages/TrashBin";
 import { IAuthRoute, IMainRoute } from "./types";
 
 export const mainRoutes: IMainRoute[] = [
+  {
+    name: "Main",
+    component: Main,
+  },
   {
     name: "Profile",
     component: Profile,
@@ -29,16 +34,16 @@ export const mainRoutes: IMainRoute[] = [
     component: FAQ,
   },
   {
-    name: "Main",
-    component: Main,
-  },
-  {
     name: "Settings",
     component: Settings,
   },
   {
     name: "TrashBin",
     component: TrashBin,
+  },
+  {
+    name: "SubscriptionChange",
+    component: SubscriptionChange,
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
@@ -7,21 +7,14 @@ import Accordion from "react-native-collapsible/Accordion";
 import { questions } from "../../../constants/questions";
 import { IQuestionSection } from "./types";
 import { ArrowAccordionIcon, MessageIcon } from "../../../../assets/icons";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import IconRotated from "../../atoms/IconRotated";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
 
 const FAQ = () => {
   const { navigate } = useMainNavigation();
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const rotations = useRef(questions.map(() => useSharedValue(0))).current;
 
   const handleSectionChange = (sections: number[]) => {
-    const newActiveIndex = sections[0];
-
-    rotations.forEach((rotation, index) => {
-      rotation.value = withTiming(newActiveIndex === index ? 1 : 0);
-    });
-
     setActiveSections(sections);
   };
 
@@ -30,7 +23,6 @@ const FAQ = () => {
       <Text style={styles.headerText}>{question.title}</Text>
       <IconRotated
         icon={<ArrowAccordionIcon />}
-        rotation={rotations[index]}
         isActive={activeSections.includes(index)}
       />
     </View>
@@ -49,27 +41,29 @@ const FAQ = () => {
       headerText="Помощь"
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
       bottomIcon={
-        <Pressable
-          style={styles.support}
+        <BottomFixIcon
+          icon={<MessageIcon />}
+          text="Обратиться в поддержку"
           onPress={() => alert("Обратиться в поддержку пока невозможно.")}
-        >
-          <View style={styles.circle}>
-            <MessageIcon />
-          </View>
-          <Text style={styles.supportText}>Обратиться в поддержку</Text>
-        </Pressable>
+          marginRight={12}
+          marginBottom={28}
+        />
       }
     >
       <View style={styles.managerWrapper}>
-        <Accordion
-          containerStyle={styles.accordion}
-          sections={questions}
-          activeSections={activeSections}
-          renderHeader={renderHeader}
-          renderContent={renderContent}
-          onChange={handleSectionChange}
-          touchableComponent={Pressable}
-        />
+        {questions.length > 0 ? (
+          <Accordion
+            containerStyle={styles.accordion}
+            sections={questions}
+            activeSections={activeSections}
+            renderHeader={renderHeader}
+            renderContent={renderContent}
+            onChange={handleSectionChange}
+            touchableComponent={Pressable}
+          />
+        ) : (
+          <Text style={styles.noQuestions}>Здесь пусто</Text>
+        )}
       </View>
     </PageTemplate>
   );

@@ -10,6 +10,8 @@ import Button from "../../atoms/Button";
 import Modal from "../../atoms/Modal";
 import useAuthStore from "../../../hooks/useAuthStore";
 import Input from "../../atoms/Input";
+import { EErrors } from "../../../constants/errors";
+import { showErrorToast } from "../../../helpers/toast";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
@@ -22,6 +24,7 @@ const Settings = () => {
   const [isExitModalOpen, setIsExitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const closeDD = () => {
     if (isFirstDDOpen) {
@@ -32,11 +35,27 @@ const Settings = () => {
     }
   };
 
+  const deleteAccount = () => {
+    if (!code.trim()) {
+      setError(EErrors.required);
+      showErrorToast("Сначала введите код");
+    } else {
+      logout();
+    }
+  };
+
   useEffect(() => {
     if (isFirstDDOpen && isSecondDDOpen) {
       setIsSecondDDOpen(false);
     }
   }, [isFirstDDOpen]);
+
+  useEffect(() => {
+    if (!isDeleteModalOpen) {
+      setCode("");
+      setError("");
+    }
+  }, [isDeleteModalOpen]);
 
   return (
     <PageTemplate
@@ -120,16 +139,22 @@ const Settings = () => {
               inputMode="numeric"
               label="Код подтверждения"
               value={code}
-              onChangeText={setCode}
+              onChangeText={(code) => {
+                setCode(code);
+                setError("");
+              }}
+              customStyles={styles.customStyles}
               customInputStyles={styles.customInputStyles}
               customLabelStyles={styles.customLabelStyles}
+              errorText={error}
+              maxLength={6}
             />
-            <Button style={styles.modalBtn} color="blue">
+            <Button style={styles.codeBtn} color="blue">
               <Text style={styles.modalBtnCodeText}>Отправить код</Text>
             </Button>
           </View>
           <View style={styles.modalBtns}>
-            <Button style={styles.modalBtn} color="red" onPress={logout}>
+            <Button style={styles.modalBtn} color="red" onPress={deleteAccount}>
               <Text style={styles.modalBtnText}>Удалить</Text>
             </Button>
             <Button

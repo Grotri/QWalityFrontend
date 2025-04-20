@@ -6,6 +6,8 @@ import { styles } from "./styles";
 import { IDefect } from "../../pages/Main/types";
 import { initialDefect } from "../../../constants/defects";
 import Button from "../../atoms/Button";
+import { showSuccessToast } from "../../../helpers/toast";
+import { convertISODate } from "../../../helpers/formatDate";
 
 const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
   const [defectInfo, setDefectInfo] = useState<IDefect>({ ...initialDefect });
@@ -18,16 +20,23 @@ const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
   }, [defect]);
 
   return (
-    <Modal isVisible={!!defect} setIsVisible={() => {}} onPress={onClose}>
+    <Modal isVisible={!!defect} onBackdropPress={onClose}>
       <View style={styles.modal}>
         <View style={styles.mainInfo}>
           <Text style={styles.title}>Хотите скачать изображение?</Text>
           <Text style={styles.name}>
-            Дефект ({name}) {date}
+            Дефект ({name}) {convertISODate(date)}
           </Text>
         </View>
         <View style={styles.btns}>
-          <Button color="modal" style={styles.btn} onPress={onClose}>
+          <Button
+            color="modal"
+            style={styles.btn}
+            onPress={() => {
+              onClose();
+              showSuccessToast("Изображение скачано");
+            }}
+          >
             <Text style={styles.btnText}>Да</Text>
           </Button>
           <Button color="modal" style={styles.btn} onPress={onClose}>

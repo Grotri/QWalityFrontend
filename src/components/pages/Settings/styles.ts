@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.semibold,
   },
   modal: {
-    width: "84%",
+    width: "90%",
     paddingVertical: 16,
     paddingHorizontal: 30,
     borderRadius: 14,
@@ -79,8 +79,16 @@ export const styles = StyleSheet.create({
   confirmationWrapper: {
     flexDirection: "row",
     gap: 14,
-    alignItems: "flex-end",
     marginTop: -12,
+  },
+  customStyles: {
+    flex: 1,
+  },
+  codeBtn: {
+    width: "44%",
+    height: 27,
+    borderRadius: 8,
+    marginTop: 21,
   },
   modalBtnCodeText: {
     color: palette.mainText,
@@ -90,6 +98,7 @@ export const styles = StyleSheet.create({
   },
   customInputStyles: {
     height: 27,
+    fontFamily: fonts.semibold,
   },
   customLabelStyles: {
     color: palette.codeTransparentText,
