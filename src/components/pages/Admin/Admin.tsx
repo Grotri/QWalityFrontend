@@ -19,10 +19,11 @@ import uuid from "react-native-uuid";
 import Slider from "../../atoms/Slider";
 import GetReportModal from "../../organisms/GetReportModal";
 import InputPassword from "../../atoms/InputPassword";
+import { screenHeight } from "../../../constants/screenSize";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
-  const { addAccount } = useAccountStore();
+  const { accounts, addAccount } = useAccountStore();
   const [name, setName] = useState<string>("");
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -75,7 +76,7 @@ const Admin = () => {
 
   return (
     <PageTemplate
-      mustScroll={false}
+      mustScroll={screenHeight < 740}
       onTouchablePress={closeDropdowns}
       headerText="Админ панель"
       underlined
@@ -163,7 +164,7 @@ const Admin = () => {
           >
             <Text style={styles.btnText}>Управлять аккаунтами</Text>
           </Button>
-          <Text style={styles.statistics}>3/15 аккаунтов</Text>
+          <Text style={styles.statistics}>{accounts.length}/15 аккаунтов</Text>
         </View>
         <GetReportModal
           isOpen={isMainModalOpened}

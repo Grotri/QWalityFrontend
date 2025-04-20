@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     color: palette.mainText,
     lineHeight: 16,
     fontSize: 12,
-    maxWidth: 74,
+    maxWidth: 80,
     fontFamily: fonts.semibold,
     textAlign: "center",
   },

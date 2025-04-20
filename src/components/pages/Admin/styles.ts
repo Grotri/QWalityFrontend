@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 54,
     width: "100%",
     alignItems: "center",
+    paddingBottom: 28,
   },
   subTitle: {
     color: palette.mainText,

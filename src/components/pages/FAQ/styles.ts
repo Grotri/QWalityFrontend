@@ -39,4 +39,12 @@ export const styles = StyleSheet.create({
     color: palette.mainText,
     fontFamily: fonts.semibold,
   },
+  noQuestions: {
+    alignSelf: "center",
+    marginTop: 28,
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
+  },
 });

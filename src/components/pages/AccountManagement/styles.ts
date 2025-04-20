@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
   managerWrapper: {
     flex: 1,
     marginTop: 8,
+    marginBottom: 28,
     paddingHorizontal: 34,
     width: "100%",
     alignItems: "center",
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create({
     gap: 2,
   },
   inputWrapperStyles: {
-    width: "60%",
+    width: "64%",
     height: 22,
   },
   input: {
@@ -59,7 +60,7 @@ export const styles = StyleSheet.create({
     lineHeight: 12,
   },
   dropdownWrapper: {
-    width: "60%",
+    width: "64%",
   },
   dropdown: {
     backgroundColor: palette.textFieldInFolderBg,
@@ -89,5 +90,12 @@ export const styles = StyleSheet.create({
   btnText: {
     color: palette.mainText,
     fontFamily: fonts.semibold,
+  },
+  noAccounts: {
+    marginTop: 28,
+    fontSize: 16,
+    lineHeight: 16,
+    fontFamily: fonts.semibold,
+    color: palette.sectionTransparentText,
   },
 });

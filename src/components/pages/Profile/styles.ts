@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
     paddingHorizontal: 28,
+    paddingBottom: 28,
   },
   card: {
     backgroundColor: palette.folderOrHighlightedSectionBg,

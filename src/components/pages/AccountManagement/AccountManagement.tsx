@@ -166,15 +166,21 @@ const AccountManagement = () => {
     >
       <TouchableWithoutFeedback onPress={closeDd}>
         <View style={styles.managerWrapper}>
-          <Accordion
-            containerStyle={styles.accordion}
-            sections={sections}
-            activeSections={activeSections}
-            renderHeader={renderHeader}
-            renderContent={renderContent}
-            onChange={handleSectionChange}
-            touchableComponent={Pressable}
-          />
+          {accounts.length > 0 ? (
+            <Accordion
+              containerStyle={styles.accordion}
+              sections={sections}
+              activeSections={activeSections}
+              renderHeader={renderHeader}
+              renderContent={renderContent}
+              onChange={handleSectionChange}
+              touchableComponent={Pressable}
+            />
+          ) : (
+            <Text style={styles.noAccounts}>
+              У вас нет управляемых аккаунтов
+            </Text>
+          )}
         </View>
       </TouchableWithoutFeedback>
     </PageTemplate>

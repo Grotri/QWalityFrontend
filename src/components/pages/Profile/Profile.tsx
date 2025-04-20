@@ -12,6 +12,7 @@ import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern } from "../../../constants/patterns";
 import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
+import { screenHeight } from "../../../constants/screenSize";
 
 const Profile = () => {
   const { navigate } = useMainNavigation();
@@ -63,7 +64,7 @@ const Profile = () => {
 
   return (
     <PageTemplate
-      mustScroll={false}
+      mustScroll={screenHeight < 700 && isEditMode}
       headerText="Профиль"
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
     >

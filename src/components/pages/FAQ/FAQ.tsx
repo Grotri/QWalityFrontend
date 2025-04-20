@@ -51,15 +51,19 @@ const FAQ = () => {
       }
     >
       <View style={styles.managerWrapper}>
-        <Accordion
-          containerStyle={styles.accordion}
-          sections={questions}
-          activeSections={activeSections}
-          renderHeader={renderHeader}
-          renderContent={renderContent}
-          onChange={handleSectionChange}
-          touchableComponent={Pressable}
-        />
+        {questions.length > 0 ? (
+          <Accordion
+            containerStyle={styles.accordion}
+            sections={questions}
+            activeSections={activeSections}
+            renderHeader={renderHeader}
+            renderContent={renderContent}
+            onChange={handleSectionChange}
+            touchableComponent={Pressable}
+          />
+        ) : (
+          <Text style={styles.noQuestions}>Здесь пусто</Text>
+        )}
       </View>
     </PageTemplate>
   );

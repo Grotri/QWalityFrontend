@@ -61,6 +61,7 @@ const Dropdown: FC<IDropdown> = ({
         flatListProps={{
           scrollEnabled: false,
         }}
+        dropDownDirection="BOTTOM"
       />
     </View>
   );

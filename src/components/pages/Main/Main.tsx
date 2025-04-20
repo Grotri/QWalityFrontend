@@ -60,19 +60,21 @@ const Main = () => {
     <View style={styles.header}>
       <View style={styles.headerSearch}>
         <Text style={styles.title}>{section.title}</Text>
-        <Input
-          placeholder="Поиск..."
-          placeholderTextColor={palette.mainText}
-          value={index === 0 ? onlineSearch : offlineSearch}
-          onChangeText={(text) =>
-            index === 0 ? setOnlineSearch(text) : setOfflineSearch(text)
-          }
-          customStyles={styles.input}
-          customInputStyles={styles.customInputStyles}
-          rightIcon={<SearchIcon />}
-          cursorColor={palette.subTextMainScreenPopup}
-          onPress={() => setActiveSections([index === 0 ? 0 : 1])}
-        />
+        {section.cameras.length > 0 && (
+          <Input
+            placeholder="Поиск..."
+            placeholderTextColor={palette.mainText}
+            value={index === 0 ? onlineSearch : offlineSearch}
+            onChangeText={(text) =>
+              index === 0 ? setOnlineSearch(text) : setOfflineSearch(text)
+            }
+            customStyles={styles.input}
+            customInputStyles={styles.customInputStyles}
+            rightIcon={<SearchIcon />}
+            cursorColor={palette.subTextMainScreenPopup}
+            onPress={() => setActiveSections([index === 0 ? 0 : 1])}
+          />
+        )}
       </View>
       <IconRotated
         icon={<ArrowAccordionIcon />}
@@ -90,7 +92,11 @@ const Main = () => {
     if (filteredCameras.length === 0) {
       return (
         <View style={styles.emptyList}>
-          <Text style={styles.emptyText}>Нет камер по заданному поиску</Text>
+          <Text style={styles.emptyText}>
+            {searchText
+              ? "Нет камер по заданному поиску"
+              : "Камер в данной категории нет"}
+          </Text>
         </View>
       );
     }
