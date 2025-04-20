@@ -34,6 +34,9 @@ export const styles = StyleSheet.create({
     backgroundColor: palette.subDropdownListBgTransparent,
     height: 27,
   },
+  btns: {
+    gap: 12,
+  },
   btn: {
     borderRadius: 8,
     paddingVertical: 3,

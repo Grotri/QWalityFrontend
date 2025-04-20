@@ -24,15 +24,16 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
   },
-  modalTitle: {
+  customTitleStyles: {
+    width: "70%",
+    marginBottom: 4,
+  },
+  customTitleInputStyles: {
+    backgroundColor: palette.textFieldBgMainScreenPopup,
     fontSize: 20,
     lineHeight: 27,
     fontFamily: fonts.semibold,
     color: palette.mainText,
-    marginBottom: 4,
-    backgroundColor: palette.modalBtns,
-    borderRadius: 8,
-    width: "70%",
     textAlign: "center",
   },
   customStyles: {

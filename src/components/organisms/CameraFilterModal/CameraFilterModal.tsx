@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { ICameraFilterModal } from "./types";
+import React, { FC, useEffect, useState } from "react";
+import { ICameraFilterModal, initialCameraFilter } from "./types";
 import { Text, View } from "react-native";
 import Modal from "../../atoms/Modal";
 import { styles } from "./styles";
@@ -10,8 +10,14 @@ import Button from "../../atoms/Button";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EDefectFilterOptions } from "./enums";
+import { showErrorToast } from "../../../helpers/toast";
 
-const CameraFilterModal: FC<ICameraFilterModal> = ({ isOpen, setIsOpen }) => {
+const CameraFilterModal: FC<ICameraFilterModal> = ({
+  isOpen,
+  setIsOpen,
+  initialFilter,
+  onApply,
+}) => {
   const [isDDOpen, setIsDDOpen] = useState<boolean>(false);
   const [isDateFilter, setIsDateFilter] = useState<boolean>(true);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -27,10 +33,46 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({ isOpen, setIsOpen }) => {
     if (isDDOpen) {
       setIsDDOpen(false);
     }
-    setOption("missingElement");
     setStartDate(null);
     setEndDate(null);
+    setOption("missingElement");
   };
+
+  const handleApply = () => {
+    if (isDateFilter) {
+      if (!startDate || !endDate) {
+        showErrorToast("Выберите обе даты");
+        return;
+      }
+
+      if (startDate > endDate) {
+        showErrorToast("Начальная дата не может быть позже конечной");
+        return;
+      }
+    }
+
+    onApply({
+      isDateFilter,
+      startDate,
+      endDate,
+      option,
+    });
+    closeModal();
+  };
+
+  const handleReset = () => {
+    onApply({ ...initialCameraFilter });
+    closeModal();
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsDateFilter(initialFilter.isDateFilter);
+      setStartDate(initialFilter.startDate);
+      setEndDate(initialFilter.endDate);
+      setOption(initialFilter.option);
+    }
+  }, [isOpen, initialFilter]);
 
   return (
     <Modal
@@ -93,11 +135,18 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({ isOpen, setIsOpen }) => {
               selectedTextStyle={styles.selectedTextStyle}
               borderColor={palette.subDropdownListBgTransparent}
               arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              maxHeight={300}
             />
           </View>
-          <Button style={styles.btn} color="modal" onPress={closeModal}>
+          <Button style={styles.btn} color="modal" onPress={handleApply}>
             <Text style={styles.btnText}>Применить</Text>
           </Button>
+          {JSON.stringify(initialCameraFilter) !==
+            JSON.stringify(initialFilter) && (
+            <Button style={styles.btn} color="darkBlue" onPress={handleReset}>
+              <Text style={styles.btnText}>Сбросить фильтры</Text>
+            </Button>
+          )}
         </View>
       </View>
     </Modal>

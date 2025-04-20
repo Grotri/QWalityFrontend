@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { ICameraAccordion } from "./types";
 import Accordion from "react-native-collapsible/Accordion";
 import { Pressable, Text, View } from "react-native";
@@ -20,6 +20,10 @@ import DefectSaveModal from "../DefectSaveModal";
 import CameraSortModal from "../CameraSortModal";
 import CameraFilterModal from "../CameraFilterModal";
 import CameraPagination from "../../molecules/CameraPagination";
+import useCamerasStore from "../../../hooks/useCamerasStore";
+import { ESortOptions } from "../CameraSortModal/enums";
+import { filterDefects, sortDefects } from "./utils";
+import { ICameraFilter, initialCameraFilter } from "../CameraFilterModal/types";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -35,8 +39,21 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   setSelectedDefect,
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
+  const { deleteDefect } = useCamerasStore();
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
+  const [sortModalCameraId, setSortModalCameraId] = useState<string | null>(
+    null
+  );
+  const [cameraSortOptions, setCameraSortOptions] = useState<
+    Record<string, keyof typeof ESortOptions>
+  >({});
+  const [filterModalCameraId, setFilterModalCameraId] = useState<string | null>(
+    null
+  );
+  const [cameraFilterOptions, setCameraFilterOptions] = useState<
+    Record<string, ICameraFilter>
+  >({});
 
   const handleSectionChange = (sections: number[]) => {
     setActiveSections(sections);
@@ -55,49 +72,97 @@ const CameraAccordion: FC<ICameraAccordion> = ({
     return defects.slice(start, start + pageSize);
   };
 
-  const renderHeader = (camera: ICamera, index: number) => (
-    <View style={styles.header} key={camera.id}>
-      <View style={styles.headerMain}>
-        <View style={styles.cameraNameWrapper}>
-          <View style={styles.cameraName}>
-            <CameraIcon />
-            <Text style={styles.cameraTitle}>{camera.title}</Text>
+  const handleSortApply = (
+    cameraId: string,
+    selectedOption?: keyof typeof ESortOptions
+  ) => {
+    if (selectedOption) {
+      setCameraSortOptions({
+        ...cameraSortOptions,
+        [cameraId]: selectedOption,
+      });
+    } else {
+      const updatedSorts = Object.fromEntries(
+        Object.entries(cameraSortOptions).filter(([key]) => key !== cameraId)
+      );
+      setCameraSortOptions(updatedSorts);
+    }
+  };
+
+  const handleFilterApply = (cameraId: string, filter: ICameraFilter) => {
+    if (JSON.stringify(filter) === JSON.stringify(initialCameraFilter)) {
+      const updatedFilters = Object.fromEntries(
+        Object.entries(cameraFilterOptions).filter(([key]) => key !== cameraId)
+      );
+      setCameraFilterOptions(updatedFilters);
+    } else {
+      setCameraFilterOptions({
+        ...cameraFilterOptions,
+        [cameraId]: filter,
+      });
+    }
+    if (cameraPages[cameraId]) {
+      handlePageChange(cameraId, 1);
+    }
+  };
+
+  useEffect(() => {
+    setActiveSections([]);
+  }, [sections.length]);
+
+  const renderHeader = (camera: ICamera, index: number) => {
+    const defects = camera.defects.filter((defect) => !defect.isDeleted);
+    return (
+      <View style={styles.header} key={camera.id}>
+        <View style={styles.headerMain}>
+          <View style={styles.cameraNameWrapper}>
+            <View style={styles.cameraName}>
+              <CameraIcon />
+              <Text style={styles.cameraTitle}>{camera.title}</Text>
+            </View>
+            <Text style={styles.defectText}>{defects.length}/100 дефектов</Text>
+            <Text style={styles.defectText}>{defects.length}%</Text>
           </View>
-          <Text style={styles.defectText}>
-            {camera.defectsCount}/100 дефектов
-          </Text>
-          <Text style={styles.defectText}>{camera.defectsCount}%</Text>
-        </View>
-        <View style={styles.line} />
-        <View style={styles.stateWrapper}>
-          <View style={styles.state}>
-            <View
-              style={[
-                styles.circle,
-                {
-                  backgroundColor: camera.online
-                    ? palette.greenOnline
-                    : palette.red,
-                },
-              ]}
-            />
-            <Text style={styles.stateName}>
-              {camera.online ? "Online" : "Offline"}
-            </Text>
+          <View style={styles.line} />
+          <View style={styles.stateWrapper}>
+            <View style={styles.state}>
+              <View
+                style={[
+                  styles.circle,
+                  {
+                    backgroundColor: camera.online
+                      ? palette.greenOnline
+                      : palette.red,
+                  },
+                ]}
+              />
+              <Text style={styles.stateName}>
+                {camera.online ? "Online" : "Offline"}
+              </Text>
+            </View>
+            <Text style={styles.uptime}>Аптайм {camera.uptime}</Text>
           </View>
-          <Text style={styles.uptime}>Аптайм {camera.uptime}</Text>
         </View>
+        <IconRotated
+          icon={<ArrowAccordionIcon />}
+          isActive={activeSections.includes(index)}
+        />
       </View>
-      <IconRotated
-        icon={<ArrowAccordionIcon />}
-        isActive={activeSections.includes(index)}
-      />
-    </View>
-  );
+    );
+  };
 
   const renderContent = (camera: ICamera) => {
+    const defects = camera.defects.filter((defect) => !defect.isDeleted);
     const page = cameraPages[camera.id] || 1;
-    const pagedDefects = getPagedDefects(camera.defects, page);
+    const sortOption = cameraSortOptions[camera.id];
+    const filterOption = cameraFilterOptions[camera.id];
+    const sortedDefects = sortOption
+      ? sortDefects(defects, sortOption)
+      : defects;
+    const filteredDefects = filterOption
+      ? filterDefects(sortedDefects, filterOption)
+      : sortedDefects;
+    const pagedDefects = getPagedDefects(filteredDefects, page);
 
     return (
       <Fragment>
@@ -113,47 +178,76 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                 <SettingsIcon width={19} height={19} stroke={2} />
                 <Text style={styles.iconTitle}>Настроить</Text>
               </Button>
-              <Button
-                style={styles.icon}
-                onPress={() => {
-                  setIsSortCameraModalOpen(true);
-                }}
-              >
-                <SortIcon />
-                <Text style={styles.iconTitle}>Сортировать</Text>
-              </Button>
-              <Button
-                style={styles.icon}
-                onPress={() => {
-                  setIsFilterCameraModalOpen(true);
-                }}
-              >
-                <FilterIcon />
-                <Text style={styles.iconTitle}>Фильтровать</Text>
-              </Button>
+              {defects.length > 0 && (
+                <>
+                  <Button
+                    style={styles.icon}
+                    onPress={() => {
+                      setSortModalCameraId(camera.id);
+                      setIsSortCameraModalOpen(true);
+                    }}
+                  >
+                    <SortIcon
+                      color={sortOption ? palette.brightBlue : palette.white}
+                    />
+                    <Text
+                      style={[
+                        styles.iconTitle,
+                        sortOption && styles.activeOption,
+                      ]}
+                    >
+                      Сортировать
+                    </Text>
+                  </Button>
+                  <Button
+                    style={styles.icon}
+                    onPress={() => {
+                      setFilterModalCameraId(camera.id);
+                      setIsFilterCameraModalOpen(true);
+                    }}
+                  >
+                    <FilterIcon
+                      color={filterOption ? palette.brightBlue : palette.white}
+                    />
+                    <Text
+                      style={[
+                        styles.iconTitle,
+                        filterOption && styles.activeOption,
+                      ]}
+                    >
+                      Фильтровать
+                    </Text>
+                  </Button>
+                </>
+              )}
             </View>
             <View style={styles.horizontalLine} />
           </View>
           <View
             style={[
               styles.defects,
-              camera.defectsCount <= DEFAULT_PAGE_CAPACITY && {
+              filteredDefects.length <= DEFAULT_PAGE_CAPACITY && {
                 marginBottom: 4,
               },
             ]}
           >
-            {pagedDefects.map((defect: IDefect) => (
-              <Defect
-                key={defect.id}
-                defect={defect}
-                textBtn="Скрыть"
-                setSelectedDefect={setSelectedDefect}
-                pressableIcon
-              />
-            ))}
+            {filteredDefects.length > 0 ? (
+              pagedDefects.map((defect: IDefect) => (
+                <Defect
+                  key={defect.id}
+                  defect={defect}
+                  textBtn="Скрыть"
+                  setSelectedDefect={setSelectedDefect}
+                  onPress={() => deleteDefect(camera.id, defect.id)}
+                  pressableIcon
+                />
+              ))
+            ) : (
+              <Text style={styles.noDefects}>Дефектов не обнаружено</Text>
+            )}
           </View>
           <CameraPagination
-            total={camera.defects.length}
+            total={filteredDefects.length}
             current={page}
             onPageChange={(newPage) => handlePageChange(camera.id, newPage)}
           />
@@ -165,12 +259,40 @@ const CameraAccordion: FC<ICameraAccordion> = ({
           setIsHistoryModalOpen={setIsHistoryModalOpen}
         />
         <CameraSortModal
+          initialOption={
+            sortModalCameraId && cameraSortOptions[sortModalCameraId]
+              ? cameraSortOptions[sortModalCameraId]
+              : undefined
+          }
           isOpen={isSortCameraModalOpen}
-          setIsOpen={setIsSortCameraModalOpen}
+          setIsOpen={(isOpen) => {
+            setIsSortCameraModalOpen(isOpen);
+            if (!isOpen) {
+              setSortModalCameraId(null);
+            }
+          }}
+          onApply={(option) => {
+            if (sortModalCameraId) {
+              handleSortApply(sortModalCameraId, option);
+            }
+          }}
         />
         <CameraFilterModal
           isOpen={isFilterCameraModalOpen}
-          setIsOpen={setIsFilterCameraModalOpen}
+          setIsOpen={(isOpen) => {
+            setIsFilterCameraModalOpen(isOpen);
+            if (!isOpen) setFilterModalCameraId(null);
+          }}
+          initialFilter={
+            filterModalCameraId && cameraFilterOptions[filterModalCameraId]
+              ? cameraFilterOptions[filterModalCameraId]
+              : { ...initialCameraFilter }
+          }
+          onApply={(filter) => {
+            if (filterModalCameraId) {
+              handleFilterApply(filterModalCameraId, filter);
+            }
+          }}
         />
         <DefectSaveModal
           defect={selectedDefect}

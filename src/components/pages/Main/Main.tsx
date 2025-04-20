@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
-import { cameras } from "../../../constants/cameras";
 import {
   ArrowAccordionIcon,
   PlusIcon,
@@ -16,8 +15,11 @@ import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
 import { ICamera, IDefect } from "./types";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
+import useCamerasStore from "../../../hooks/useCamerasStore";
 
 const Main = () => {
+  const { cameras: camerasInfo } = useCamerasStore();
+  const [cameras, setCameras] = useState<ICamera[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
     useState<boolean>(false);
@@ -27,9 +29,15 @@ const Main = () => {
   );
   const [isSortCameraModalOpen, setIsSortCameraModalOpen] =
     useState<boolean>(false);
+  const [isSortOflCameraModalOpen, setIsSortOflCameraModalOpen] =
+    useState<boolean>(false);
   const [isFilterCameraModalOpen, setIsFilterCameraModalOpen] =
     useState<boolean>(false);
+  const [isFilterCameraOflModalOpen, setIsFilterCameraOflModalOpen] =
+    useState<boolean>(false);
   const [selectedDefect, setSelectedDefect] = useState<IDefect | null>(null);
+  const [onlineSearch, setOnlineSearch] = useState<string>("");
+  const [offlineSearch, setOfflineSearch] = useState<string>("");
 
   const onlineCameras = cameras.filter((camera) => camera.online);
   const offlineCameras = cameras.filter((camera) => !camera.online);
@@ -43,20 +51,28 @@ const Main = () => {
     setActiveSections(sections);
   };
 
+  useEffect(() => {
+    setCameras([...camerasInfo]);
+    setIsAddCameraModalOpen(false);
+  }, [camerasInfo]);
+
   const renderHeader = (section: (typeof sections)[number], index: number) => (
     <View style={styles.header}>
       <View style={styles.headerSearch}>
         <Text style={styles.title}>{section.title}</Text>
-        {section.cameras.length > 0 && (
-          <Input
-            placeholder="Поиск..."
-            placeholderTextColor={palette.mainText}
-            customStyles={styles.input}
-            customInputStyles={styles.customInputStyles}
-            rightIcon={<SearchIcon />}
-            cursorColor={palette.subTextMainScreenPopup}
-          />
-        )}
+        <Input
+          placeholder="Поиск..."
+          placeholderTextColor={palette.mainText}
+          value={index === 0 ? onlineSearch : offlineSearch}
+          onChangeText={(text) =>
+            index === 0 ? setOnlineSearch(text) : setOfflineSearch(text)
+          }
+          customStyles={styles.input}
+          customInputStyles={styles.customInputStyles}
+          rightIcon={<SearchIcon />}
+          cursorColor={palette.subTextMainScreenPopup}
+          onPress={() => setActiveSections([index === 0 ? 0 : 1])}
+        />
       </View>
       <IconRotated
         icon={<ArrowAccordionIcon />}
@@ -65,21 +81,46 @@ const Main = () => {
     </View>
   );
 
-  const renderContent = (section: (typeof sections)[number]) => (
-    <CameraAccordion
-      sections={section.cameras}
-      selectedCamera={selectedCamera}
-      setSelectedCamera={setSelectedCamera}
-      isHistoryModalOpen={isHistoryModalOpen}
-      setIsHistoryModalOpen={setIsHistoryModalOpen}
-      isSortCameraModalOpen={isSortCameraModalOpen}
-      setIsSortCameraModalOpen={setIsSortCameraModalOpen}
-      isFilterCameraModalOpen={isFilterCameraModalOpen}
-      setIsFilterCameraModalOpen={setIsFilterCameraModalOpen}
-      selectedDefect={selectedDefect}
-      setSelectedDefect={setSelectedDefect}
-    />
-  );
+  const renderContent = (section: (typeof sections)[number], index: number) => {
+    const searchText = index === 0 ? onlineSearch : offlineSearch;
+    const filteredCameras = section.cameras.filter((camera) =>
+      camera.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    if (filteredCameras.length === 0) {
+      return (
+        <View style={styles.emptyList}>
+          <Text style={styles.emptyText}>Нет камер по заданному поиску</Text>
+        </View>
+      );
+    }
+
+    return (
+      <CameraAccordion
+        sections={filteredCameras}
+        selectedCamera={selectedCamera}
+        setSelectedCamera={setSelectedCamera}
+        isHistoryModalOpen={isHistoryModalOpen}
+        setIsHistoryModalOpen={setIsHistoryModalOpen}
+        isSortCameraModalOpen={
+          index === 0 ? isSortCameraModalOpen : isSortOflCameraModalOpen
+        }
+        setIsSortCameraModalOpen={
+          index === 0 ? setIsSortCameraModalOpen : setIsSortOflCameraModalOpen
+        }
+        isFilterCameraModalOpen={
+          index === 0 ? isFilterCameraModalOpen : isFilterCameraOflModalOpen
+        }
+        setIsFilterCameraModalOpen={
+          index === 0
+            ? setIsFilterCameraModalOpen
+            : setIsFilterCameraOflModalOpen
+        }
+        selectedDefect={selectedDefect}
+        setSelectedDefect={setSelectedDefect}
+      />
+    );
+  };
 
   return (
     <PageTemplate
@@ -97,7 +138,9 @@ const Main = () => {
         isAddCameraModalOpen ||
         !!selectedCamera ||
         isSortCameraModalOpen ||
+        isSortOflCameraModalOpen ||
         isFilterCameraModalOpen ||
+        isFilterCameraOflModalOpen ||
         !!selectedDefect
       }
     >

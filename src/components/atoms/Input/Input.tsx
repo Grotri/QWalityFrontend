@@ -13,6 +13,7 @@ const Input: FC<IInput> = ({
   customLabelStyles,
   customInputWrapperStyles,
   onChangeText,
+  onPress,
   placeholder,
   keyboardType = "default",
   keyboardAppearance = "default",
@@ -37,6 +38,7 @@ const Input: FC<IInput> = ({
             customInputStyles,
           ]}
           onChangeText={onChangeText}
+          onPress={onPress}
           value={value}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}

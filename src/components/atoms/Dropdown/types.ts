@@ -15,6 +15,7 @@ export interface IDropdown {
   isOpen: boolean;
   borderColor?: string;
   arrowIconComponent?: JSX.Element;
+  maxHeight?: number;
 }
 
 export interface IDropdownData {

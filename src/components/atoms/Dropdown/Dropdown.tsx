@@ -22,6 +22,7 @@ const Dropdown: FC<IDropdown> = ({
   itemContainerStyle,
   borderColor = palette.bg,
   arrowIconComponent,
+  maxHeight,
 }) => {
   const rotation = useSharedValue(0);
 
@@ -45,6 +46,7 @@ const Dropdown: FC<IDropdown> = ({
           setValue(callback(value));
         }}
         value={value}
+        maxHeight={maxHeight}
         style={[styles.dropdown, dropdownStyle, { borderColor }]}
         textStyle={[styles.textStyle, selectedTextStyle]}
         dropDownContainerStyle={{ borderColor }}

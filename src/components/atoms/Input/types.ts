@@ -16,6 +16,7 @@ export interface IInput {
   customLabelStyles?: StyleProp<TextStyle>;
   errorStyles?: StyleProp<TextStyle>;
   onChangeText?: (text: string) => void;
+  onPress?: () => void;
   placeholder?: string;
   keyboardType?: KeyboardTypeOptions;
   keyboardAppearance?: "default" | "light" | "dark";
