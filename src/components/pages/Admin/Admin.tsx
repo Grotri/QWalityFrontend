@@ -43,12 +43,12 @@ const Admin = () => {
       login: !login.trim()
         ? EErrors.required
         : !emailPattern.test(login.trim())
-        ? "Введите корректный email"
+        ? EErrors.email
         : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
-        ? "Пароль должен содержать не менее 8 символов"
+        ? EErrors.password
         : "",
     };
     setErrors(newErrors);
@@ -69,7 +69,7 @@ const Admin = () => {
       setPassword("");
       setName("");
     } else {
-      showErrorToast("Сначала заполните поля формы");
+      showErrorToast(EErrors.fields);
     }
   };
 

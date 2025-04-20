@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { styles } from "./styles";
-import HomeListPoint from "../../atoms/HomeListPoint/HomeListPoint";
+import HomeListPoint from "../../molecules/HomeListPoint";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
 import { screenWidth } from "../../../constants/screenSize";
 import { LogoIcon, SolarPanelIcon, WaveIcon } from "../../../../assets/icons";

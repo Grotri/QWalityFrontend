@@ -24,12 +24,12 @@ const Login = () => {
       email: !email.trim()
         ? EErrors.required
         : !emailPattern.test(email.trim())
-        ? "Введите корректный email"
+        ? EErrors.email
         : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
-        ? "Пароль должен содержать не менее 8 символов"
+        ? EErrors.password
         : "",
     };
 
@@ -41,7 +41,7 @@ const Login = () => {
     if (validate()) {
       login(email, password);
     } else {
-      showErrorToast("Сначала заполните поля формы");
+      showErrorToast(EErrors.fields);
     }
   };
 

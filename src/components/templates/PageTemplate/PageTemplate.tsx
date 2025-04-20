@@ -13,7 +13,7 @@ import {
 import Header from "../../molecules/Header";
 import { IPageTemplate } from "./types";
 import { styles } from "./styles";
-import Menu from "../../molecules/Menu";
+import Menu from "../../organisms/Menu";
 import BlurView from "../../atoms/BlurView";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({

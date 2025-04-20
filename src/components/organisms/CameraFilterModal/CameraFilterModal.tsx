@@ -11,6 +11,7 @@ import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EDefectFilterOptions } from "./enums";
 import { showErrorToast } from "../../../helpers/toast";
+import { EErrors } from "../../../constants/errors";
 
 const CameraFilterModal: FC<ICameraFilterModal> = ({
   isOpen,
@@ -41,12 +42,12 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   const handleApply = () => {
     if (isDateFilter) {
       if (!startDate || !endDate) {
-        showErrorToast("Выберите обе даты");
+        showErrorToast(EErrors.chooseDates);
         return;
       }
 
       if (startDate > endDate) {
-        showErrorToast("Начальная дата не может быть позже конечной");
+        showErrorToast(EErrors.timeDates);
         return;
       }
     }

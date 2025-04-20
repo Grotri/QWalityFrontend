@@ -80,18 +80,18 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
       inn: !inn
         ? EErrors.required
         : inn.length !== 10 && inn.length !== 12
-        ? "Инн должен содержать 10 или 12 цифр"
+        ? EErrors.inn
         : "",
       email: !email.trim()
         ? EErrors.required
         : !emailPattern.test(email.trim())
-        ? "Введите корректный email"
+        ? EErrors.email
         : "",
       code: !code.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
-        ? "Пароль должен содержать не менее 8 символов"
+        ? EErrors.password
         : "",
       agreement: !agreement ? EErrors.required : "",
     };
@@ -120,7 +120,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
         set({ loading: false });
       }
     } else {
-      showErrorToast("Сначала заполните поля формы");
+      showErrorToast(EErrors.fields);
     }
   },
 

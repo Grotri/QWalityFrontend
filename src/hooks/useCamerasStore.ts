@@ -98,7 +98,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
         set({ loading: false });
       }
     } else {
-      showErrorToast("Сначала заполните поля формы");
+      showErrorToast(EErrors.fields);
     }
   },
 
@@ -122,10 +122,10 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
           set({ loading: false });
         }
       } else {
-        showErrorToast("Сначала заполните поля формы");
+        showErrorToast(EErrors.fields);
       }
     } else {
-      showInfoToast("Вы не поменяли данные");
+      showInfoToast(EErrors.noChanges);
     }
   },
 
@@ -243,12 +243,12 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
     const { cameras } = get();
 
     if (!startDate || !endDate) {
-      showErrorToast("Выберите обе даты");
+      showErrorToast(EErrors.chooseDates);
       return;
     }
 
     if (startDate > endDate) {
-      showErrorToast("Начальная дата не может быть позже конечной");
+      showErrorToast(EErrors.timeDates);
       return;
     }
 

@@ -33,13 +33,13 @@ const Profile = () => {
       email: !userInfo.email.trim()
         ? EErrors.required
         : !emailPattern.test(userInfo.email.trim())
-        ? "Введите корректный email"
+        ? EErrors.email
         : "",
       code: !code.trim() ? EErrors.required : "",
       inn: !userInfo.inn
         ? EErrors.required
         : userInfo.inn.length !== 10 && userInfo.inn.length !== 12
-        ? "Инн должен содержать 10 или 12 цифр"
+        ? EErrors.inn
         : "",
     };
     setErrors(newErrors);
@@ -53,7 +53,7 @@ const Profile = () => {
       setUser({ ...userInfo });
       showSuccessToast("Данные профиля изменены");
     } else {
-      showErrorToast("Сначала заполните поля формы");
+      showErrorToast(EErrors.fields);
     }
   };
 

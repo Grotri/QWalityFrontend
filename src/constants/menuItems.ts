@@ -1,5 +1,5 @@
 import { HelpIcon, SettingsIcon, TrashBinIcon } from "../../assets/icons";
-import { IMenuItem } from "../components/molecules/Menu/types";
+import { IMenuItem } from "../components/organisms/Menu/types";
 
 export const menuItems: IMenuItem[] = [
   {
