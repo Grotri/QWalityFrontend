@@ -72,4 +72,5 @@ export const palette = {
   dashBg: "#B5CAFF",
   modalBtn: "#4B74DD",
   trashItemImageBg: "#BCBCBC",
+  datePickerBg: "rgba(0, 0, 0, 0.2)",
 };

@@ -79,7 +79,6 @@ export const styles = StyleSheet.create({
   confirmationWrapper: {
     flexDirection: "row",
     gap: 14,
-    alignItems: "flex-end",
     marginTop: -12,
   },
   customStyles: {
@@ -89,6 +88,7 @@ export const styles = StyleSheet.create({
     width: "44%",
     height: 27,
     borderRadius: 8,
+    marginTop: 21,
   },
   modalBtnCodeText: {
     color: palette.mainText,

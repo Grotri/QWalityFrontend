@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
+    backgroundColor: palette.datePickerBg,
   },
   modalContent: {
     backgroundColor: "#fff",
