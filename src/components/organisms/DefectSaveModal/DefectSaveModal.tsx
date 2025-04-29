@@ -4,7 +4,7 @@ import Modal from "../../atoms/Modal";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
 import { IDefect } from "../../pages/Main/types";
-import { initialDefect } from "../../../constants/defects";
+import { initialDefect } from "../../../model/defect";
 import Button from "../../atoms/Button";
 import { showSuccessToast } from "../../../helpers/toast";
 import { convertISODate } from "../../../helpers/formatDate";

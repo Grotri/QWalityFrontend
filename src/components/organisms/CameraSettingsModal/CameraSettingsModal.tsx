@@ -8,7 +8,7 @@ import Input from "../../atoms/Input";
 import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import { ICamera } from "../../pages/Main/types";
-import { initialCamera } from "../../../constants/cameras";
+import { initialCamera } from "../../../model/camera";
 import { palette } from "../../../constants/palette";
 import useCamerasStore from "../../../hooks/useCamerasStore";
 
@@ -28,6 +28,11 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   } = useCamerasStore();
   const [cameraInfo, setCameraInfo] = useState<ICamera>({ ...initialCamera });
   const { title, link, online } = cameraInfo;
+
+  const handleEditCamera = () => {
+    editCamera(cameraInfo, setCamera);
+    setIsHistoryModalOpen(null);
+  };
 
   const openHistoryModal = () => {
     setIsHistoryModalOpen(true);
@@ -116,10 +121,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
             <Button
               style={styles.fullBtn}
               color="modal"
-              onPress={() => {
-                editCamera(cameraInfo, setCamera);
-                setIsHistoryModalOpen(null);
-              }}
+              onPress={handleEditCamera}
             >
               <Text style={styles.fullBtnText}>Сохранить</Text>
             </Button>

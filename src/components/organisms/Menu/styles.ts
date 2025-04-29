@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
   headerBtn: {
     alignItems: "center",
     gap: 2,
+    minWidth: 52,
   },
   headerBtnTxt: {
     fontSize: 12,
