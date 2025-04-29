@@ -1,5 +1,13 @@
+import { FC } from "react";
 import { HelpIcon, SettingsIcon, TrashBinIcon } from "../../assets/icons";
-import { IMenuItem } from "../components/organisms/Menu/types";
+import { IIcon } from "../../assets/icons/types";
+import { TypeMainStackParamList } from "../navigation";
+
+export interface IMenuItem {
+  icon: FC<IIcon>;
+  title: string;
+  path: keyof TypeMainStackParamList;
+}
 
 export const menuItems: IMenuItem[] = [
   {

@@ -1,13 +1,4 @@
-import { ICamera } from "../components/pages/Main/types";
-
-export const initialCamera: ICamera = {
-  id: "",
-  online: true,
-  title: "",
-  uptime: "",
-  defects: [],
-  link: "",
-};
+import { ICamera } from "../model/camera";
 
 export const initialCameras: ICamera[] = [
   {
@@ -33,7 +24,7 @@ export const initialCameras: ICamera[] = [
         id: "_d3",
         name: "Смещение",
         date: "2025-03-14T14:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "_d4",
@@ -66,7 +57,7 @@ export const initialCameras: ICamera[] = [
         id: "d2",
         name: "Смещение",
         date: "2025-03-12T08:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d3",
@@ -108,7 +99,7 @@ export const initialCameras: ICamera[] = [
         id: "d9",
         name: "Повреждение",
         date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d10",
@@ -144,7 +135,7 @@ export const initialCameras: ICamera[] = [
         id: "d15",
         name: "Повреждение",
         date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d16",

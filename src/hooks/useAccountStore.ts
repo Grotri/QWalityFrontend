@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
-import { IAccount, initialAccounts } from "../constants/account";
 import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
 } from "../helpers/toast";
-import { roles } from "../constants/roles";
 import { EErrors } from "../constants/errors";
-import { emailPattern } from "../constants/patterns";
+import { IUser } from "../model/user";
+import { ERoles } from "../constants/roles";
+import { initialAccounts } from "../constants/accounts";
 
 export interface IErrors {
   login: string;
@@ -16,14 +16,13 @@ export interface IErrors {
 }
 
 interface IUseAccountStore extends IStoreStatus {
-  accounts: IAccount[];
+  accounts: IUser[];
   errors: IErrors[];
-  fetchAccounts: () => void;
-  addAccount: (account: IAccount) => void;
-  changeAccount: (index: number, newAccount: IAccount) => void;
+  addAccount: (account: IUser) => void;
+  changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
   refreshErrors: () => void;
-  validate: (newAccount: IAccount, index: number) => boolean;
+  validate: (newAccount: IUser, index: number) => boolean;
   deleteAccount: (index: number) => void;
 }
 
@@ -33,25 +32,8 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   accounts: [...initialAccounts],
   errors: initialAccounts.map(() => ({ login: "", password: "" })),
 
-  fetchAccounts: () => {
-    try {
-      set({ loading: true, error: null });
-      const accounts = [...initialAccounts];
-      set({
-        accounts,
-        errors: accounts.map(() => ({ login: "", password: "" })),
-        loading: false,
-        error: false,
-      });
-    } catch (error) {
-      showErrorToast("Не удалось загрузить список управляемых аккаунтов");
-      console.error(error);
-      set({ error, loading: false });
-    }
-  },
-
   addAccount: (account) => {
-    const currRole = roles.find((r) => r.id === account.role)?.name;
+    const currRole = ERoles[account.role as keyof typeof ERoles];
 
     try {
       set({ loading: true, error: null });
@@ -74,11 +56,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
     const { login, password } = newAccount;
 
     const newError: IErrors = {
-      login: !login.trim()
-        ? EErrors.required
-        : !emailPattern.test(login.trim())
-        ? EErrors.email
-        : "",
+      login: !login.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -95,8 +73,9 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   changeAccount: (index, newAccount) => {
     const { accounts, validate } = get();
     const oldAccount = accounts[index];
-
-    if (JSON.stringify(oldAccount) !== JSON.stringify(newAccount)) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { inn, subscription, ...oldAccountData } = oldAccount;
+    if (JSON.stringify(oldAccountData) !== JSON.stringify(newAccount)) {
       if (validate(newAccount, index)) {
         try {
           set({ loading: true, error: null });
@@ -107,7 +86,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
             loading: false,
             error: false,
           }));
-          showSuccessToast(`Данные ${newAccount.name} изменены`);
+          showSuccessToast(`Данные аккаунта изменены`);
         } catch (error) {
           showErrorToast("Не удалось изменить данные");
           console.error(error);
@@ -131,7 +110,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   deleteAccount: (index) => {
     const { accounts, errors } = get();
     const userToDelete = accounts[index];
-    const role = roles.find((role) => role.id === userToDelete.role);
+    const role = ERoles[userToDelete.role as keyof typeof ERoles];
 
     try {
       set({ loading: true, error: null });
@@ -141,7 +120,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
         loading: false,
         error: false,
       });
-      showSuccessToast(`${role?.name} ${userToDelete.name} удален`);
+      showSuccessToast(`${role} ${userToDelete.login} удален`);
     } catch (error) {
       showErrorToast("Не удалось удалить аккаунт");
       console.error(error);
