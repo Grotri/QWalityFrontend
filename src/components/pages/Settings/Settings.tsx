@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { Keyboard, Text, View } from "react-native";
 import { styles } from "./styles";
 import Dropdown from "../../atoms/Dropdown";
-import { settingsItems } from "./types";
 import { ArrowBottomIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import Modal from "../../atoms/Modal";
@@ -12,10 +11,11 @@ import useAuthStore from "../../../hooks/useAuthStore";
 import Input from "../../atoms/Input";
 import { EErrors } from "../../../constants/errors";
 import { showErrorToast } from "../../../helpers/toast";
+import { settingsItems } from "../../../constants/settingsItems";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
-  const { logout } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const [isFirstDDOpen, setIsFirstDDOpen] = useState<boolean>(false);
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
@@ -67,32 +67,36 @@ const Settings = () => {
       isWholeBlurOn={isExitModalOpen || isDeleteModalOpen}
     >
       <View style={styles.wrapper}>
-        <View style={styles.dropdownWrapper}>
-          <Text style={styles.dropdownText}>Авто-удаление дефектов</Text>
-          <Dropdown
-            data={settingsItems}
-            setValue={setIsAutoDelete}
-            value={isAutoDelete}
-            setIsOpen={setIsFirstDDOpen}
-            isOpen={isFirstDDOpen}
-            wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
-            dropdownStyle={styles.dropdownStyle}
-            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
-          />
-        </View>
-        <View style={styles.dropdownWrapper}>
-          <Text style={styles.dropdownText}>Авто-чистка корзины</Text>
-          <Dropdown
-            data={settingsItems}
-            setValue={setIsAutoClear}
-            value={isAutoClear}
-            setIsOpen={setIsSecondDDOpen}
-            isOpen={isSecondDDOpen}
-            wrapperStyle={styles.wrapperStyle}
-            dropdownStyle={styles.dropdownStyle}
-            arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
-          />
-        </View>
+        {user.role !== "user" && (
+          <Fragment>
+            <View style={styles.dropdownWrapper}>
+              <Text style={styles.dropdownText}>Авто-удаление дефектов</Text>
+              <Dropdown
+                data={settingsItems}
+                setValue={setIsAutoDelete}
+                value={isAutoDelete}
+                setIsOpen={setIsFirstDDOpen}
+                isOpen={isFirstDDOpen}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
+                dropdownStyle={styles.dropdownStyle}
+                arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              />
+            </View>
+            <View style={styles.dropdownWrapper}>
+              <Text style={styles.dropdownText}>Авто-чистка корзины</Text>
+              <Dropdown
+                data={settingsItems}
+                setValue={setIsAutoClear}
+                value={isAutoClear}
+                setIsOpen={setIsSecondDDOpen}
+                isOpen={isSecondDDOpen}
+                wrapperStyle={styles.wrapperStyle}
+                dropdownStyle={styles.dropdownStyle}
+                arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              />
+            </View>
+          </Fragment>
+        )}
         <Button
           style={[styles.btn, { marginTop: 22, marginBottom: 16 }]}
           color="blue"
@@ -100,13 +104,15 @@ const Settings = () => {
         >
           <Text style={styles.btnText}>Выйти из аккаунта</Text>
         </Button>
-        <Button
-          style={[styles.btn, { marginBottom: 8 }]}
-          color="red"
-          onPress={() => setIsDeleteModalOpen(true)}
-        >
-          <Text style={styles.btnText}>Удалить аккаунт</Text>
-        </Button>
+        {user.role === "owner" && (
+          <Button
+            style={[styles.btn, { marginBottom: 8 }]}
+            color="red"
+            onPress={() => setIsDeleteModalOpen(true)}
+          >
+            <Text style={styles.btnText}>Удалить аккаунт</Text>
+          </Button>
+        )}
         <Text style={styles.version}>QWality Release v1.0.0</Text>
       </View>
       <Modal isVisible={isExitModalOpen} setIsVisible={setIsExitModalOpen}>

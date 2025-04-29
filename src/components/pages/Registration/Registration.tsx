@@ -41,7 +41,7 @@ const Registration = () => {
         <View style={styles.fields}>
           <Input
             label="ИНН"
-            value={user.inn}
+            value={user.inn || ""}
             onChangeText={(inn) => {
               setUserField("inn", inn);
               setErrorsField("inn", "");
@@ -53,14 +53,14 @@ const Registration = () => {
           />
           <Input
             label="Почта"
-            value={user.email}
+            value={user.login}
             onChangeText={(email) => {
-              setUserField("email", email);
-              setErrorsField("email", "");
+              setUserField("login", email);
+              setErrorsField("login", "");
             }}
             inputMode="email"
             maxLength={254}
-            errorText={errors.email}
+            errorText={errors.login}
           />
           <View style={styles.confirmationWrapper}>
             <Input

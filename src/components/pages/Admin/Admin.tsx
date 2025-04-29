@@ -8,27 +8,28 @@ import { ArrowBottomIcon } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
-import { roles } from "../../../constants/roles";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
-import { showErrorToast } from "../../../helpers/toast";
-import useAccountStore from "../../../hooks/useAccountStore";
-import { IAccount } from "../../../constants/account";
 import uuid from "react-native-uuid";
+import useAccountStore from "../../../hooks/useAccountStore";
 import Slider from "../../atoms/Slider";
 import GetReportModal from "../../organisms/GetReportModal";
 import InputPassword from "../../atoms/InputPassword";
 import { screenHeight } from "../../../constants/screenSize";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import { useAccountLimits } from "../../../helpers/useAccountLimits";
+import { IUser } from "../../../model/user";
+import { showErrorToast } from "../../../helpers/toast";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
   const { accounts, addAccount } = useAccountStore();
-  const [name, setName] = useState<string>("");
+  const availableRoles = useAvailableRoles();
+  const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
-  const [role, setRole] = useState<string>("0");
+  const [role, setRole] = useState<string>("user");
   const [isMainModalOpened, setIsMainModalOpened] = useState<boolean>(false);
   const [isRoleDdOpen, setIsRoleDdOpen] = useState<boolean>(false);
 
@@ -40,12 +41,7 @@ const Admin = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      name: !name.trim() ? EErrors.required : "",
-      login: !login.trim()
-        ? EErrors.required
-        : !emailPattern.test(login.trim())
-        ? EErrors.email
-        : "",
+      login: !login.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -57,20 +53,22 @@ const Admin = () => {
   };
 
   const createSubAccount = () => {
-    const account: IAccount = {
-      id: uuid.v4(),
-      name,
-      login,
-      password,
-      role,
-    };
-    if (validate()) {
-      addAccount(account);
-      setLogin("");
-      setPassword("");
-      setName("");
+    if (accounts.length < accountLimits) {
+      const account: IUser = {
+        id: uuid.v4(),
+        login: login.trim(),
+        password: password.trim(),
+        role,
+      };
+      if (validate()) {
+        addAccount(account);
+        setLogin("");
+        setPassword("");
+      } else {
+        showErrorToast(EErrors.fields);
+      }
     } else {
-      showErrorToast(EErrors.fields);
+      showErrorToast("Достигнут лимит аккаунтов");
     }
   };
 
@@ -88,20 +86,6 @@ const Admin = () => {
           <Text style={styles.subTitle}>Уверенность нейросети</Text>
           <Slider />
           <Text style={styles.subTitle}>Регистрация суб-аккаунта</Text>
-          <Input
-            label="Имя пользователя"
-            value={name}
-            onChangeText={(name) => {
-              setName(name);
-              setErrors({ ...errors, name: "" });
-            }}
-            errorText={errors.name}
-            maxLength={254}
-            cursorColor={palette.subTextMainScreenPopup}
-            customStyles={styles.confirmationInputWrapper}
-            customInputStyles={styles.confirmationInput}
-            customLabelStyles={styles.confirmationInputLabel}
-          />
           <Input
             label="Логин"
             value={login}
@@ -132,10 +116,7 @@ const Admin = () => {
             iconColor={palette.mainText}
           />
           <Dropdown
-            data={roles.map((role) => ({
-              value: role.id,
-              label: role.name,
-            }))}
+            data={availableRoles}
             value={role}
             setValue={setRole}
             label="Роль"
@@ -164,7 +145,9 @@ const Admin = () => {
           >
             <Text style={styles.btnText}>Управлять аккаунтами</Text>
           </Button>
-          <Text style={styles.statistics}>{accounts.length}/15 аккаунтов</Text>
+          <Text style={styles.statistics}>
+            {accounts.length}/{accountLimits} аккаунтов
+          </Text>
         </View>
         <GetReportModal
           isOpen={isMainModalOpened}

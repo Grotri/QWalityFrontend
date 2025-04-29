@@ -17,11 +17,12 @@ export const styles = StyleSheet.create({
   },
   headerSearch: {
     flexDirection: "row",
-    gap: 36,
+    gap: 24,
     alignItems: "center",
     flex: 1,
   },
   title: {
+    width: 84,
     fontSize: 16,
     lineHeight: 21,
     fontFamily: fonts.semibold,

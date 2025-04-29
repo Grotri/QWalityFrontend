@@ -16,9 +16,14 @@ import AddCameraModal from "../../organisms/AddCameraModal";
 import { ICamera, IDefect } from "./types";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import useCamerasStore from "../../../hooks/useCamerasStore";
+import { useCameraLimits } from "../../../helpers/useCameraLimits";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { showErrorToast } from "../../../helpers/toast";
 
 const Main = () => {
   const { cameras: camerasInfo } = useCamerasStore();
+  const cameraLimits = useCameraLimits();
+  const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =
@@ -93,9 +98,9 @@ const Main = () => {
       return (
         <View style={styles.emptyList}>
           <Text style={styles.emptyText}>
-            {searchText
-              ? "Нет камер по заданному поиску"
-              : "Камер в данной категории нет"}
+            {!section.cameras.length
+              ? "Камер в данной категории нет"
+              : "Нет камер по заданному поиску"}
           </Text>
         </View>
       );
@@ -132,13 +137,21 @@ const Main = () => {
     <PageTemplate
       hasMenu
       bottomIcon={
-        <BottomFixIcon
-          icon={<PlusIcon />}
-          text="Добавить камеру"
-          onPress={() => setIsAddCameraModalOpen(true)}
-          marginRight={20}
-          marginBottom={28}
-        />
+        user.role !== "user" ? (
+          <BottomFixIcon
+            icon={<PlusIcon />}
+            text="Добавить камеру"
+            onPress={() => {
+              if (camerasInfo.length < cameraLimits) {
+                setIsAddCameraModalOpen(true);
+              } else {
+                showErrorToast("Достигнут лимит камер");
+              }
+            }}
+            marginRight={20}
+            marginBottom={28}
+          />
+        ) : null
       }
       isBlurOn={
         isAddCameraModalOpen ||

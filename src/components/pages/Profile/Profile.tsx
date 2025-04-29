@@ -7,12 +7,18 @@ import { ProfileIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import Input from "../../atoms/Input";
 import { palette } from "../../../constants/palette";
-import useAuthStore, { initialUser, IUser } from "../../../hooks/useAuthStore";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
-import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
+import { emailPattern, innPattern } from "../../../constants/patterns";
+import {
+  showErrorToast,
+  showInfoToast,
+  showSuccessToast,
+} from "../../../helpers/toast";
 import { screenHeight } from "../../../constants/screenSize";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { initialUser, IUser } from "../../../model/user";
+import { ERoles } from "../../../constants/roles";
 
 const Profile = () => {
   const { navigate } = useMainNavigation();
@@ -31,30 +37,40 @@ const Profile = () => {
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      email: !userInfo.email.trim()
+      login: !userInfo.login.trim()
         ? EErrors.required
-        : !emailPattern.test(userInfo.email.trim())
+        : !emailPattern.test(userInfo.login.trim())
         ? EErrors.email
         : "",
       code: !code.trim() ? EErrors.required : "",
-      inn: !userInfo.inn
-        ? EErrors.required
-        : userInfo.inn.length !== 10 && userInfo.inn.length !== 12
-        ? EErrors.inn
-        : "",
+      inn:
+        !userInfo.inn || !userInfo.inn.trim()
+          ? EErrors.required
+          : !innPattern.test(userInfo.inn.trim())
+          ? EErrors.inn
+          : "",
     };
     setErrors(newErrors);
     return Object.values(newErrors).every((error) => !error);
   };
 
   const saveChanges = () => {
-    if (validate()) {
-      setIsEditMode(false);
-      setCode("");
-      setUser({ ...userInfo });
-      showSuccessToast("Данные профиля изменены");
+    const newProfile: IUser = {
+      ...userInfo,
+      login: userInfo.login.trim(),
+      inn: userInfo.inn?.trim(),
+    };
+    if (JSON.stringify(user) !== JSON.stringify(newProfile)) {
+      if (validate()) {
+        setIsEditMode(false);
+        setCode("");
+        setUser(newProfile);
+        showSuccessToast("Данные профиля изменены");
+      } else {
+        showErrorToast(EErrors.fields);
+      }
     } else {
-      showErrorToast(EErrors.fields);
+      showInfoToast(EErrors.noChanges);
     }
   };
 
@@ -74,70 +90,80 @@ const Profile = () => {
           <View>
             <Text style={styles.cardPointTitle}>Электронная почта / логин</Text>
             {!isEditMode ? (
-              <Text style={styles.cardPointData}>{userInfo.email}</Text>
+              <Text style={styles.cardPointData}>{userInfo.login}</Text>
             ) : (
               <Input
-                value={userInfo.email}
+                value={userInfo.login}
                 onChangeText={(email) => {
-                  setUserInfo({ ...userInfo, email });
-                  setErrors({ ...errors, email: "" });
+                  setUserInfo({ ...userInfo, login: email });
+                  setErrors({ ...errors, login: "" });
                 }}
                 customInputStyles={styles.input}
                 inputMode="email"
                 maxLength={254}
                 cursorColor={palette.subTextMainScreenPopup}
-                errorText={errors.email}
+                errorText={errors.login}
               />
             )}
           </View>
           <View>
             <Text style={styles.cardPointTitle}>Роль</Text>
-            <Text style={styles.cardPointData}>Владелец</Text>
+            <Text style={styles.cardPointData}>
+              {ERoles[user.role as keyof typeof ERoles]}
+            </Text>
           </View>
-          <View>
-            <Text style={styles.cardPointTitle}>ИНН</Text>
-            {!isEditMode ? (
-              <Text style={styles.cardPointData}>{userInfo.inn}</Text>
-            ) : (
-              <Input
-                value={userInfo.inn}
-                onChangeText={(inn) => {
-                  setUserInfo({ ...userInfo, inn });
-                  setErrors({ ...errors, inn: "" });
-                }}
-                maxLength={12}
-                inputMode="numeric"
-                keyboardType="numeric"
-                customInputStyles={styles.input}
-                cursorColor={palette.subTextMainScreenPopup}
-                errorText={errors.inn}
-              />
-            )}
-          </View>
+          {user.role === "owner" && (
+            <View>
+              <Text style={styles.cardPointTitle}>ИНН</Text>
+              {!isEditMode ? (
+                <Text style={styles.cardPointData}>{userInfo.inn}</Text>
+              ) : (
+                <Input
+                  value={userInfo.inn || ""}
+                  onChangeText={(inn) => {
+                    setUserInfo({ ...userInfo, inn });
+                    setErrors({ ...errors, inn: "" });
+                  }}
+                  maxLength={12}
+                  inputMode="numeric"
+                  keyboardType="numeric"
+                  customInputStyles={styles.input}
+                  cursorColor={palette.subTextMainScreenPopup}
+                  errorText={errors.inn}
+                />
+              )}
+            </View>
+          )}
         </View>
         {!isEditMode ? (
           <>
-            <Button
-              style={[styles.btn, { marginTop: 13 }]}
-              color="blue"
-              onPress={() => setIsEditMode(true)}
-            >
-              <Text style={styles.btnText}>Изменить данные</Text>
-            </Button>
-            <Button
-              style={styles.btn}
-              color="blue"
-              onPress={() => navigate("SubscriptionChange")}
-            >
-              <Text style={styles.btnText}>Управлять подпиской</Text>
-            </Button>
-            <Button
-              style={styles.btn}
-              color="blue"
-              onPress={() => navigate("Admin")}
-            >
-              <Text style={styles.btnText}>Админ панель</Text>
-            </Button>
+            {user.role === "owner" && (
+              <Button
+                style={[styles.btn, { marginTop: 13 }]}
+                color="blue"
+                onPress={() => setIsEditMode(true)}
+              >
+                <Text style={styles.btnText}>Изменить данные</Text>
+              </Button>
+            )}
+            {user.role === "owner" && (
+              <Button
+                style={styles.btn}
+                color="blue"
+                onPress={() => navigate("SubscriptionChange")}
+              >
+                <Text style={styles.btnText}>Управлять подпиской</Text>
+              </Button>
+            )}
+            {["owner", "administrator"].includes(user.role) && (
+              <Button
+                style={styles.btn}
+                color="blue"
+                onPress={() => navigate("Admin")}
+              >
+                <Text style={styles.btnText}>Админ панель</Text>
+              </Button>
+            )}
           </>
         ) : (
           <>
