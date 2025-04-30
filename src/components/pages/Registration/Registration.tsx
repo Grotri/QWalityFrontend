@@ -8,6 +8,7 @@ import { CheckIcon } from "../../../../assets/icons";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
 import useAuthStore from "../../../hooks/useAuthStore";
 import InputPassword from "../../atoms/InputPassword";
+import useAccountStore from "../../../hooks/useAccountStore";
 
 const Registration = () => {
   const { navigate } = useAuthNavigation();
@@ -20,6 +21,7 @@ const Registration = () => {
     clearUser,
     register,
   } = useAuthStore();
+  const { addAccount } = useAccountStore();
 
   const [code, setCode] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -95,7 +97,7 @@ const Registration = () => {
           style={styles.createBtn}
           onPress={() => {
             Keyboard.dismiss();
-            register(code, isChecked);
+            register(code, isChecked, addAccount);
           }}
         >
           <Text style={styles.createBtnText}>Создать аккаунт</Text>

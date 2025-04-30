@@ -8,7 +8,6 @@ import {
 import { EErrors } from "../constants/errors";
 import { IUser } from "../model/user";
 import { ERoles } from "../constants/roles";
-import { initialAccounts } from "../constants/accounts";
 
 export interface IErrors {
   login: string;
@@ -19,6 +18,7 @@ interface IUseAccountStore extends IStoreStatus {
   accounts: IUser[];
   errors: IErrors[];
   addAccount: (account: IUser) => void;
+  registerAccount: (account: IUser) => void;
   changeAccount: (index: number, newAccount: IUser) => void;
   changeError: (index: number, field: keyof IErrors, value: string) => void;
   refreshErrors: () => void;
@@ -29,10 +29,26 @@ interface IUseAccountStore extends IStoreStatus {
 const useAccountStore = create<IUseAccountStore>((set, get) => ({
   loading: false,
   error: null,
-  accounts: [...initialAccounts],
-  errors: initialAccounts.map(() => ({ login: "", password: "" })),
+  accounts: [],
+  errors: [],
 
   addAccount: (account) => {
+    try {
+      set({ loading: true, error: null });
+      set((state) => ({
+        accounts: [...state.accounts, account],
+        errors: [...state.errors, { login: "", password: "" }],
+        loading: false,
+        error: false,
+      }));
+    } catch (error) {
+      showErrorToast("Не удалось добавить аккаунт");
+      console.error(error);
+      set({ error, loading: false });
+    }
+  },
+
+  registerAccount: (account) => {
     const currRole = ERoles[account.role as keyof typeof ERoles];
 
     try {
@@ -45,7 +61,7 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
       }));
       showSuccessToast(`${currRole} создан`);
     } catch (error) {
-      showErrorToast("Не удалось изменить данные");
+      showErrorToast("Не удалось создать аккаунт");
       console.error(error);
       set({ error, loading: false });
     }

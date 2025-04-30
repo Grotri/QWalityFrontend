@@ -5,7 +5,7 @@ import { emailPattern, innPattern } from "../constants/patterns";
 import uuid from "react-native-uuid";
 import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
 import { showErrorToast, showSuccessToast } from "../helpers/toast";
-import { initialAccounts } from "../constants/accounts";
+import { credits } from "../constants/credits";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -15,9 +15,17 @@ interface IUseAuthStore extends IStoreStatus {
   errors: IErrors;
   setErrorsField: (field: keyof IErrors, error: string) => void;
   clearErrors: () => void;
-  register: (code: string, agreement: boolean) => void;
+  register: (
+    code: string,
+    agreement: boolean,
+    addAccount: (account: IUser) => void
+  ) => void;
   validate: (code: string, agreement: boolean) => boolean;
-  login: (email: string, password: string) => void;
+  login: (
+    email: string,
+    password: string,
+    addAccount: (account: IUser) => void
+  ) => void;
   logout: () => void;
 }
 
@@ -76,7 +84,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
     return Object.values(newErrors).every((error) => !error);
   },
 
-  register: (code, agreement) => {
+  register: (code, agreement, addAccount) => {
     const { user, validate } = get();
 
     if (validate(code, agreement)) {
@@ -88,7 +96,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
           inn: user.inn?.trim(),
           role: user.role,
         };
-
+        addAccount(newUser);
         set({
           loading: true,
           user: newUser,
@@ -105,12 +113,13 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
     }
   },
 
-  login: (email, password) => {
+  login: (email, password, addAccount) => {
     try {
-      const existingAccount = initialAccounts.find(
+      const existingAccount = credits.find(
         (acc) => acc.login === email && acc.password === password
       );
       if (existingAccount) {
+        addAccount(existingAccount);
         set({
           loading: true,
           user: existingAccount,

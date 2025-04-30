@@ -10,10 +10,12 @@ import { EErrors } from "../../../constants/errors";
 import { showErrorToast } from "../../../helpers/toast";
 import useAuthStore from "../../../hooks/useAuthStore";
 import InputPassword from "../../atoms/InputPassword";
+import useAccountStore from "../../../hooks/useAccountStore";
 
 const Login = () => {
   const { navigate } = useAuthNavigation();
   const { login } = useAuthStore();
+  const { addAccount } = useAccountStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
@@ -34,7 +36,7 @@ const Login = () => {
 
   const changePassword = () => {
     if (validate()) {
-      login(email.trim(), password.trim());
+      login(email.trim(), password.trim(), addAccount);
     } else {
       showErrorToast(EErrors.fields);
     }
