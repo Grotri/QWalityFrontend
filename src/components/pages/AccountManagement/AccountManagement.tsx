@@ -19,7 +19,7 @@ import InputPassword from "../../atoms/InputPassword";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { IUser } from "../../../model/user";
-import { rolesOrder } from "../../../constants/roles";
+import { ERoles } from "../../../constants/roles";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
@@ -64,11 +64,8 @@ const AccountManagement = () => {
   }, [activeSections]);
 
   useEffect(() => {
-    const allowedRoles = rolesOrder.filter(
-      (role) => rolesOrder.indexOf(role) < rolesOrder.indexOf(user.role)
-    );
     const filteredAccounts = accounts.filter((acc) =>
-      allowedRoles.includes(acc.role)
+      availableRoles.includes(acc.role)
     );
     setSections([...filteredAccounts]);
   }, [accounts, user.role]);
@@ -131,7 +128,10 @@ const AccountManagement = () => {
           iconSize={18}
         />
         <Dropdown
-          data={availableRoles}
+          data={availableRoles.map((key) => ({
+            value: key,
+            label: ERoles[key as keyof typeof ERoles],
+          }))}
           value={section.role}
           setValue={(role) => changeAccountField(section.id, "role", role)}
           isOpen={isDdOpen}

@@ -20,10 +20,11 @@ import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { IUser } from "../../../model/user";
 import { showErrorToast } from "../../../helpers/toast";
+import { ERoles } from "../../../constants/roles";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
-  const { accounts, addAccount } = useAccountStore();
+  const { accounts, registerAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();
   const accountLimits = useAccountLimits();
   const [login, setLogin] = useState<string>("");
@@ -61,7 +62,7 @@ const Admin = () => {
         role,
       };
       if (validate()) {
-        addAccount(account);
+        registerAccount(account);
         setLogin("");
         setPassword("");
       } else {
@@ -116,7 +117,10 @@ const Admin = () => {
             iconColor={palette.mainText}
           />
           <Dropdown
-            data={availableRoles}
+            data={availableRoles.map((key) => ({
+              value: key,
+              label: ERoles[key as keyof typeof ERoles],
+            }))}
             value={role}
             setValue={setRole}
             label="Роль"
