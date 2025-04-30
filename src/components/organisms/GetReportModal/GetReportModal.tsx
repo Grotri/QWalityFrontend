@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { IGetReportModal } from "./types";
 import Modal from "../../atoms/Modal";
 import { Text, View } from "react-native";
@@ -29,6 +29,15 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
       setIsFormatDdOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setType("report");
+      setStartDate(null);
+      setEndDate(null);
+      setFormat("0");
+    }
+  }, [isOpen]);
 
   return (
     <View style={styles.wrapper}>

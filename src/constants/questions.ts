@@ -1,4 +1,4 @@
-import { IQuestionSection } from "../components/pages/FAQ/types";
+import { IQuestionSection } from "../model/question";
 
 export const questions: IQuestionSection[] = [
   {

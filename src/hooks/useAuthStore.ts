@@ -1,40 +1,11 @@
 import { create } from "zustand";
 import { IStoreStatus } from "../model/misc";
-import uuid from "react-native-uuid";
 import { EErrors } from "../constants/errors";
+import { emailPattern, innPattern } from "../constants/patterns";
+import uuid from "react-native-uuid";
+import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
 import { showErrorToast, showSuccessToast } from "../helpers/toast";
-import { emailPattern } from "../constants/patterns";
-
-export interface IUser {
-  id: string;
-  inn: string;
-  email: string;
-  password: string;
-  subscription?: string;
-}
-
-export const initialUser: IUser = {
-  id: "",
-  inn: "",
-  email: "",
-  password: "",
-};
-
-interface IErrors {
-  inn: string;
-  email: string;
-  code: string;
-  password: string;
-  agreement: string;
-}
-
-const initialErrors: IErrors = {
-  inn: "",
-  email: "",
-  code: "",
-  password: "",
-  agreement: "",
-};
+import { credits } from "../constants/credits";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -44,9 +15,17 @@ interface IUseAuthStore extends IStoreStatus {
   errors: IErrors;
   setErrorsField: (field: keyof IErrors, error: string) => void;
   clearErrors: () => void;
-  register: (code: string, agreement: boolean) => void;
+  register: (
+    code: string,
+    agreement: boolean,
+    addAccount: (account: IUser) => void
+  ) => void;
   validate: (code: string, agreement: boolean) => boolean;
-  login: (email: string, password: string) => void;
+  login: (
+    email: string,
+    password: string,
+    addAccount: (account: IUser) => void
+  ) => void;
   logout: () => void;
 }
 
@@ -58,14 +37,18 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
 
   clearUser: () => set({ user: { ...initialUser } }),
 
-  setUser: (newUser) => set({ user: { ...newUser } }),
+  setUser: (newUser) => {
+    set({ user: { ...newUser } });
+  },
 
   setUserField: (field, value) =>
     set((state) => ({
       user: { ...state.user, [field]: value },
     })),
 
-  logout: () => set({ user: { ...initialUser } }),
+  logout: () => {
+    set({ user: { ...initialUser } });
+  },
 
   setErrorsField: (field, error) =>
     set((state) => ({ errors: { ...state.errors, [field]: error } })),
@@ -74,17 +57,18 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
 
   validate: (code, agreement) => {
     const { user } = get();
-    const { inn, email, password } = user;
+    const { inn, login, password } = user;
 
     const newErrors: IErrors = {
-      inn: !inn
+      inn:
+        !inn || !inn.trim()
+          ? EErrors.required
+          : !innPattern.test(inn.trim())
+          ? EErrors.inn
+          : "",
+      login: !login.trim()
         ? EErrors.required
-        : inn.length !== 10 && inn.length !== 12
-        ? EErrors.inn
-        : "",
-      email: !email.trim()
-        ? EErrors.required
-        : !emailPattern.test(email.trim())
+        : !emailPattern.test(login.trim())
         ? EErrors.email
         : "",
       code: !code.trim() ? EErrors.required : "",
@@ -100,18 +84,23 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
     return Object.values(newErrors).every((error) => !error);
   },
 
-  register: (code, agreement) => {
-    const { validate } = get();
+  register: (code, agreement, addAccount) => {
+    const { user, validate } = get();
 
     if (validate(code, agreement)) {
       try {
-        set((state) => ({
+        const newUser: IUser = {
+          id: uuid.v4(),
+          login: user.login.trim(),
+          password: user.password.trim(),
+          inn: user.inn?.trim(),
+          role: user.role,
+        };
+        addAccount(newUser);
+        set({
           loading: true,
-          user: {
-            ...state.user,
-            id: uuid.v4(),
-          },
-        }));
+          user: newUser,
+        });
         showSuccessToast("Вы успешно зарегистрировались!");
       } catch (error) {
         console.log(error);
@@ -124,19 +113,21 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
     }
   },
 
-  login: (email, password) => {
+  login: (email, password, addAccount) => {
     try {
-      set({
-        loading: true,
-        user: {
-          id: uuid.v4(),
-          inn: "1122123450",
-          email,
-          password,
-          subscription: "1",
-        },
-      });
-      showSuccessToast("Вы успешно вошли в аккаунт!");
+      const existingAccount = credits.find(
+        (acc) => acc.login === email && acc.password === password
+      );
+      if (existingAccount) {
+        addAccount(existingAccount);
+        set({
+          loading: true,
+          user: existingAccount,
+        });
+        showSuccessToast("Вы успешно вошли в аккаунт!");
+      } else {
+        showErrorToast("Такого аккаунта не существует");
+      }
     } catch (error) {
       console.log(error);
       showErrorToast("Произошла ошибка при входе в аккаунт");

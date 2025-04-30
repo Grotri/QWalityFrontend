@@ -11,13 +11,15 @@ import {
 } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
-import { roles } from "../../../constants/roles";
 import Button from "../../atoms/Button";
 import { palette } from "../../../constants/palette";
 import IconRotated from "../../atoms/IconRotated";
-import { IAccount } from "../../../constants/account";
 import useAccountStore from "../../../hooks/useAccountStore";
 import InputPassword from "../../atoms/InputPassword";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import { IUser } from "../../../model/user";
+import { ERoles } from "../../../constants/roles";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
@@ -29,8 +31,10 @@ const AccountManagement = () => {
     changeError,
     refreshErrors,
   } = useAccountStore();
+  const { user } = useAuthStore();
+  const availableRoles = useAvailableRoles();
   const [activeSections, setActiveSections] = useState<number[]>([]);
-  const [sections, setSections] = useState<IAccount[]>([...accounts]);
+  const [sections, setSections] = useState<IUser[]>([...accounts]);
   const [isDdOpen, setIsDdOpen] = useState<boolean>(false);
 
   const handleSectionChange = (sections: number[]) => {
@@ -39,7 +43,7 @@ const AccountManagement = () => {
 
   const changeAccountField = (
     id: string,
-    field: keyof IAccount,
+    field: keyof IUser,
     value: string
   ) => {
     setSections(
@@ -60,27 +64,35 @@ const AccountManagement = () => {
   }, [activeSections]);
 
   useEffect(() => {
-    setSections([...accounts]);
-  }, [accounts]);
+    const filteredAccounts = accounts.filter((acc) =>
+      availableRoles.includes(acc.role)
+    );
+    setSections([...filteredAccounts]);
+  }, [accounts, user.role]);
 
   useEffect(() => {
     refreshErrors();
-  }, []);
+  }, [refreshErrors]);
 
-  const renderHeader = (section: IAccount, index: number) => (
-    <View style={styles.header}>
-      <View style={styles.headerLeft}>
-        <ProfileIconSmall />
-        <Text style={styles.headerText}>{section.name}</Text>
+  const renderHeader = (section: IUser, index: number) => {
+    const initialUser = accounts.find((account) => account.id === section.id);
+
+    return (
+      <View style={styles.header}>
+        <View style={styles.headerLeft}>
+          <ProfileIconSmall />
+          <Text style={styles.headerText}>{initialUser?.login}</Text>
+        </View>
+        <IconRotated
+          icon={<ArrowTopIcon style={{ transform: [{ scaleY: -1 }] }} />}
+          isActive={activeSections.includes(index)}
+        />
       </View>
-      <IconRotated
-        icon={<ArrowTopIcon style={{ transform: [{ scaleY: -1 }] }} />}
-        isActive={activeSections.includes(index)}
-      />
-    </View>
-  );
+    );
+  };
 
-  const renderContent = (section: IAccount, index: number) => {
+  const renderContent = (section: IUser) => {
+    const index = accounts.findIndex((acc) => acc.id === section.id);
     const error = errors[index] || { login: "", password: "" };
 
     return (
@@ -116,9 +128,9 @@ const AccountManagement = () => {
           iconSize={18}
         />
         <Dropdown
-          data={roles.map((role) => ({
-            value: role.id,
-            label: role.name,
+          data={availableRoles.map((key) => ({
+            value: key,
+            label: ERoles[key as keyof typeof ERoles],
           }))}
           value={section.role}
           setValue={(role) => changeAccountField(section.id, "role", role)}
@@ -140,7 +152,14 @@ const AccountManagement = () => {
           <Button
             color="management"
             style={styles.btn}
-            onPress={() => changeAccount(index, section)}
+            onPress={() =>
+              changeAccount(index, {
+                id: section.id,
+                login: section.login.trim(),
+                password: section.password.trim(),
+                role: section.role,
+              })
+            }
           >
             <Text style={styles.btnText}>Изменить</Text>
           </Button>
@@ -166,7 +185,7 @@ const AccountManagement = () => {
     >
       <TouchableWithoutFeedback onPress={closeDd}>
         <View style={styles.managerWrapper}>
-          {accounts.length > 0 ? (
+          {sections.length > 0 ? (
             <Accordion
               containerStyle={styles.accordion}
               sections={sections}

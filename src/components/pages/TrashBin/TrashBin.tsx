@@ -12,11 +12,13 @@ import { IDefect } from "../Main/types";
 import Defect from "../../molecules/Defect";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
 import useCamerasStore from "../../../hooks/useCamerasStore";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const TrashBin = () => {
   const { navigate } = useMainNavigation();
   const { cameras, recoverDefect, clearTrashBin, clearTrashBinByDates } =
     useCamerasStore();
+  const { user } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -45,7 +47,7 @@ const TrashBin = () => {
       onHeaderClick={() => navigate("Main", { direction: "backward" })}
       isWholeBlurOn={isModalOpen}
       bottomIcon={
-        deletedDefects.length > 0 ? (
+        deletedDefects.length > 0 && user.role !== "user" ? (
           <BottomFixIcon
             icon={<TrashBinIcon width={36} height={36} />}
             text="Очистить"
@@ -66,7 +68,7 @@ const TrashBin = () => {
                 <Defect
                   key={defect.id}
                   defect={defect}
-                  textBtn="Восстановить"
+                  textBtn={user.role !== "user" ? "Восстановить" : undefined}
                   onPress={() => recoverDefect(camera.id, defect.id)}
                 />
               ))

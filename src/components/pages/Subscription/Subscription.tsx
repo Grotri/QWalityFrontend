@@ -6,7 +6,7 @@ import SliderCard from "../../organisms/SliderCard";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
-import { slidersInfo } from "../../../constants/slider";
+import { subscriptions } from "../../../constants/subscriptions";
 
 const Subscription = () => {
   const { setUserField } = useAuthStore();
@@ -35,7 +35,7 @@ const Subscription = () => {
           )}
           <FlatList
             ref={flatListRef}
-            data={slidersInfo}
+            data={subscriptions}
             renderItem={({ item }) => (
               <SliderCard
                 id={item.id}
@@ -58,7 +58,7 @@ const Subscription = () => {
               index,
             })}
           />
-          {currentSlide < slidersInfo.length - 1 && (
+          {currentSlide < subscriptions.length - 1 && (
             <ArrowRightIcon
               style={styles.rightIcon}
               onClick={() => scrollToIndex(currentSlide + 1)}
@@ -66,7 +66,7 @@ const Subscription = () => {
           )}
         </View>
         <View style={styles.dots}>
-          {slidersInfo.map(({ id }) => (
+          {subscriptions.map(({ id }) => (
             <View
               key={id}
               style={id === currentSlide ? styles.activeDot : styles.dot}

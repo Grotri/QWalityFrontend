@@ -24,6 +24,7 @@ import useCamerasStore from "../../../hooks/useCamerasStore";
 import { ESortOptions } from "../CameraSortModal/enums";
 import { filterDefects, sortDefects } from "./utils";
 import { ICameraFilter, initialCameraFilter } from "../CameraFilterModal/types";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -40,6 +41,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
   const { deleteDefect } = useCamerasStore();
+  const { user } = useAuthStore();
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
   const [sortModalCameraId, setSortModalCameraId] = useState<string | null>(
@@ -167,62 +169,68 @@ const CameraAccordion: FC<ICameraAccordion> = ({
     return (
       <Fragment>
         <View style={styles.contentWrapper}>
-          <View style={styles.settingsWrapper}>
-            <View style={styles.settingsIcons}>
-              <Button
-                style={styles.icon}
-                onPress={() => {
-                  setSelectedCamera(camera);
-                }}
-              >
-                <SettingsIcon width={19} height={19} stroke={2} />
-                <Text style={styles.iconTitle}>Настроить</Text>
-              </Button>
-              {defects.length > 0 && (
-                <>
+          {(user.role !== "user" || defects.length > 0) && (
+            <View style={styles.settingsWrapper}>
+              <View style={styles.settingsIcons}>
+                {user.role !== "user" && (
                   <Button
                     style={styles.icon}
                     onPress={() => {
-                      setSortModalCameraId(camera.id);
-                      setIsSortCameraModalOpen(true);
+                      setSelectedCamera(camera);
                     }}
                   >
-                    <SortIcon
-                      color={sortOption ? palette.brightBlue : palette.white}
-                    />
-                    <Text
-                      style={[
-                        styles.iconTitle,
-                        sortOption && styles.activeOption,
-                      ]}
-                    >
-                      Сортировать
-                    </Text>
+                    <SettingsIcon width={19} height={19} stroke={2} />
+                    <Text style={styles.iconTitle}>Настроить</Text>
                   </Button>
-                  <Button
-                    style={styles.icon}
-                    onPress={() => {
-                      setFilterModalCameraId(camera.id);
-                      setIsFilterCameraModalOpen(true);
-                    }}
-                  >
-                    <FilterIcon
-                      color={filterOption ? palette.brightBlue : palette.white}
-                    />
-                    <Text
-                      style={[
-                        styles.iconTitle,
-                        filterOption && styles.activeOption,
-                      ]}
+                )}
+                {defects.length > 0 && (
+                  <>
+                    <Button
+                      style={styles.icon}
+                      onPress={() => {
+                        setSortModalCameraId(camera.id);
+                        setIsSortCameraModalOpen(true);
+                      }}
                     >
-                      Фильтровать
-                    </Text>
-                  </Button>
-                </>
-              )}
+                      <SortIcon
+                        color={sortOption ? palette.brightBlue : palette.white}
+                      />
+                      <Text
+                        style={[
+                          styles.iconTitle,
+                          sortOption && styles.activeOption,
+                        ]}
+                      >
+                        Сортировать
+                      </Text>
+                    </Button>
+                    <Button
+                      style={styles.icon}
+                      onPress={() => {
+                        setFilterModalCameraId(camera.id);
+                        setIsFilterCameraModalOpen(true);
+                      }}
+                    >
+                      <FilterIcon
+                        color={
+                          filterOption ? palette.brightBlue : palette.white
+                        }
+                      />
+                      <Text
+                        style={[
+                          styles.iconTitle,
+                          filterOption && styles.activeOption,
+                        ]}
+                      >
+                        Фильтровать
+                      </Text>
+                    </Button>
+                  </>
+                )}
+              </View>
+              <View style={styles.horizontalLine} />
             </View>
-            <View style={styles.horizontalLine} />
-          </View>
+          )}
           <View
             style={[
               styles.defects,
@@ -236,7 +244,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
                 <Defect
                   key={defect.id}
                   defect={defect}
-                  textBtn="Скрыть"
+                  textBtn={user.role !== "user" ? "Скрыть" : undefined}
                   setSelectedDefect={setSelectedDefect}
                   onPress={() => deleteDefect(camera.id, defect.id)}
                   pressableIcon

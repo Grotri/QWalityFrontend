@@ -7,25 +7,22 @@ import Button from "../../atoms/Button";
 import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
-import { emailPattern } from "../../../constants/patterns";
 import { showErrorToast } from "../../../helpers/toast";
 import useAuthStore from "../../../hooks/useAuthStore";
 import InputPassword from "../../atoms/InputPassword";
+import useAccountStore from "../../../hooks/useAccountStore";
 
 const Login = () => {
   const { navigate } = useAuthNavigation();
   const { login } = useAuthStore();
+  const { addAccount } = useAccountStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
 
   const validate = (): boolean => {
     const newErrors: IErrors = {
-      email: !email.trim()
-        ? EErrors.required
-        : !emailPattern.test(email.trim())
-        ? EErrors.email
-        : "",
+      email: !email.trim() ? EErrors.required : "",
       password: !password.trim()
         ? EErrors.required
         : password.trim().length < 8
@@ -39,7 +36,7 @@ const Login = () => {
 
   const changePassword = () => {
     if (validate()) {
-      login(email, password);
+      login(email.trim(), password.trim(), addAccount);
     } else {
       showErrorToast(EErrors.fields);
     }

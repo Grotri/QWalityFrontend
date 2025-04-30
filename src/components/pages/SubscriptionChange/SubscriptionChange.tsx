@@ -7,13 +7,22 @@ import Button from "../../atoms/Button";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
-import { slidersInfo } from "../../../constants/slider";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import { showSuccessToast } from "../../../helpers/toast";
+import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
+import useCamerasStore from "../../../hooks/useCamerasStore";
+import useAccountStore from "../../../hooks/useAccountStore";
+import {
+  accountLimits,
+  cameraLimits,
+  subscriptions,
+} from "../../../constants/subscriptions";
+import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
 
 const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
+  const { cameras } = useCamerasStore();
+  const { accounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(
     user.subscription ? +user.subscription : 0
   );
@@ -23,6 +32,40 @@ const SubscriptionChange = () => {
     if (flatListRef.current) {
       flatListRef.current.scrollToIndex({ index, animated: true });
       setCurrentSlide(index);
+    }
+  };
+
+  const handleChangeSubscription = (sliderId: string) => {
+    const camerasLimit = cameraLimits[sliderId];
+    const accountLimit = accountLimits[sliderId];
+    const allowedRoles = getAllowedRolesBySubscription(sliderId);
+
+    const hasTooManyAccounts = accountLimit < accounts.length;
+    const hasTooManyCameras = camerasLimit < cameras.length;
+    const invalidAccounts = accounts.filter(
+      (account) => !allowedRoles.includes(account.role)
+    );
+
+    if (hasTooManyAccounts) {
+      showErrorToast(
+        "Вы не можете перейти на этот тариф, так как у вас больше суб-аккаунтов, чем в лимите"
+      );
+    } else if (hasTooManyCameras) {
+      showErrorToast(
+        "Вы не можете перейти на этот тариф, так как у вас больше камер, чем в лимите"
+      );
+    } else if (invalidAccounts.length > 0) {
+      const rolesList = [...new Set(invalidAccounts.map((a) => a.role))].join(
+        ", "
+      );
+      showErrorToast(
+        `Нельзя перейти на этот тариф, так как у вас есть аккаунты с ролями: ${rolesList}, которые не входят в разрешённые роли этого тарифа`,
+        { duration: 3000 }
+      );
+    } else {
+      setUserField("subscription", sliderId);
+      navigate("Profile", { direction: "backward" });
+      showSuccessToast("Вы успешно поменяли уровень подписки");
     }
   };
 
@@ -42,7 +85,7 @@ const SubscriptionChange = () => {
           )}
           <FlatList
             ref={flatListRef}
-            data={slidersInfo}
+            data={subscriptions}
             renderItem={({ item }) => (
               <SliderCard
                 id={item.id}
@@ -51,11 +94,7 @@ const SubscriptionChange = () => {
                 description={item.description}
                 radioLabels={item.radioLabels}
                 price={item.price}
-                onPress={() => {
-                  setUserField("subscription", item.id.toString());
-                  navigate("Profile", { direction: "backward" });
-                  showSuccessToast("Вы успешно поменяли уровень подписки");
-                }}
+                onPress={() => handleChangeSubscription(item.id.toString())}
               />
             )}
             keyExtractor={({ id }) => id.toString()}
@@ -70,7 +109,7 @@ const SubscriptionChange = () => {
               index,
             })}
           />
-          {currentSlide < slidersInfo.length - 1 && (
+          {currentSlide < subscriptions.length - 1 && (
             <ArrowRightIcon
               style={styles.rightIcon}
               onClick={() => scrollToIndex(currentSlide + 1)}
@@ -78,7 +117,7 @@ const SubscriptionChange = () => {
           )}
         </View>
         <View style={styles.dots}>
-          {slidersInfo.map(({ id }) => (
+          {subscriptions.map(({ id }) => (
             <View
               key={id}
               style={id === currentSlide ? styles.activeDot : styles.dot}

@@ -1,58 +1,10 @@
-import { ICamera } from "../components/pages/Main/types";
-
-export const initialCamera: ICamera = {
-  id: "",
-  online: true,
-  title: "",
-  uptime: "",
-  defects: [],
-  link: "",
-};
+import { ICamera } from "../model/camera";
 
 export const initialCameras: ICamera[] = [
   {
     id: "camera_1",
     online: true,
     title: "Камера 1",
-    link: "https://swagatyt.gg/heatvision1",
-    uptime: "1д 16ч 3м",
-    defects: [
-      {
-        id: "_d1",
-        name: "Повреждение",
-        date: "2025-03-13T13:21:03Z",
-        isDeleted: true,
-      },
-      {
-        id: "_d2",
-        name: "Смещение",
-        date: "2025-03-12T16:21:04Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d3",
-        name: "Смещение",
-        date: "2025-03-14T14:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d4",
-        name: "Неверная сборка",
-        date: "2025-03-15T23:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d5",
-        name: "Повреждение",
-        date: "2025-03-12T16:21:03Z",
-        isDeleted: false,
-      },
-    ],
-  },
-  {
-    id: "camera_2",
-    online: true,
-    title: "Камера 2",
     uptime: "1д 16ч 3м",
     link: "https://swagatyt.gg/heatvision2",
     defects: [
@@ -66,7 +18,7 @@ export const initialCameras: ICamera[] = [
         id: "d2",
         name: "Смещение",
         date: "2025-03-12T08:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d3",
@@ -108,7 +60,7 @@ export const initialCameras: ICamera[] = [
         id: "d9",
         name: "Повреждение",
         date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d10",
@@ -144,7 +96,7 @@ export const initialCameras: ICamera[] = [
         id: "d15",
         name: "Повреждение",
         date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
+        isDeleted: true,
       },
       {
         id: "d16",
@@ -413,123 +365,6 @@ export const initialCameras: ICamera[] = [
       {
         id: "d60",
         name: "Скол_12",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-    ],
-  },
-  {
-    id: "camera_3",
-    online: false,
-    title: "Камера 3",
-    link: "https://swagatyt.gg/heatvision3",
-    uptime: "1д 16ч 3м",
-    defects: [
-      {
-        id: "_d100",
-        name: "Поверхностный дефект",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d101",
-        name: "Неверная сборка",
-        date: "2025-03-12T08:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d102",
-        name: "Смещение",
-        date: "2025-03-12T20:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d103",
-        name: "Отсутствует элемент",
-        date: "2025-03-12T19:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d104",
-        name: "Повреждение",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-    ],
-  },
-  {
-    id: "camera_4",
-    online: false,
-    title: "Камера 4",
-    link: "https://swagatyt.gg/heatvision3",
-    uptime: "1д 16ч 3м",
-    defects: [
-      {
-        id: "_d200",
-        name: "Поверхностный дефект",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d201",
-        name: "Неверная сборка",
-        date: "2025-03-12T08:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d202",
-        name: "Смещение",
-        date: "2025-03-12T20:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d203",
-        name: "Отсутствует элемент",
-        date: "2025-03-12T19:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d204",
-        name: "Повреждение",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-    ],
-  },
-  {
-    id: "camera_5",
-    online: false,
-    title: "Камера 5",
-    link: "https://swagatyt.gg/heatvision3",
-    uptime: "1д 16ч 3м",
-    defects: [
-      {
-        id: "_d300",
-        name: "Поверхностный дефект",
-        date: "2025-03-12T13:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d301",
-        name: "Неверная сборка",
-        date: "2025-03-12T08:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d302",
-        name: "Смещение",
-        date: "2025-03-12T20:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d303",
-        name: "Отсутствует элемент",
-        date: "2025-03-12T19:21:03Z",
-        isDeleted: false,
-      },
-      {
-        id: "_d304",
-        name: "Повреждение",
         date: "2025-03-12T13:21:03Z",
         isDeleted: false,
       },

@@ -37,9 +37,11 @@ const Defect: FC<IDefectItem> = ({
           <Text style={styles.itemDate}>{convertISODate(date)}</Text>
         </View>
       </View>
-      <Button onPress={onPress}>
-        <Text style={styles.btnText}>{textBtn}</Text>
-      </Button>
+      {textBtn && (
+        <Button onPress={onPress}>
+          <Text style={styles.btnText}>{textBtn}</Text>
+        </Button>
+      )}
     </View>
   );
 };

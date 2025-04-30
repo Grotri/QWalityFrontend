@@ -1,4 +1,4 @@
-import { IDropdownData } from "../../atoms/Dropdown/types";
+import { IDropdownData } from "../components/atoms/Dropdown/types";
 
 export const settingsItems: IDropdownData[] = [
   {
