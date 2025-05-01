@@ -10,8 +10,14 @@ export interface IMainRoute {
   component: ComponentType;
 }
 
+export interface ISubscriptionRoute {
+  name: keyof TypeSubscriptionStackParamList;
+  component: ComponentType;
+}
+
 type NavigationParams = {
   direction?: "backward";
+  sliderId?: string;
 };
 
 export type TypeAuthStackParamList = {
@@ -30,4 +36,9 @@ export type TypeMainStackParamList = {
   Settings: NavigationParams | undefined;
   TrashBin: NavigationParams | undefined;
   SubscriptionChange: NavigationParams | undefined;
+};
+
+export type TypeSubscriptionStackParamList = {
+  Subscription: NavigationParams | undefined;
+  Payment: NavigationParams | undefined;
 };
