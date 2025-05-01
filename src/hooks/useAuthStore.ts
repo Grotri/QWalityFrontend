@@ -26,7 +26,7 @@ interface IUseAuthStore extends IStoreStatus {
     password: string,
     addAccount: (account: IUser) => void
   ) => void;
-  logout: () => void;
+  logout: (clearAccounts: () => void) => void;
 }
 
 const useAuthStore = create<IUseAuthStore>((set, get) => ({
@@ -46,8 +46,9 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
       user: { ...state.user, [field]: value },
     })),
 
-  logout: () => {
+  logout: (clearAccounts) => {
     set({ user: { ...initialUser } });
+    clearAccounts();
   },
 
   setErrorsField: (field, error) =>
@@ -120,6 +121,9 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
       );
       if (existingAccount) {
         addAccount(existingAccount);
+        if (existingAccount.role === "administrator") {
+          addAccount(credits[3]);
+        }
         set({
           loading: true,
           user: existingAccount,

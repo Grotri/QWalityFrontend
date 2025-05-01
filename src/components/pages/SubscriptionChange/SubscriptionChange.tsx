@@ -22,7 +22,7 @@ const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
   const { cameras } = useCamerasStore();
-  const { accounts } = useAccountStore();
+  const { accounts, clearAccounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(
     user.subscription ? +user.subscription : 0
   );
@@ -63,9 +63,13 @@ const SubscriptionChange = () => {
         { duration: 3000 }
       );
     } else {
-      setUserField("subscription", sliderId);
-      navigate("Profile", { direction: "backward" });
-      showSuccessToast("Вы успешно поменяли уровень подписки");
+      if (sliderId === "0") {
+        setUserField("subscription", sliderId);
+        navigate("Profile", { direction: "backward" });
+        showSuccessToast("Вы успешно поменяли уровень подписки");
+      } else {
+        navigate("PaymentChange", { sliderId });
+      }
     }
   };
 
@@ -124,7 +128,11 @@ const SubscriptionChange = () => {
             />
           ))}
         </View>
-        <Button color="welcomeBlue" style={styles.cancelBtn} onPress={logout}>
+        <Button
+          color="welcomeBlue"
+          style={styles.cancelBtn}
+          onPress={() => logout(clearAccounts)}
+        >
           <Text style={styles.cancelBtnText}>Отменить подписку</Text>
         </Button>
       </View>

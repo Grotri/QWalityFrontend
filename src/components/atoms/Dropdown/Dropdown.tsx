@@ -52,6 +52,7 @@ const Dropdown: FC<IDropdown> = ({
         dropDownContainerStyle={{ borderColor }}
         listItemContainerStyle={[styles.item, itemContainerStyle]}
         selectedItemContainerStyle={styles.selectedItem}
+        listMessageTextStyle={{ color: palette.black }}
         showTickIcon={false}
         ArrowDownIconComponent={renderIcon}
         ArrowUpIconComponent={renderIcon}
