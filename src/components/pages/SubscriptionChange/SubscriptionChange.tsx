@@ -22,7 +22,7 @@ const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
   const { cameras } = useCamerasStore();
-  const { accounts } = useAccountStore();
+  const { accounts, clearAccounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(
     user.subscription ? +user.subscription : 0
   );
@@ -124,7 +124,11 @@ const SubscriptionChange = () => {
             />
           ))}
         </View>
-        <Button color="welcomeBlue" style={styles.cancelBtn} onPress={logout}>
+        <Button
+          color="welcomeBlue"
+          style={styles.cancelBtn}
+          onPress={() => logout(clearAccounts)}
+        >
           <Text style={styles.cancelBtnText}>Отменить подписку</Text>
         </Button>
       </View>

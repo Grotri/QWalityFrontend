@@ -24,6 +24,7 @@ interface IUseAccountStore extends IStoreStatus {
   refreshErrors: () => void;
   validate: (newAccount: IUser, index: number) => boolean;
   deleteAccount: (index: number) => void;
+  clearAccounts: () => void;
 }
 
 const useAccountStore = create<IUseAccountStore>((set, get) => ({
@@ -147,6 +148,10 @@ const useAccountStore = create<IUseAccountStore>((set, get) => ({
   refreshErrors: () => {
     const { accounts } = get();
     set({ errors: accounts.map(() => ({ login: "", password: "" })) });
+  },
+
+  clearAccounts: () => {
+    set({ accounts: [] });
   },
 }));
 

@@ -12,10 +12,12 @@ import Input from "../../atoms/Input";
 import { EErrors } from "../../../constants/errors";
 import { showErrorToast } from "../../../helpers/toast";
 import { settingsItems } from "../../../constants/settingsItems";
+import useAccountStore from "../../../hooks/useAccountStore";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
   const { user, logout } = useAuthStore();
+  const { clearAccounts } = useAccountStore();
 
   const [isFirstDDOpen, setIsFirstDDOpen] = useState<boolean>(false);
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
@@ -40,7 +42,7 @@ const Settings = () => {
       setError(EErrors.required);
       showErrorToast("Сначала введите код");
     } else {
-      logout();
+      logout(clearAccounts);
     }
   };
 
@@ -119,7 +121,11 @@ const Settings = () => {
         <View style={styles.modal}>
           <Text style={styles.modalText}>Вы точно хотите выйти?</Text>
           <View style={styles.modalBtns}>
-            <Button style={styles.modalBtn} color="blue" onPress={logout}>
+            <Button
+              style={styles.modalBtn}
+              color="blue"
+              onPress={() => logout(clearAccounts)}
+            >
               <Text style={styles.modalBtnText}>Да</Text>
             </Button>
             <Button
