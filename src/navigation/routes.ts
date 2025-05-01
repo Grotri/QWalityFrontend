@@ -6,6 +6,7 @@ import Home from "../components/pages/Home";
 import Login from "../components/pages/Login";
 import Main from "../components/pages/Main";
 import Payment from "../components/pages/Payment";
+import PaymentChange from "../components/pages/PaymentChange";
 import Profile from "../components/pages/Profile";
 import Registration from "../components/pages/Registration";
 import Settings from "../components/pages/Settings";
@@ -46,6 +47,10 @@ export const mainRoutes: IMainRoute[] = [
   {
     name: "SubscriptionChange",
     component: SubscriptionChange,
+  },
+  {
+    name: "PaymentChange",
+    component: PaymentChange,
   },
 ];
 

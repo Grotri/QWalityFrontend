@@ -36,6 +36,7 @@ export type TypeMainStackParamList = {
   Settings: NavigationParams | undefined;
   TrashBin: NavigationParams | undefined;
   SubscriptionChange: NavigationParams | undefined;
+  PaymentChange: NavigationParams | undefined;
 };
 
 export type TypeSubscriptionStackParamList = {

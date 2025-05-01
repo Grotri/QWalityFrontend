@@ -63,9 +63,13 @@ const SubscriptionChange = () => {
         { duration: 3000 }
       );
     } else {
-      setUserField("subscription", sliderId);
-      navigate("Profile", { direction: "backward" });
-      showSuccessToast("Вы успешно поменяли уровень подписки");
+      if (sliderId === "0") {
+        setUserField("subscription", sliderId);
+        navigate("Profile", { direction: "backward" });
+        showSuccessToast("Вы успешно поменяли уровень подписки");
+      } else {
+        navigate("PaymentChange", { sliderId });
+      }
     }
   };
 
