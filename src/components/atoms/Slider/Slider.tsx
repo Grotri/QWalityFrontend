@@ -1,11 +1,11 @@
+import { Slider as ReactSlider } from "@miblanchard/react-native-slider";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
 import { TooltipIcon } from "../../../../assets/icons";
-import { Slider as ReactSlider } from "@miblanchard/react-native-slider";
 import { screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { getStyles } from "./styles";
 
 const Slider = () => {
   const { user } = useAuthStore();

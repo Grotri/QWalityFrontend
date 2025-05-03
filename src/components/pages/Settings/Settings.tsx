@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
-import PageTemplate from "../../templates/PageTemplate";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { Keyboard, Text, View } from "react-native";
-import { getStyles } from "./styles";
-import Dropdown from "../../atoms/Dropdown";
 import { ArrowBottomIcon } from "../../../../assets/icons";
-import Button from "../../atoms/Button";
-import Modal from "../../atoms/Modal";
-import useAuthStore from "../../../hooks/useAuthStore";
-import Input from "../../atoms/Input";
 import { EErrors } from "../../../constants/errors";
-import { showErrorToast } from "../../../helpers/toast";
 import { settingsItems } from "../../../constants/settingsItems";
+import { showErrorToast } from "../../../helpers/toast";
 import useAccountStore from "../../../hooks/useAccountStore";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import Button from "../../atoms/Button";
+import Dropdown from "../../atoms/Dropdown";
+import Input from "../../atoms/Input";
+import Modal from "../../atoms/Modal";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
@@ -56,13 +56,17 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    if (isFirstDDOpen && isSecondDDOpen) {
+    if (isFirstDDOpen) {
+      setIsSecondDDOpen(false);
+      setIsThemeDDOpen(false);
+    } else if (isSecondDDOpen) {
+      setIsFirstDDOpen(false);
+      setIsThemeDDOpen(false);
+    } else if (isThemeDDOpen) {
+      setIsFirstDDOpen(false);
       setIsSecondDDOpen(false);
     }
-    if ((isFirstDDOpen || isSecondDDOpen) && isThemeDDOpen) {
-      setIsThemeDDOpen(false);
-    }
-  }, [isFirstDDOpen, isSecondDDOpen]);
+  }, [isFirstDDOpen, isSecondDDOpen, isThemeDDOpen]);
 
   useEffect(() => {
     if (!isDeleteModalOpen) {
@@ -91,7 +95,7 @@ const Settings = () => {
                 value={isAutoDelete}
                 setIsOpen={setIsFirstDDOpen}
                 isOpen={isFirstDDOpen}
-                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 3 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />
@@ -104,7 +108,7 @@ const Settings = () => {
                 value={isAutoClear}
                 setIsOpen={setIsSecondDDOpen}
                 isOpen={isSecondDDOpen}
-                wrapperStyle={styles.wrapperStyle}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />

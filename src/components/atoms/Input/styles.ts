@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -17,7 +17,7 @@ export const getStyles = (theme: "light" | "dark") => {
       paddingLeft: 4,
     },
     input: {
-      backgroundColor: palette.white,
+      backgroundColor: palette.inputDefaultBg,
       borderRadius: 8,
       height: 30,
       paddingVertical: 0,

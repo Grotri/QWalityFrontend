@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import Svg, { Defs, Path, RadialGradient, Stop } from "react-native-svg";
-import { IRadialGradientBg } from "./types";
 import { usePalette } from "../../../hooks/usePalette";
+import { IRadialGradientBg } from "./types";
 
 const RadialGradientBg: FC<IRadialGradientBg> = ({
   screenWidth,

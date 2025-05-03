@@ -10,7 +10,10 @@ export const baseColors = {
   blueTransparent: "rgba(21, 116, 224, 0.6)",
   brightBlueTransparent: "rgba(0, 200, 255, 0.85)",
   error: "rgb(255, 0, 0)",
-  info: "rgb(255, 136, 0)",
+
+  infoToast: "rgb(255, 136, 0)",
+  errorToast: "rgb(255, 0, 0)",
+  successToast: "rgb(32, 214, 77)",
 };
 
 export const palette = {
@@ -74,4 +77,6 @@ export const palette = {
   trashItemImageBg: "#BCBCBC",
   datePickerBg: "rgba(0, 0, 0, 0.2)",
   darkBlueBtnBg: baseColors.darkBlue,
+  inputDefaultBg: baseColors.white,
+  btnChoosen: baseColors.blue,
 };

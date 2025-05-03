@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { ISliderCard } from "./types";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
-import Radio from "../../atoms/Radio";
-import Button from "../../atoms/Button";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import Button from "../../atoms/Button";
+import Radio from "../../atoms/Radio";
+import { getStyles } from "./styles";
+import { ISliderCard } from "./types";
 
 const SliderCard: FC<ISliderCard> = ({
   id,
@@ -50,7 +50,7 @@ const SliderCard: FC<ISliderCard> = ({
         <View style={styles.bottomView}>
           <Text style={styles.price}>{price} руб. в месяц</Text>
           {currentId !== undefined && currentId === id ? (
-            <View style={[styles.btn, { backgroundColor: palette.blue }]}>
+            <View style={[styles.btn, { backgroundColor: palette.btnChoosen }]}>
               <Text style={styles.btnText}>Выбрано</Text>
             </View>
           ) : (

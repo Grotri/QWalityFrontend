@@ -1,10 +1,10 @@
-import React, { FC } from "react";
-import { IInput } from "./types";
-import { Platform, Text, TextInput, View } from "react-native";
-import { getStyles } from "./styles";
 import * as NavigationBar from "expo-navigation-bar";
+import React, { FC } from "react";
+import { Platform, Text, TextInput, View } from "react-native";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { getStyles } from "./styles";
+import { IInput } from "./types";
 
 const Input: FC<IInput> = ({
   value,
