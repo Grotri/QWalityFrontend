@@ -96,6 +96,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
           password: user.password.trim(),
           inn: user.inn?.trim(),
           role: user.role,
+          theme: "dark",
         };
         addAccount(newUser);
         set({
