@@ -5,51 +5,35 @@ import {
   ErrorToast,
   InfoToast,
 } from "react-native-toast-message";
-import { palette } from "../constants/palette";
 import { usePalette } from "../hooks/usePalette";
 
 export const toastConfig = () => {
-  const themePalette = usePalette();
+  const palette = usePalette();
+
+  const baseStyle = {
+    marginTop: 12,
+    borderLeftColor: palette.mainText,
+  };
+
+  const text1Style = {
+    color: palette.mainText,
+    fontSize: 14,
+  };
+
+  const createToast =
+    (Component: typeof BaseToast, bgColor: string) =>
+    (props: JSX.IntrinsicAttributes & BaseToastProps) =>
+      (
+        <Component
+          {...props}
+          style={{ ...baseStyle, backgroundColor: bgColor }}
+          text1Style={text1Style}
+        />
+      );
 
   return {
-    success: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-      <BaseToast
-        {...props}
-        style={{
-          backgroundColor: palette.greenOnline,
-          marginTop: 12,
-          borderLeftColor: themePalette.mainText,
-        }}
-        text1Style={{
-          color: palette.mainText,
-        }}
-      />
-    ),
-    error: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-      <ErrorToast
-        {...props}
-        style={{
-          backgroundColor: palette.red,
-          marginTop: 12,
-          borderLeftColor: themePalette.mainText,
-        }}
-        text1Style={{
-          color: palette.mainText,
-        }}
-      />
-    ),
-    info: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-      <InfoToast
-        {...props}
-        style={{
-          backgroundColor: palette.info,
-          marginTop: 12,
-          borderLeftColor: themePalette.mainText,
-        }}
-        text1Style={{
-          color: palette.mainText,
-        }}
-      />
-    ),
+    success: createToast(BaseToast, palette.successToast),
+    error: createToast(ErrorToast, palette.errorToast),
+    info: createToast(InfoToast, palette.infoToast),
   };
 };
