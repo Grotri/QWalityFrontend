@@ -1,13 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { Platform, StatusBar, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import { palette } from "../constants/palette";
 import { toastConfig } from "../helpers/toastConfig";
 import useAuthStore from "../hooks/useAuthStore";
+import { usePalette } from "../hooks/usePalette";
 import { authRoutes, mainRoutes, subscriptionRoutes } from "./routes";
 import {
   TypeAuthStackParamList,
@@ -77,14 +77,17 @@ const SubscriptionTabs = () => (
 
 export const Navigation = () => {
   const { user } = useAuthStore();
+  const palette = usePalette();
 
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView style={styles.container}>
-        <View style={styles.container}>
+      <GestureHandlerRootView style={{ flex: 1, backgroundColor: palette.bg }}>
+        <View style={{ flex: 1, backgroundColor: palette.bg }}>
           <NavigationContainer>
             <StatusBar
-              barStyle="light-content"
+              barStyle={
+                user.theme === "light" ? "dark-content" : "light-content"
+              }
               hidden={Platform.OS !== "ios"}
             />
             <RootStack.Navigator
@@ -106,15 +109,8 @@ export const Navigation = () => {
             </RootStack.Navigator>
           </NavigationContainer>
         </View>
-        <Toast config={toastConfig} />
+        <Toast config={toastConfig()} />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: palette.bg,
-  },
-});
