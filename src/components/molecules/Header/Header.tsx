@@ -3,11 +3,9 @@ import { Keyboard, Text, TouchableWithoutFeedback, View } from "react-native";
 import { ArrowLeftIcon } from "../../../../assets/icons";
 import { getStyles } from "./styles";
 import { IHeader } from "./types";
-import useAuthStore from "../../../hooks/useAuthStore";
 
 const Header: FC<IHeader> = ({ onClick, headerText, underlined }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

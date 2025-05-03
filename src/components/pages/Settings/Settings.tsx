@@ -19,7 +19,7 @@ const Settings = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
   const { clearAccounts } = useAccountStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
 
   const [isFirstDDOpen, setIsFirstDDOpen] = useState<boolean>(false);
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
@@ -111,7 +111,7 @@ const Settings = () => {
                 value={isAutoDelete}
                 setIsOpen={setIsFirstDDOpen}
                 isOpen={isFirstDDOpen}
-                wrapperStyle={[styles.wrapperStyle, { zIndex: 3 }]}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 4 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />
@@ -124,7 +124,7 @@ const Settings = () => {
                 value={isAutoClear}
                 setIsOpen={setIsSecondDDOpen}
                 isOpen={isSecondDDOpen}
-                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 3 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />
@@ -137,7 +137,7 @@ const Settings = () => {
                 value={user.theme === "dark" ? "No" : "Yes"}
                 setIsOpen={setIsThemeDDOpen}
                 isOpen={isThemeDDOpen}
-                wrapperStyle={styles.wrapperStyle}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />

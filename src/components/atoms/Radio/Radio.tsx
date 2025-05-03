@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import { Pressable, Text, View } from "react-native";
-import { IRadio } from "./types";
 import { getStyles } from "./styles";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { IRadio } from "./types";
 
 const Radio: FC<IRadio> = ({
   label,
@@ -12,8 +11,7 @@ const Radio: FC<IRadio> = ({
   labelStyle,
   radioWrapperStyle,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
 
   return (
     <Pressable onPress={setIsChecked} style={[styles.wrapper, style]}>

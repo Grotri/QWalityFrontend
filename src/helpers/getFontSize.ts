@@ -6,12 +6,6 @@ const scaleFontSize = {
   large: 1.175,
 };
 
-const scaleLineHeight = {
-  small: 1,
-  default: 1,
-  large: 1.175,
-};
-
 export const getFontSize = (base: number): number => {
   const fontSize = useAuthStore.getState().user.fontSize;
   return base * scaleFontSize[fontSize];
@@ -19,5 +13,5 @@ export const getFontSize = (base: number): number => {
 
 export const getLineHeight = (base: number): number => {
   const fontSize = useAuthStore.getState().user.fontSize;
-  return base * scaleLineHeight[fontSize];
+  return base * scaleFontSize[fontSize];
 };

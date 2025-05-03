@@ -1,11 +1,11 @@
 import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { TFontSize } from "@/src/model/user";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../constants/fonts";
-import { getPalette } from "../../../helpers/getPalette";
 
-export const getStyles = (theme: "light" | "dark", font: TFontSize) => {
-  const palette = getPalette(theme);
+export const getStyles = (font: TFontSize) => {
+  const palette = usePalette();
   const itemHeight = font === "large" ? 26 : 22;
 
   return StyleSheet.create({

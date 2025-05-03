@@ -1,10 +1,10 @@
 import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../constants/fonts";
-import { getPalette } from "../../../helpers/getPalette";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     wrapper: {
@@ -104,6 +104,7 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     customInputStyles: {
       height: 27,
+      color: "#000033",
       fontFamily: fonts.semibold,
     },
     customLabelStyles: {

@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Text, View } from "react-native";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
 import Button from "../../atoms/Button";
 import Radio from "../../atoms/Radio";
@@ -17,8 +16,7 @@ const SliderCard: FC<ISliderCard> = ({
   price,
   onPress,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
 
   const isSmallHeight = screenHeight < 700;

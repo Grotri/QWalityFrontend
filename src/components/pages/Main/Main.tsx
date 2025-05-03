@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
-import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
-import { getStyles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import {
   ArrowAccordionIcon,
   PlusIcon,
   SearchIcon,
 } from "../../../../assets/icons";
-import Input from "../../atoms/Input";
-import CameraAccordion from "../../organisms/CameraAccordion";
-import IconRotated from "../../atoms/IconRotated";
-import AddCameraModal from "../../organisms/AddCameraModal";
-import { ICamera, IDefect } from "./types";
-import BottomFixIcon from "../../molecules/BottomFixIcon";
-import useCamerasStore from "../../../hooks/useCamerasStore";
+import { showErrorToast } from "../../../helpers/toast";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
 import useAuthStore from "../../../hooks/useAuthStore";
-import { showErrorToast } from "../../../helpers/toast";
+import useCamerasStore from "../../../hooks/useCamerasStore";
 import { usePalette } from "../../../hooks/usePalette";
+import IconRotated from "../../atoms/IconRotated";
+import Input from "../../atoms/Input";
+import BottomFixIcon from "../../molecules/BottomFixIcon";
+import AddCameraModal from "../../organisms/AddCameraModal";
+import CameraAccordion from "../../organisms/CameraAccordion";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
+import { ICamera, IDefect } from "./types";
 
 const Main = () => {
   const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const { cameras: camerasInfo } = useCamerasStore();
   const cameraLimits = useCameraLimits();

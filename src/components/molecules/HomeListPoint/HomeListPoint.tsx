@@ -1,14 +1,12 @@
-import React, { FC } from "react";
-import { IHomeListPoint } from "./types";
 import { LinearGradient } from "expo-linear-gradient";
+import React, { FC } from "react";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { getStyles } from "./styles";
+import { IHomeListPoint } from "./types";
 
 const HomeListPoint: FC<IHomeListPoint> = ({ text }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
 
   return (

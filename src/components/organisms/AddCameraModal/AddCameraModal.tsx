@@ -1,18 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import { IAddCameraModal } from "./types";
 import { Text, View } from "react-native";
+import { CrossIcon } from "../../../../assets/icons";
+import useCamerasStore from "../../../hooks/useCamerasStore";
+import { usePalette } from "../../../hooks/usePalette";
+import Button from "../../atoms/Button";
+import Input from "../../atoms/Input";
 import Modal from "../../atoms/Modal";
 import { getStyles } from "./styles";
-import { CrossIcon } from "../../../../assets/icons";
-import Input from "../../atoms/Input";
-import Button from "../../atoms/Button";
-import useCamerasStore from "../../../hooks/useCamerasStore";
-import useAuthStore from "../../../hooks/useAuthStore";
-import { usePalette } from "../../../hooks/usePalette";
+import { IAddCameraModal } from "./types";
 
 const AddCameraModal: FC<IAddCameraModal> = ({ isOpen, setIsOpen }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const { addCamera, errors, setErrorsField, refreshErrors } =
     useCamerasStore();

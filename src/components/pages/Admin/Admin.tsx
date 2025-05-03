@@ -9,7 +9,6 @@ import { showErrorToast } from "../../../helpers/toast";
 import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import useAccountStore from "../../../hooks/useAccountStore";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { IUser } from "../../../model/user";
@@ -25,8 +24,7 @@ import { IErrors, initialErrors } from "./types";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const { accounts, registerAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();

@@ -3,13 +3,11 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { TooltipIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
 import { getStyles } from "./styles";
 
 const Slider = () => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
 
   const initialConfidence = 0.75;

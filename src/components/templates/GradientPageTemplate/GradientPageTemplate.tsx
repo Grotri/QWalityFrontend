@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
-import useAuthStore from "../../../hooks/useAuthStore";
 import RadialGradientBg from "../../atoms/RadialGradient";
 import Header from "../../molecules/Header";
 import { getStyles } from "./styles";
@@ -24,8 +23,7 @@ const GradientPageTemplate = forwardRef(
     }: PropsWithChildren<IGradientPageTemplate>,
     scrollRef: Ref<ScrollView>
   ) => {
-    const { user } = useAuthStore();
-    const styles = getStyles(user.theme);
+    const styles = getStyles();
 
     return (
       <SafeAreaView style={styles.container}>

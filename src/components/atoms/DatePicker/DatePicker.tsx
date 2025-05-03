@@ -1,6 +1,5 @@
-import React, { FC, useState } from "react";
-import { IDatePicker } from "./types";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { FC, useState } from "react";
 import {
   Modal,
   Platform,
@@ -9,13 +8,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { getStyles } from "./styles";
 import { formatDate } from "../../../helpers/formatDate";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { getStyles } from "./styles";
+import { IDatePicker } from "./types";
 
 const DatePicker: FC<IDatePicker> = ({ date, setDate, datePickerStyle }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const [show, setShow] = useState<boolean>(false);
   const defaultDate = new Date();
 

@@ -24,7 +24,7 @@ import { getStyles } from "./styles";
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
   const { user } = useAuthStore();
-  const styles = getStyles(user.theme, user.fontSize);
+  const styles = getStyles(user.fontSize);
   const palette = usePalette();
   const {
     accounts,

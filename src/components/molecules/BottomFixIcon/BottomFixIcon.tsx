@@ -2,7 +2,6 @@ import { usePalette } from "@/src/hooks/usePalette";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import Svg, { Defs, Path, RadialGradient, Stop } from "react-native-svg";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { getStyles } from "./styles";
 import { IBottomFixIcon } from "./types";
 
@@ -14,8 +13,7 @@ const BottomFixIcon: React.FC<IBottomFixIcon> = ({
   marginRight,
   marginBottom,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
 
   return (

@@ -1,17 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import { ICameraSettingsModal } from "./types";
 import { Text, View } from "react-native";
-import Modal from "../../atoms/Modal";
-import { getStyles } from "./styles";
 import { CrossIcon } from "../../../../assets/icons";
-import Input from "../../atoms/Input";
-import Radio from "../../atoms/Radio";
-import Button from "../../atoms/Button";
-import { ICamera } from "../../pages/Main/types";
-import { initialCamera } from "../../../model/camera";
 import useCamerasStore from "../../../hooks/useCamerasStore";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { initialCamera } from "../../../model/camera";
+import Button from "../../atoms/Button";
+import Input from "../../atoms/Input";
+import Modal from "../../atoms/Modal";
+import Radio from "../../atoms/Radio";
+import { ICamera } from "../../pages/Main/types";
+import { getStyles } from "./styles";
+import { ICameraSettingsModal } from "./types";
 
 const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   camera,
@@ -19,8 +18,7 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   isHistoryModalOpen,
   setIsHistoryModalOpen,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const {
     errors,

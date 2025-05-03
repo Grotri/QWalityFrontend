@@ -21,7 +21,7 @@ import { getStyles } from "./styles";
 const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const { cameras } = useCamerasStore();
   const { accounts, clearAccounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(

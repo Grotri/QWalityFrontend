@@ -1,18 +1,18 @@
-import React from "react";
 import { useRoute } from "@react-navigation/native";
+import React from "react";
+import { Text, View } from "react-native";
+import { showSuccessToast } from "../../../helpers/toast";
 import { useCost } from "../../../helpers/useCost";
 import useAuthStore from "../../../hooks/useAuthStore";
-import Button from "../../atoms/Button";
-import { getStyles } from "./styles";
-import { Text, View } from "react-native";
-import PageTemplate from "../../templates/PageTemplate";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import { showSuccessToast } from "../../../helpers/toast";
+import Button from "../../atoms/Button";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
 
 const PaymentChange = () => {
   const route = useRoute();
-  const { user, setUserField } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const { setUserField } = useAuthStore();
+  const styles = getStyles();
   const { navigate } = useMainNavigation();
   const { sliderId } = route.params as { sliderId: string };
   const subscriptionCost = useCost(sliderId || "0");
