@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import { styles } from "./styles";
+import { LogoIcon, SolarPanelIcon, WaveIcon } from "../../../../assets/icons";
+import { screenWidth } from "../../../constants/screenSize";
+import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
+import Button from "../../atoms/Button";
 import HomeListPoint from "../../molecules/HomeListPoint";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import { screenWidth } from "../../../constants/screenSize";
-import { LogoIcon, SolarPanelIcon, WaveIcon } from "../../../../assets/icons";
-import Button from "../../atoms/Button";
-import { useAuthNavigation } from "../../../hooks/useTypedNavigation";
+import { styles } from "./styles";
 
 let hasScrolledOnce = false;
 

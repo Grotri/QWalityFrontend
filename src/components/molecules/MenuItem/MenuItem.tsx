@@ -1,12 +1,11 @@
 import React, { FC } from "react";
 import { Text, TouchableOpacity } from "react-native";
-import { IMenuItem } from "./types";
-import { getStyles } from "./styles";
 import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { getStyles } from "./styles";
+import { IMenuItem } from "./types";
 
 const MenuItem: FC<IMenuItem> = ({
   index,
@@ -16,8 +15,7 @@ const MenuItem: FC<IMenuItem> = ({
   isExpanded,
   onPress,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
 
   const collapsedTop = 18;
   const expandedTop = (index + 1) * 55 + 18;

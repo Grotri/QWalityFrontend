@@ -1,29 +1,31 @@
+import { fontSizes } from "@/src/constants/fontSizes";
 import React, { Fragment, useEffect, useState } from "react";
-import PageTemplate from "../../templates/PageTemplate";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { Keyboard, Text, View } from "react-native";
-import { getStyles } from "./styles";
-import Dropdown from "../../atoms/Dropdown";
 import { ArrowBottomIcon } from "../../../../assets/icons";
-import Button from "../../atoms/Button";
-import Modal from "../../atoms/Modal";
-import useAuthStore from "../../../hooks/useAuthStore";
-import Input from "../../atoms/Input";
 import { EErrors } from "../../../constants/errors";
-import { showErrorToast } from "../../../helpers/toast";
 import { settingsItems } from "../../../constants/settingsItems";
+import { showErrorToast } from "../../../helpers/toast";
 import useAccountStore from "../../../hooks/useAccountStore";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import Button from "../../atoms/Button";
+import Dropdown from "../../atoms/Dropdown";
+import Input from "../../atoms/Input";
+import Modal from "../../atoms/Modal";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
   const { clearAccounts } = useAccountStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
 
   const [isFirstDDOpen, setIsFirstDDOpen] = useState<boolean>(false);
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isSecondDDOpen, setIsSecondDDOpen] = useState<boolean>(false);
   const [isThemeDDOpen, setIsThemeDDOpen] = useState<boolean>(false);
+  const [isFontsDDOpen, setIsFontsDDOpen] = useState<boolean>(false);
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
   const [isExitModalOpen, setIsExitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -32,6 +34,10 @@ const Settings = () => {
 
   const toggleTheme = (value: string) => {
     setUserField("theme", value === "Yes" ? "light" : "dark");
+  };
+
+  const toggleFontSize = (value: string) => {
+    setUserField("fontSize", value);
   };
 
   const closeDD = () => {
@@ -43,6 +49,9 @@ const Settings = () => {
     }
     if (isThemeDDOpen) {
       setIsThemeDDOpen(false);
+    }
+    if (isFontsDDOpen) {
+      setIsFontsDDOpen(false);
     }
   };
 
@@ -56,13 +65,24 @@ const Settings = () => {
   };
 
   useEffect(() => {
-    if (isFirstDDOpen && isSecondDDOpen) {
+    if (isFirstDDOpen) {
       setIsSecondDDOpen(false);
-    }
-    if ((isFirstDDOpen || isSecondDDOpen) && isThemeDDOpen) {
+      setIsThemeDDOpen(false);
+      setIsFontsDDOpen(false);
+    } else if (isSecondDDOpen) {
+      setIsFirstDDOpen(false);
+      setIsThemeDDOpen(false);
+      setIsFontsDDOpen(false);
+    } else if (isThemeDDOpen) {
+      setIsFirstDDOpen(false);
+      setIsSecondDDOpen(false);
+      setIsFontsDDOpen(false);
+    } else if (isFontsDDOpen) {
+      setIsFirstDDOpen(false);
+      setIsSecondDDOpen(false);
       setIsThemeDDOpen(false);
     }
-  }, [isFirstDDOpen, isSecondDDOpen]);
+  }, [isFirstDDOpen, isSecondDDOpen, isThemeDDOpen]);
 
   useEffect(() => {
     if (!isDeleteModalOpen) {
@@ -91,7 +111,7 @@ const Settings = () => {
                 value={isAutoDelete}
                 setIsOpen={setIsFirstDDOpen}
                 isOpen={isFirstDDOpen}
-                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 4 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />
@@ -104,7 +124,7 @@ const Settings = () => {
                 value={isAutoClear}
                 setIsOpen={setIsSecondDDOpen}
                 isOpen={isSecondDDOpen}
-                wrapperStyle={styles.wrapperStyle}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 3 }]}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
               />
@@ -117,6 +137,19 @@ const Settings = () => {
                 value={user.theme === "dark" ? "No" : "Yes"}
                 setIsOpen={setIsThemeDDOpen}
                 isOpen={isThemeDDOpen}
+                wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}
+                dropdownStyle={styles.dropdownStyle}
+                arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              />
+            </View>
+            <View style={styles.dropdownWrapper}>
+              <Text style={styles.dropdownText}>Размер шрифта</Text>
+              <Dropdown
+                data={fontSizes}
+                setValue={toggleFontSize}
+                value={user.fontSize}
+                setIsOpen={setIsFontsDDOpen}
+                isOpen={isFontsDDOpen}
                 wrapperStyle={styles.wrapperStyle}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}

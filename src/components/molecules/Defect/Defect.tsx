@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { IDefectItem } from "./types";
 import { Text, View } from "react-native";
+import { convertISODate } from "../../../helpers/formatDate";
 import Button from "../../atoms/Button";
 import { getStyles } from "./styles";
-import { convertISODate } from "../../../helpers/formatDate";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { IDefectItem } from "./types";
 
 const Defect: FC<IDefectItem> = ({
   defect,
@@ -13,8 +12,7 @@ const Defect: FC<IDefectItem> = ({
   setSelectedDefect,
   pressableIcon = false,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const { name, date } = defect;
 
   const clickDefect = () => {

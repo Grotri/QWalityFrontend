@@ -1,13 +1,12 @@
 import React, { FC } from "react";
-import { IDropdown } from "./types";
-import { getStyles } from "./styles";
-import { ArrowBottomIcon } from "../../../../assets/icons";
 import { Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import IconRotated from "../IconRotated";
 import { useSharedValue } from "react-native-reanimated";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { ArrowBottomIcon } from "../../../../assets/icons";
 import { usePalette } from "../../../hooks/usePalette";
+import IconRotated from "../IconRotated";
+import { getStyles } from "./styles";
+import { IDropdown } from "./types";
 
 const Dropdown: FC<IDropdown> = ({
   data,
@@ -25,9 +24,8 @@ const Dropdown: FC<IDropdown> = ({
   arrowIconComponent,
   maxHeight,
 }) => {
-  const { user } = useAuthStore();
   const palette = usePalette();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const rotation = useSharedValue(0);
 
   const renderIcon = () => (

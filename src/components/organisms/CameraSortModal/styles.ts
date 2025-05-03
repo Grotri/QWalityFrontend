@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     modal: {
@@ -24,8 +25,8 @@ export const getStyles = (theme: "light" | "dark") => {
       left: 0,
     },
     modalTitle: {
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
       fontFamily: fonts.semibold,
       color: palette.mainText,
     },
@@ -45,8 +46,8 @@ export const getStyles = (theme: "light" | "dark") => {
       paddingVertical: 3,
     },
     btnText: {
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
       color: palette.mainText,
     },

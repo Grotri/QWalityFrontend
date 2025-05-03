@@ -1,9 +1,10 @@
+import { getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     sliderWrapper: {
@@ -30,7 +31,7 @@ export const getStyles = (theme: "light" | "dark") => {
     tooltipText: {
       color: palette.mainText,
       fontFamily: fonts.semibold,
-      lineHeight: 20,
+      lineHeight: getLineHeight(20),
       width: "100%",
       textAlign: "center",
       position: "absolute",

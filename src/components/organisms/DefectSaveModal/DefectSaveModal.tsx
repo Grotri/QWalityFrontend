@@ -1,18 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
-import { IDefectSaveModal } from "./types";
-import Modal from "../../atoms/Modal";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
-import { IDefect } from "../../pages/Main/types";
+import { convertISODate } from "../../../helpers/formatDate";
+import { showSuccessToast } from "../../../helpers/toast";
 import { initialDefect } from "../../../model/defect";
 import Button from "../../atoms/Button";
-import { showSuccessToast } from "../../../helpers/toast";
-import { convertISODate } from "../../../helpers/formatDate";
-import useAuthStore from "../../../hooks/useAuthStore";
+import Modal from "../../atoms/Modal";
+import { IDefect } from "../../pages/Main/types";
+import { getStyles } from "./styles";
+import { IDefectSaveModal } from "./types";
 
 const DefectSaveModal: FC<IDefectSaveModal> = ({ onClose, defect }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const [defectInfo, setDefectInfo] = useState<IDefect>({ ...initialDefect });
   const { name, date } = defectInfo;
 

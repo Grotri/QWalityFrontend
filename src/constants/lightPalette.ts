@@ -7,26 +7,29 @@ export const baseColors = {
   blue3: "#a6cfff",
   darkBlue: "#6ab2ff",
   red: "#ec4f4f",
-  blueTransparent: "rgba(21, 116, 224, 0.6)", //TODO
-  brightBlueTransparent: "rgba(0, 200, 255, 0.85)", //TODO
+  blueTransparent: "rgba(21, 116, 224, 0.6)",
+  brightBlueTransparent: "rgba(0, 102, 255, 0.85)",
   error: "rgb(255, 0, 0)",
-  info: "rgb(255, 136, 0)",
+
+  infoToast: "rgb(255, 157, 45)",
+  errorToast: "rgb(255, 104, 104)",
+  successToast: "rgb(35, 224, 82)",
 };
 
 export const lightPalette = {
   ...baseColors,
 
   // Welcome Screens Section
-  welcomeScreenPoint: "rgba(0, 229, 255, 0.8)", //TODO
+  welcomeScreenPoint: "rgba(0, 229, 255, 0.8)",
   welcomeScreenContrastBtn: "#398ff1",
-  welcomeScreenSubBtn: baseColors.blue,
+  welcomeScreenSubBtn: baseColors.darkBlue,
   welcomeScreenSubText: "rgba(0, 0, 51, 0.8)",
   welcomeScreenMainText: baseColors.white,
-  welcomeScreenScrollNonActivePoint: "rgba(217, 217, 249, 0.7)",
-  welcomeScreenScrollActivePoint: "rgba(0, 0, 51, 0.8)",
+  welcomeScreenScrollNonActivePoint: "rgba(46, 178, 255, 0.7)",
+  welcomeScreenScrollActivePoint: "rgba(27, 80, 202, 0.8)",
   welcomeScreenImproveText: "rgba(0, 0, 51, 0.7)",
-  welcomeScreenGradientDark: "rgba(5, 5, 5, 0.4)", //TODO
-  welcomeScreenGradientLight: "rgba(107, 107, 107, 0)", //TODO
+  welcomeScreenGradientDark: "rgba(5, 5, 5, 0.4)",
+  welcomeScreenGradientLight: "rgba(107, 107, 107, 0)",
 
   // Main Screens Section
   bg: "#d9ebff",
@@ -34,13 +37,13 @@ export const lightPalette = {
   mainOnlineOfflineBg: baseColors.blue3,
   subBg: baseColors.darkBlue,
   subFolderBg: "#8fc3ff",
-  searchBarBg: "#7aa5ee",
-  splitBar: "#4f81ff",
+  searchBarBg: "rgb(84, 161, 255)",
+  splitBar: "rgb(54, 144, 255)",
   edgeBtnBg: "#62a1ff",
   mainText: baseColors.white,
-  gradientLightBlue: "#4DEDFF", //TODO
-  gradientBlue: "#053D8F", //TODO
-  subscriptionCardBg: "rgba(0, 0, 0, 0.4)", //TODO
+  gradientLightBlue: "#A6F7FF",
+  gradientBlue: "#BFDFFF",
+  subscriptionCardBg: "rgba(46, 178, 255, 0.4)",
   greenOnline: "#00ff40",
 
   // Main Screen Popups Section
@@ -60,7 +63,7 @@ export const lightPalette = {
   dateAndListSelectsPopupBg: "#459aff",
   dateAndListBtnsPopupBg: "#459aff",
   folderOrHighlightedSectionBg: "#98c6ff",
-  textFieldInFolderBg: "#519fff",
+  textFieldInFolderBg: "rgb(108, 174, 255)",
   modalBtns: "#80b9ff",
   sectionTransparentText: "rgba(0, 0, 51, 0.75)",
   supportTransparentText: "rgba(0, 0, 51, 0.6)",
@@ -70,8 +73,10 @@ export const lightPalette = {
   dropdownListBgTransparent: "rgba(166, 207, 255, 0.7)",
   subDropdownListBgTransparent: "rgba(166, 207, 255, 0.8)",
   dashBg: "#0048ff",
-  modalBtn: "#4B74DD", //TODO
+  modalBtn: baseColors.blue3,
   trashItemImageBg: "#fdfdfd",
-  datePickerBg: "rgba(0, 0, 0, 0.2)", //TODO
+  datePickerBg: "rgba(0, 0, 0, 0.2)",
   darkBlueBtnBg: "#2f8dff",
+  inputDefaultBg: baseColors.black,
+  btnChoosen: baseColors.brightBlueTransparent,
 };

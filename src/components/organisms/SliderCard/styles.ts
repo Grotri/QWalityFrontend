@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     card: {
@@ -21,8 +22,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     title: {
       color: palette.mainText,
-      fontSize: 28,
-      lineHeight: 37,
+      fontSize: getFontSize(28),
+      lineHeight: getLineHeight(37),
       fontFamily: fonts.bold,
       marginBottom: 10,
     },
@@ -52,8 +53,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     price: {
       color: palette.welcomeScreenImproveText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.bold,
       marginBottom: 8,
     },
@@ -67,8 +68,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     btnText: {
       color: palette.mainText,
-      fontSize: 18,
-      lineHeight: 24,
+      fontSize: getFontSize(18),
+      lineHeight: getLineHeight(24),
       fontFamily: fonts.bold,
     },
   });

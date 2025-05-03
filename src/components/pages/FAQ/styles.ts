@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     managerWrapper: {
@@ -23,8 +24,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     headerText: {
       flexWrap: "wrap",
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
       color: palette.mainText,
       fontFamily: fonts.bold,
       maxWidth: "80%",
@@ -37,16 +38,16 @@ export const getStyles = (theme: "light" | "dark") => {
       marginBottom: 8,
     },
     contentText: {
-      fontSize: 16,
-      lineHeight: 22,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(22),
       color: palette.mainText,
       fontFamily: fonts.semibold,
     },
     noQuestions: {
       alignSelf: "center",
       marginTop: 28,
-      fontSize: 16,
-      lineHeight: 16,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
     },

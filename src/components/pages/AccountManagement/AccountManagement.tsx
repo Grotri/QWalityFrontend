@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
-import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import { getStyles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import {
   ArrowBottomIcon,
   ArrowTopIcon,
   ProfileIconSmall,
 } from "../../../../assets/icons";
-import Input from "../../atoms/Input";
-import Dropdown from "../../atoms/Dropdown";
-import Button from "../../atoms/Button";
-import IconRotated from "../../atoms/IconRotated";
-import useAccountStore from "../../../hooks/useAccountStore";
-import InputPassword from "../../atoms/InputPassword";
-import useAuthStore from "../../../hooks/useAuthStore";
-import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
-import { IUser } from "../../../model/user";
 import { ERoles } from "../../../constants/roles";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import useAccountStore from "../../../hooks/useAccountStore";
+import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import { IUser } from "../../../model/user";
+import Button from "../../atoms/Button";
+import Dropdown from "../../atoms/Dropdown";
+import IconRotated from "../../atoms/IconRotated";
+import Input from "../../atoms/Input";
+import InputPassword from "../../atoms/InputPassword";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
   const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles(user.fontSize);
   const palette = usePalette();
   const {
     accounts,
@@ -156,11 +156,9 @@ const AccountManagement = () => {
             style={styles.btn}
             onPress={() =>
               changeAccount(index, {
-                id: section.id,
+                ...section,
                 login: section.login.trim(),
                 password: section.password.trim(),
-                role: section.role,
-                theme: section.theme,
               })
             }
           >

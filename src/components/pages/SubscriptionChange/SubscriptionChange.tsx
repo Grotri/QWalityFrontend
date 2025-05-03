@@ -1,27 +1,27 @@
 import React, { useRef, useState } from "react";
 import { FlatList, Text, View } from "react-native";
-import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import { getStyles } from "./styles";
-import SliderCard from "../../organisms/SliderCard";
-import Button from "../../atoms/Button";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
 import { screenWidth } from "../../../constants/screenSize";
-import useAuthStore from "../../../hooks/useAuthStore";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
-import useCamerasStore from "../../../hooks/useCamerasStore";
-import useAccountStore from "../../../hooks/useAccountStore";
 import {
   accountLimits,
   cameraLimits,
   subscriptions,
 } from "../../../constants/subscriptions";
 import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesBySubscription";
+import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
+import useAccountStore from "../../../hooks/useAccountStore";
+import useAuthStore from "../../../hooks/useAuthStore";
+import useCamerasStore from "../../../hooks/useCamerasStore";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import Button from "../../atoms/Button";
+import SliderCard from "../../organisms/SliderCard";
+import GradientPageTemplate from "../../templates/GradientPageTemplate";
+import { getStyles } from "./styles";
 
 const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const { cameras } = useCamerasStore();
   const { accounts, clearAccounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(
@@ -61,7 +61,7 @@ const SubscriptionChange = () => {
       );
       showErrorToast(
         `Нельзя перейти на этот тариф, так как у вас есть аккаунты с ролями: ${rolesList}, которые не входят в разрешённые роли этого тарифа`,
-        { duration: 3000 }
+        3000
       );
     } else {
       if (sliderId === "0") {

@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     wrapper: {
@@ -24,8 +25,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     textStyle: {
       color: palette.mainText,
-      lineHeight: 14,
-      fontSize: 14,
+      lineHeight: getLineHeight(14),
+      fontSize: getFontSize(14),
       fontFamily: fonts.regular,
     },
     item: {

@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
+import { palette } from "../../../constants/palette";
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -29,8 +30,8 @@ export const styles = StyleSheet.create({
   headerTitle: {
     color: palette.welcomeScreenMainText,
     fontFamily: fonts.black,
-    fontSize: 22,
-    lineHeight: 30,
+    fontSize: getFontSize(22),
+    lineHeight: getLineHeight(30),
     width: "66%",
   },
   line: {
@@ -46,8 +47,8 @@ export const styles = StyleSheet.create({
     width: "88%",
     color: palette.welcomeScreenMainText,
     fontFamily: fonts.bold,
-    fontSize: 16,
-    lineHeight: 21,
+    fontSize: getFontSize(16),
+    lineHeight: getLineHeight(21),
     marginBottom: 16,
     zIndex: 1,
   },
@@ -64,8 +65,8 @@ export const styles = StyleSheet.create({
     width: "60%",
     color: palette.welcomeScreenImproveText,
     fontFamily: fonts.bold,
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: getFontSize(14),
+    lineHeight: getLineHeight(19),
   },
   brightBlueBtn: {
     padding: 8,
@@ -74,8 +75,8 @@ export const styles = StyleSheet.create({
     minWidth: "70%",
   },
   brightBlueBtnText: {
-    fontSize: 20,
-    lineHeight: 27,
+    fontSize: getFontSize(20),
+    lineHeight: getLineHeight(27),
     fontFamily: fonts.black,
     color: palette.welcomeScreenMainText,
   },
@@ -86,8 +87,8 @@ export const styles = StyleSheet.create({
     minWidth: "60%",
   },
   blueBtnText: {
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: getFontSize(16),
+    lineHeight: getLineHeight(22),
     fontFamily: fonts.black,
     color: palette.welcomeScreenSubText,
   },

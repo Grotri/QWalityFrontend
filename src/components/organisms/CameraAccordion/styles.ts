@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     header: {
@@ -33,13 +34,13 @@ export const getStyles = (theme: "light" | "dark") => {
     cameraTitle: {
       width: "72%",
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
     },
     defectText: {
       color: palette.mainText,
-      lineHeight: 19,
+      lineHeight: getLineHeight(19),
       fontFamily: fonts.regular,
     },
     line: {
@@ -63,12 +64,12 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     stateName: {
       color: palette.mainText,
-      lineHeight: 19,
+      lineHeight: getLineHeight(19),
       fontFamily: fonts.regular,
     },
     uptime: {
       color: palette.mainText,
-      lineHeight: 19,
+      lineHeight: getLineHeight(19),
       fontFamily: fonts.regular,
     },
     contentWrapper: {
@@ -85,7 +86,10 @@ export const getStyles = (theme: "light" | "dark") => {
     settingsIcons: {
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
       gap: 8,
+      flexWrap: "wrap",
+      paddingHorizontal: 8,
     },
     icon: {
       flexDirection: "row",
@@ -93,8 +97,8 @@ export const getStyles = (theme: "light" | "dark") => {
       gap: 4,
     },
     iconTitle: {
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.regular,
       color: palette.mainText,
     },
@@ -112,8 +116,8 @@ export const getStyles = (theme: "light" | "dark") => {
       gap: 12,
     },
     noDefects: {
-      fontSize: 16,
-      lineHeight: 16,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
       alignSelf: "center",

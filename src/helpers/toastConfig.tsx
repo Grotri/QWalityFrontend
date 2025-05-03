@@ -1,38 +1,40 @@
 import { JSX } from "react";
 import {
-    BaseToast,
-    BaseToastProps,
-    ErrorToast,
-    InfoToast,
+  BaseToast,
+  BaseToastProps,
+  ErrorToast,
+  InfoToast,
 } from "react-native-toast-message";
-import { palette } from "../constants/palette";
+import { usePalette } from "../hooks/usePalette";
+import { getFontSize } from "./getFontSize";
 
-export const toastConfig = {
-  success: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-    <BaseToast
-      {...props}
-      style={{ backgroundColor: palette.greenOnline }}
-      text1Style={{
-        color: palette.mainText,
-      }}
-    />
-  ),
-  error: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-    <ErrorToast
-      {...props}
-      style={{ backgroundColor: palette.red }}
-      text1Style={{
-        color: palette.mainText,
-      }}
-    />
-  ),
-  info: (props: JSX.IntrinsicAttributes & BaseToastProps) => (
-    <InfoToast
-      {...props}
-      style={{ backgroundColor: palette.info }}
-      text1Style={{
-        color: palette.mainText,
-      }}
-    />
-  ),
+export const toastConfig = () => {
+  const palette = usePalette();
+
+  const baseStyle = {
+    marginTop: 12,
+    borderLeftColor: palette.mainText,
+  };
+
+  const text1Style = {
+    color: palette.mainText,
+    fontSize: getFontSize(14),
+  };
+
+  const createToast =
+    (Component: typeof BaseToast, bgColor: string) =>
+    (props: JSX.IntrinsicAttributes & BaseToastProps) =>
+      (
+        <Component
+          {...props}
+          style={{ ...baseStyle, backgroundColor: bgColor }}
+          text1Style={text1Style}
+        />
+      );
+
+  return {
+    success: createToast(BaseToast, palette.successToast),
+    error: createToast(ErrorToast, palette.errorToast),
+    info: createToast(InfoToast, palette.infoToast),
+  };
 };

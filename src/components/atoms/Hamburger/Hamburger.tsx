@@ -1,17 +1,15 @@
 import React, { FC, useEffect } from "react";
 import { View } from "react-native";
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
+  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { IHamburger } from "./types";
 import { getStyles } from "./styles";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { IHamburger } from "./types";
 
 const Hamburger: FC<IHamburger> = ({ active }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const progress = useSharedValue(0);
 
   useEffect(() => {

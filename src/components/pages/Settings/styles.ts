@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     wrapper: {
@@ -18,15 +19,17 @@ export const getStyles = (theme: "light" | "dark") => {
       alignItems: "center",
       justifyContent: "space-between",
       marginBottom: 16,
+      gap: 12,
     },
     dropdownStyle: {
       height: 28,
     },
     dropdownText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
+      flexShrink: 1,
     },
     wrapperStyle: {
       width: 94,
@@ -38,14 +41,14 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     btnText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
     },
     version: {
       color: palette.supportTransparentText,
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
     },
     modal: {
@@ -59,8 +62,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     modalText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.bold,
     },
     modalBtns: {
@@ -75,8 +78,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     modalBtnText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.bold,
     },
     confirmationWrapper: {
@@ -95,12 +98,13 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     modalBtnCodeText: {
       color: palette.mainText,
-      fontSize: 12,
-      lineHeight: 19,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(19),
       fontFamily: fonts.regular,
     },
     customInputStyles: {
       height: 27,
+      color: "#000033",
       fontFamily: fonts.semibold,
     },
     customLabelStyles: {

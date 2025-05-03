@@ -1,17 +1,16 @@
-import React, { PropsWithChildren, forwardRef, Ref } from "react";
+import React, { forwardRef, PropsWithChildren, Ref } from "react";
 import {
-  View,
+  Keyboard,
   ScrollView,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from "react-native";
-import RadialGradientBg from "../../atoms/RadialGradient";
-import { screenHeight, screenWidth } from "../../../constants/screenSize";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { IGradientPageTemplate } from "./types";
-import { getStyles } from "./styles";
+import { screenHeight, screenWidth } from "../../../constants/screenSize";
+import RadialGradientBg from "../../atoms/RadialGradient";
 import Header from "../../molecules/Header";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { getStyles } from "./styles";
+import { IGradientPageTemplate } from "./types";
 
 const GradientPageTemplate = forwardRef(
   (
@@ -24,8 +23,7 @@ const GradientPageTemplate = forwardRef(
     }: PropsWithChildren<IGradientPageTemplate>,
     scrollRef: Ref<ScrollView>
   ) => {
-    const { user } = useAuthStore();
-    const styles = getStyles(user.theme);
+    const styles = getStyles();
 
     return (
       <SafeAreaView style={styles.container}>

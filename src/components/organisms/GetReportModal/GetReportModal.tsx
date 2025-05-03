@@ -1,21 +1,19 @@
 import React, { FC, useEffect, useState } from "react";
-import { IGetReportModal } from "./types";
-import Modal from "../../atoms/Modal";
 import { Text, View } from "react-native";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
-import { getStyles } from "./styles";
-import Radio from "../../atoms/Radio";
-import DatePicker from "../../atoms/DatePicker";
-import Dropdown from "../../atoms/Dropdown";
-import Button from "../../atoms/Button";
 import { formats } from "../../../constants/formats";
 import { showSuccessToast } from "../../../helpers/toast";
-import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import Button from "../../atoms/Button";
+import DatePicker from "../../atoms/DatePicker";
+import Dropdown from "../../atoms/Dropdown";
+import Modal from "../../atoms/Modal";
+import Radio from "../../atoms/Radio";
+import { getStyles } from "./styles";
+import { IGetReportModal } from "./types";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
   const [isFormatDdOpen, setIsFormatDdOpen] = useState<boolean>(false);

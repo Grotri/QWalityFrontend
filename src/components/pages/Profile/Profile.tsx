@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import PageTemplate from "../../templates/PageTemplate";
 import { ProfileIcon } from "../../../../assets/icons";
-import Button from "../../atoms/Button";
-import Input from "../../atoms/Input";
-import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern, innPattern } from "../../../constants/patterns";
+import { ERoles } from "../../../constants/roles";
+import { screenHeight } from "../../../constants/screenSize";
 import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
 } from "../../../helpers/toast";
-import { screenHeight } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
-import { initialUser, IUser } from "../../../model/user";
-import { ERoles } from "../../../constants/roles";
 import { usePalette } from "../../../hooks/usePalette";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import { initialUser, IUser } from "../../../model/user";
+import Button from "../../atoms/Button";
+import Input from "../../atoms/Input";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
+import { IErrors, initialErrors } from "./types";
 
 const Profile = () => {
   const { navigate } = useMainNavigation();
   const { user, setUser } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const [userInfo, setUserInfo] = useState<IUser>({ ...initialUser });
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });

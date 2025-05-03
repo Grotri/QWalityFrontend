@@ -1,9 +1,10 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { usePalette } from "@/src/hooks/usePalette";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (theme: "light" | "dark") => {
-  const palette = getPalette(theme);
+export const getStyles = () => {
+  const palette = usePalette();
 
   return StyleSheet.create({
     container: {
@@ -12,20 +13,20 @@ export const getStyles = (theme: "light" | "dark") => {
     label: {
       color: palette.mainText,
       fontFamily: fonts.regular,
-      fontSize: 14,
-      lineHeight: 19,
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       paddingLeft: 4,
     },
     input: {
-      backgroundColor: palette.white,
+      backgroundColor: palette.inputDefaultBg,
       borderRadius: 8,
       height: 30,
       paddingVertical: 0,
       paddingHorizontal: 8,
       color: palette.black,
       fontFamily: fonts.regular,
-      fontSize: 14,
-      lineHeight: 19,
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       textAlignVertical: "center",
       includeFontPadding: false,
     },
@@ -44,8 +45,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     error: {
       paddingLeft: 4,
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
       color: palette.error,
       fontFamily: fonts.semibold,
     },

@@ -1,9 +1,9 @@
+import { usePalette } from "@/src/hooks/usePalette";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import Svg, { Defs, RadialGradient, Stop, Path } from "react-native-svg";
-import { IBottomFixIcon } from "./types";
+import Svg, { Defs, Path, RadialGradient, Stop } from "react-native-svg";
 import { getStyles } from "./styles";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { IBottomFixIcon } from "./types";
 
 const BottomFixIcon: React.FC<IBottomFixIcon> = ({
   icon,
@@ -13,8 +13,8 @@ const BottomFixIcon: React.FC<IBottomFixIcon> = ({
   marginRight,
   marginBottom,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
+  const palette = usePalette();
 
   return (
     <Pressable onPress={onPress} style={styles.wrapper}>
@@ -35,8 +35,8 @@ const BottomFixIcon: React.FC<IBottomFixIcon> = ({
             gradientTransform="rotate(-128.908 62.313 22.426)scale(89.9569)"
             gradientUnits="userSpaceOnUse"
           >
-            <Stop />
-            <Stop offset={1} stopColor="#042555" stopOpacity={0} />
+            <Stop offset={0} stopColor={palette.bg} stopOpacity={1} />
+            <Stop offset={1} stopColor={palette.bg} stopOpacity={0} />
           </RadialGradient>
         </Defs>
       </Svg>

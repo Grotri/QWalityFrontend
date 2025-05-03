@@ -1,18 +1,17 @@
 import React, { FC, useEffect, useState } from "react";
-import { ICameraFilterModal, initialCameraFilter } from "./types";
 import { Text, View } from "react-native";
-import Modal from "../../atoms/Modal";
-import { getStyles } from "./styles";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
-import Dropdown from "../../atoms/Dropdown";
-import Button from "../../atoms/Button";
-import Radio from "../../atoms/Radio";
-import DatePicker from "../../atoms/DatePicker";
-import { EDefectFilterOptions } from "./enums";
-import { showErrorToast } from "../../../helpers/toast";
 import { EErrors } from "../../../constants/errors";
-import useAuthStore from "../../../hooks/useAuthStore";
+import { showErrorToast } from "../../../helpers/toast";
 import { usePalette } from "../../../hooks/usePalette";
+import Button from "../../atoms/Button";
+import DatePicker from "../../atoms/DatePicker";
+import Dropdown from "../../atoms/Dropdown";
+import Modal from "../../atoms/Modal";
+import Radio from "../../atoms/Radio";
+import { EDefectFilterOptions } from "./enums";
+import { getStyles } from "./styles";
+import { ICameraFilterModal, initialCameraFilter } from "./types";
 
 const CameraFilterModal: FC<ICameraFilterModal> = ({
   isOpen,
@@ -20,8 +19,7 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   initialFilter,
   onApply,
 }) => {
-  const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const [isDDOpen, setIsDDOpen] = useState<boolean>(false);
   const [isDateFilter, setIsDateFilter] = useState<boolean>(true);

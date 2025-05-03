@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
+import { palette } from "../../../constants/palette";
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -24,8 +25,8 @@ export const styles = StyleSheet.create({
   },
   loginBtnText: {
     color: palette.mainText,
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: getFontSize(18),
+    lineHeight: getLineHeight(24),
     fontFamily: fonts.bold,
   },
   textUnderlined: {

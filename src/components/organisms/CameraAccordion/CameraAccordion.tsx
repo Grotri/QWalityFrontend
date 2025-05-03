@@ -1,8 +1,6 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
-import { ICameraAccordion } from "./types";
-import Accordion from "react-native-collapsible/Accordion";
 import { Pressable, Text, View } from "react-native";
-import { ICamera, IDefect } from "../../pages/Main/types";
+import Accordion from "react-native-collapsible/Accordion";
 import {
   ArrowAccordionIcon,
   CameraIcon,
@@ -10,21 +8,23 @@ import {
   SettingsIcon,
   SortIcon,
 } from "../../../../assets/icons";
-import { getStyles } from "./styles";
-import IconRotated from "../../atoms/IconRotated";
-import Defect from "../../molecules/Defect";
-import Button from "../../atoms/Button";
-import CameraSettingsModal from "../CameraSettingsModal";
-import DefectSaveModal from "../DefectSaveModal";
-import CameraSortModal from "../CameraSortModal";
-import CameraFilterModal from "../CameraFilterModal";
-import CameraPagination from "../../molecules/CameraPagination";
-import useCamerasStore from "../../../hooks/useCamerasStore";
-import { ESortOptions } from "../CameraSortModal/enums";
-import { filterDefects, sortDefects } from "./utils";
-import { ICameraFilter, initialCameraFilter } from "../CameraFilterModal/types";
 import useAuthStore from "../../../hooks/useAuthStore";
+import useCamerasStore from "../../../hooks/useCamerasStore";
 import { usePalette } from "../../../hooks/usePalette";
+import Button from "../../atoms/Button";
+import IconRotated from "../../atoms/IconRotated";
+import CameraPagination from "../../molecules/CameraPagination";
+import Defect from "../../molecules/Defect";
+import { ICamera, IDefect } from "../../pages/Main/types";
+import CameraFilterModal from "../CameraFilterModal";
+import { ICameraFilter, initialCameraFilter } from "../CameraFilterModal/types";
+import CameraSettingsModal from "../CameraSettingsModal";
+import CameraSortModal from "../CameraSortModal";
+import { ESortOptions } from "../CameraSortModal/enums";
+import DefectSaveModal from "../DefectSaveModal";
+import { getStyles } from "./styles";
+import { ICameraAccordion } from "./types";
+import { filterDefects, sortDefects } from "./utils";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -41,7 +41,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
   const { user } = useAuthStore();
-  const styles = getStyles(user.theme);
+  const styles = getStyles();
   const palette = usePalette();
   const { deleteDefect } = useCamerasStore();
   const [activeSections, setActiveSections] = useState<number[]>([]);

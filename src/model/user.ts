@@ -1,3 +1,5 @@
+export type TFontSize = "small" | "default" | "large";
+
 export interface IUser {
   id: string;
   inn?: string;
@@ -6,6 +8,7 @@ export interface IUser {
   subscription?: string;
   role: string;
   theme: "light" | "dark";
+  fontSize: TFontSize;
 }
 
 export const initialUser: IUser = {
@@ -15,6 +18,7 @@ export const initialUser: IUser = {
   password: "",
   role: "owner",
   theme: "dark",
+  fontSize: "default",
 };
 
 export interface IErrors {
