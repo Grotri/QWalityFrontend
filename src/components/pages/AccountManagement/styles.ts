@@ -1,9 +1,12 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
+import { TFontSize } from "@/src/model/user";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
-export const getStyles = (theme: "light" | "dark") => {
+export const getStyles = (theme: "light" | "dark", font: TFontSize) => {
   const palette = getPalette(theme);
+  const itemHeight = font === "large" ? 26 : 22;
 
   return StyleSheet.create({
     managerWrapper: {
@@ -41,17 +44,17 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     inputWrapperStyles: {
       width: "64%",
-      height: 22,
+      height: itemHeight,
     },
     input: {
       backgroundColor: palette.textFieldInFolderBg,
       borderRadius: 6,
       paddingHorizontal: 6,
-      height: 22,
+      height: itemHeight,
       color: palette.mainText,
       fontFamily: fonts.semibold,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       marginBottom: 4,
       width: "100%",
       paddingRight: 36,
@@ -60,21 +63,21 @@ export const getStyles = (theme: "light" | "dark") => {
       color: palette.labelTransparentText,
     },
     errorStyles: {
-      lineHeight: 12,
+      lineHeight: getLineHeight(12),
     },
     dropdownWrapper: {
       width: "64%",
     },
     dropdown: {
       backgroundColor: palette.textFieldInFolderBg,
-      height: 22,
+      height: itemHeight,
       borderRadius: 6,
       paddingHorizontal: 6,
     },
     selectedTextStyle: {
       fontFamily: fonts.semibold,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
     },
     itemContainerStyle: {
       paddingVertical: 6,
@@ -87,7 +90,7 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     btn: {
       width: "30%",
-      height: 22,
+      height: itemHeight,
       borderRadius: 6,
     },
     btnText: {
@@ -96,8 +99,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     noAccounts: {
       marginTop: 28,
-      fontSize: 16,
-      lineHeight: 16,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
     },

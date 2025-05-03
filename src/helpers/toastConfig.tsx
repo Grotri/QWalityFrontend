@@ -6,6 +6,7 @@ import {
   InfoToast,
 } from "react-native-toast-message";
 import { usePalette } from "../hooks/usePalette";
+import { getFontSize } from "./getFontSize";
 
 export const toastConfig = () => {
   const palette = usePalette();
@@ -17,7 +18,7 @@ export const toastConfig = () => {
 
   const text1Style = {
     color: palette.mainText,
-    fontSize: 14,
+    fontSize: getFontSize(14),
   };
 
   const createToast =

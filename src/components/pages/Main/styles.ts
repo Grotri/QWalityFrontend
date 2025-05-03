@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -20,14 +21,14 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     headerSearch: {
       flexDirection: "row",
-      gap: 24,
+      gap: 12,
       alignItems: "center",
       flex: 1,
     },
     title: {
-      width: 84,
-      fontSize: 16,
-      lineHeight: 21,
+      width: 100,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
       color: palette.mainText,
     },
@@ -46,8 +47,8 @@ export const getStyles = (theme: "light" | "dark") => {
       alignItems: "center",
     },
     emptyText: {
-      fontSize: 16,
-      lineHeight: 16,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
     },

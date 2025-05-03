@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
+import { palette } from "../../../constants/palette";
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -52,8 +53,8 @@ export const styles = StyleSheet.create({
   },
   cancelBtnText: {
     color: palette.welcomeScreenSubText,
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: getFontSize(16),
+    lineHeight: getLineHeight(22),
     fontFamily: fonts.black,
   },
 });

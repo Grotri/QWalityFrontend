@@ -1,3 +1,4 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
 import { getPalette } from "../../../helpers/getPalette";
 
@@ -29,8 +30,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     radioText: {
       color: palette.mainText,
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
     },
   });
 };

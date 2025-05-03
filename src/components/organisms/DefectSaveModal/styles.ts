@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -20,14 +21,15 @@ export const getStyles = (theme: "light" | "dark") => {
       alignItems: "center",
     },
     title: {
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       color: palette.mainText,
       fontFamily: fonts.bold,
+      textAlign: "center",
     },
     name: {
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
       color: palette.codeTransparentText,
       fontFamily: fonts.regular,
     },
@@ -43,8 +45,8 @@ export const getStyles = (theme: "light" | "dark") => {
       borderRadius: 8,
     },
     btnText: {
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       color: palette.mainText,
       fontFamily: fonts.bold,
     },

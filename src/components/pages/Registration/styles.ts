@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
+import { palette } from "../../../constants/palette";
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
   },
   codeBtnText: {
     color: palette.mainText,
-    lineHeight: 19,
+    lineHeight: getLineHeight(19),
   },
   createBtn: {
     height: 34,
@@ -43,8 +44,8 @@ export const styles = StyleSheet.create({
   },
   createBtnText: {
     color: palette.mainText,
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: getFontSize(18),
+    lineHeight: getLineHeight(24),
     fontFamily: fonts.bold,
   },
   checkboxWrapper: {
@@ -72,7 +73,7 @@ export const styles = StyleSheet.create({
   },
   checkboxText: {
     color: palette.mainText,
-    lineHeight: 19,
+    lineHeight: getLineHeight(19),
     flex: 1,
   },
   checkboxTextError: {

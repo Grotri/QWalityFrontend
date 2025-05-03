@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -56,8 +57,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     cancelBtnText: {
       color: palette.welcomeScreenSubText,
-      fontSize: 16,
-      lineHeight: 22,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(22),
       fontFamily: fonts.black,
     },
   });

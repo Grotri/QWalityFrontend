@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { palette } from "../../../constants/palette";
 import { fonts } from "../../../constants/fonts";
+import { palette } from "../../../constants/palette";
 
 export const styles = StyleSheet.create({
   wrapper: {
@@ -12,8 +13,8 @@ export const styles = StyleSheet.create({
   },
   title: {
     color: palette.mainText,
-    fontSize: 20,
-    lineHeight: 28,
+    fontSize: getFontSize(20),
+    lineHeight: getLineHeight(28),
     fontFamily: fonts.semibold,
     textAlign: "center",
   },
@@ -24,8 +25,8 @@ export const styles = StyleSheet.create({
   },
   btnText: {
     color: palette.mainText,
-    fontSize: 16,
-    lineHeight: 18,
+    fontSize: getFontSize(16),
+    lineHeight: getLineHeight(18),
     fontFamily: fonts.semibold,
   },
 });

@@ -1,3 +1,4 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
 import { getPalette } from "../../../helpers/getPalette";
 
@@ -26,8 +27,8 @@ export const getStyles = (theme: "light" | "dark") => {
       minWidth: 52,
     },
     headerBtnTxt: {
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
       color: palette.mainText,
     },
   });

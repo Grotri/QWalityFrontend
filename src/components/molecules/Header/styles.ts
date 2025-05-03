@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -8,7 +9,7 @@ export const getStyles = (theme: "light" | "dark") => {
   return StyleSheet.create({
     wrapper: {
       width: "100%",
-      gap: 8,
+      gap: 10,
       alignItems: "center",
       padding: 28,
     },
@@ -24,13 +25,13 @@ export const getStyles = (theme: "light" | "dark") => {
       transform: [{ translateX: "-50%" }],
     },
     shortHeaderTextWrapper: {
-      width: "84%",
+      width: "83%",
     },
     headerText: {
       color: palette.mainText,
       fontFamily: fonts.bold,
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
       textAlign: "center",
     },
     line: {

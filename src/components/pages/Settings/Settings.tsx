@@ -1,3 +1,4 @@
+import { fontSizes } from "@/src/constants/fontSizes";
 import React, { Fragment, useEffect, useState } from "react";
 import { Keyboard, Text, View } from "react-native";
 import { ArrowBottomIcon } from "../../../../assets/icons";
@@ -24,6 +25,7 @@ const Settings = () => {
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isSecondDDOpen, setIsSecondDDOpen] = useState<boolean>(false);
   const [isThemeDDOpen, setIsThemeDDOpen] = useState<boolean>(false);
+  const [isFontsDDOpen, setIsFontsDDOpen] = useState<boolean>(false);
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
   const [isExitModalOpen, setIsExitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
@@ -32,6 +34,10 @@ const Settings = () => {
 
   const toggleTheme = (value: string) => {
     setUserField("theme", value === "Yes" ? "light" : "dark");
+  };
+
+  const toggleFontSize = (value: string) => {
+    setUserField("fontSize", value);
   };
 
   const closeDD = () => {
@@ -43,6 +49,9 @@ const Settings = () => {
     }
     if (isThemeDDOpen) {
       setIsThemeDDOpen(false);
+    }
+    if (isFontsDDOpen) {
+      setIsFontsDDOpen(false);
     }
   };
 
@@ -59,12 +68,19 @@ const Settings = () => {
     if (isFirstDDOpen) {
       setIsSecondDDOpen(false);
       setIsThemeDDOpen(false);
+      setIsFontsDDOpen(false);
     } else if (isSecondDDOpen) {
       setIsFirstDDOpen(false);
       setIsThemeDDOpen(false);
+      setIsFontsDDOpen(false);
     } else if (isThemeDDOpen) {
       setIsFirstDDOpen(false);
       setIsSecondDDOpen(false);
+      setIsFontsDDOpen(false);
+    } else if (isFontsDDOpen) {
+      setIsFirstDDOpen(false);
+      setIsSecondDDOpen(false);
+      setIsThemeDDOpen(false);
     }
   }, [isFirstDDOpen, isSecondDDOpen, isThemeDDOpen]);
 
@@ -121,6 +137,19 @@ const Settings = () => {
                 value={user.theme === "dark" ? "No" : "Yes"}
                 setIsOpen={setIsThemeDDOpen}
                 isOpen={isThemeDDOpen}
+                wrapperStyle={styles.wrapperStyle}
+                dropdownStyle={styles.dropdownStyle}
+                arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              />
+            </View>
+            <View style={styles.dropdownWrapper}>
+              <Text style={styles.dropdownText}>Размер шрифта</Text>
+              <Dropdown
+                data={fontSizes}
+                setValue={toggleFontSize}
+                value={user.fontSize}
+                setIsOpen={setIsFontsDDOpen}
+                isOpen={isFontsDDOpen}
                 wrapperStyle={styles.wrapperStyle}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}

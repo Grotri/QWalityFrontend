@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -31,8 +32,8 @@ export const getStyles = (theme: "light" | "dark") => {
       left: 0,
     },
     modalTitle: {
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
       fontFamily: fonts.semibold,
       color: palette.mainText,
     },
@@ -59,8 +60,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     btnModalText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
     },
     emptyText: {
@@ -68,8 +69,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     noDefects: {
       marginTop: 20,
-      fontSize: 16,
-      lineHeight: 16,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(16),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
       alignSelf: "center",

@@ -1,6 +1,7 @@
+import { getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -30,7 +31,7 @@ export const getStyles = (theme: "light" | "dark") => {
     tooltipText: {
       color: palette.mainText,
       fontFamily: fonts.semibold,
-      lineHeight: 20,
+      lineHeight: getLineHeight(20),
       width: "100%",
       textAlign: "center",
       position: "absolute",

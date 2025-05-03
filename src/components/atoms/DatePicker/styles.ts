@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -18,8 +19,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     date: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
     },
     modalOverlay: {

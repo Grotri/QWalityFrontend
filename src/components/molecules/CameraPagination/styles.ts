@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -12,8 +13,8 @@ export const getStyles = (theme: "light" | "dark") => {
       alignItems: "center",
     },
     pageText: {
-      fontSize: 17,
-      lineHeight: 20,
+      fontSize: getFontSize(17),
+      lineHeight: getLineHeight(20),
       paddingHorizontal: 6,
       paddingVertical: 1,
       fontFamily: fonts.semibold,

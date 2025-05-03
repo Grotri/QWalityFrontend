@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { getStyles } from "./styles";
-import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import PageTemplate from "../../templates/PageTemplate";
-import { ArrowBottomIcon } from "../../../../assets/icons";
-import Input from "../../atoms/Input";
-import Dropdown from "../../atoms/Dropdown";
-import Button from "../../atoms/Button";
-import { IErrors, initialErrors } from "./types";
-import { EErrors } from "../../../constants/errors";
 import uuid from "react-native-uuid";
-import useAccountStore from "../../../hooks/useAccountStore";
-import Slider from "../../atoms/Slider";
-import GetReportModal from "../../organisms/GetReportModal";
-import InputPassword from "../../atoms/InputPassword";
-import { screenHeight } from "../../../constants/screenSize";
-import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
-import { useAccountLimits } from "../../../helpers/useAccountLimits";
-import { IUser } from "../../../model/user";
-import { showErrorToast } from "../../../helpers/toast";
+import { ArrowBottomIcon } from "../../../../assets/icons";
+import { EErrors } from "../../../constants/errors";
 import { ERoles } from "../../../constants/roles";
+import { screenHeight } from "../../../constants/screenSize";
+import { showErrorToast } from "../../../helpers/toast";
+import { useAccountLimits } from "../../../helpers/useAccountLimits";
+import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
+import useAccountStore from "../../../hooks/useAccountStore";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { usePalette } from "../../../hooks/usePalette";
+import { useMainNavigation } from "../../../hooks/useTypedNavigation";
+import { IUser } from "../../../model/user";
+import Button from "../../atoms/Button";
+import Dropdown from "../../atoms/Dropdown";
+import Input from "../../atoms/Input";
+import InputPassword from "../../atoms/InputPassword";
+import Slider from "../../atoms/Slider";
+import GetReportModal from "../../organisms/GetReportModal";
+import PageTemplate from "../../templates/PageTemplate";
+import { getStyles } from "./styles";
+import { IErrors, initialErrors } from "./types";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
@@ -65,6 +65,7 @@ const Admin = () => {
         password: password.trim(),
         role,
         theme: "dark",
+        fontSize: "default",
       };
       if (validate()) {
         registerAccount(account);

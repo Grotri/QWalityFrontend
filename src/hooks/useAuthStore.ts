@@ -1,11 +1,11 @@
+import uuid from "react-native-uuid";
 import { create } from "zustand";
-import { IStoreStatus } from "../model/misc";
+import { credits } from "../constants/credits";
 import { EErrors } from "../constants/errors";
 import { emailPattern, innPattern } from "../constants/patterns";
-import uuid from "react-native-uuid";
-import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
 import { showErrorToast, showSuccessToast } from "../helpers/toast";
-import { credits } from "../constants/credits";
+import { IStoreStatus } from "../model/misc";
+import { IErrors, initialErrors, initialUser, IUser } from "../model/user";
 
 interface IUseAuthStore extends IStoreStatus {
   user: IUser;
@@ -97,6 +97,7 @@ const useAuthStore = create<IUseAuthStore>((set, get) => ({
           inn: user.inn?.trim(),
           role: user.role,
           theme: "dark",
+          fontSize: "default",
         };
         addAccount(newUser);
         set({

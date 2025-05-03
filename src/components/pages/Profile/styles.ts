@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -23,13 +24,13 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     cardPointTitle: {
       color: palette.sectionTransparentText,
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
     },
     cardPointData: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
     },
     btn: {
@@ -38,8 +39,8 @@ export const getStyles = (theme: "light" | "dark") => {
       borderRadius: 12,
     },
     btnText: {
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       color: palette.mainText,
       fontFamily: fonts.bold,
     },
@@ -48,8 +49,8 @@ export const getStyles = (theme: "light" | "dark") => {
       borderRadius: 6,
       paddingHorizontal: 4,
       height: 22,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
       color: palette.mainText,
       fontFamily: fonts.semibold,
       marginTop: 1,
@@ -69,8 +70,8 @@ export const getStyles = (theme: "light" | "dark") => {
       height: 27,
       color: palette.mainText,
       fontFamily: fonts.semibold,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
     },
     confirmationInputLabel: {
       fontSize: 12,
@@ -86,16 +87,16 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     codeBtnText: {
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 18,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(18),
       fontFamily: fonts.semibold,
     },
     supportTextWrapper: {
       alignItems: "center",
     },
     supportText: {
-      lineHeight: 16,
-      fontSize: 12,
+      lineHeight: getLineHeight(16),
+      fontSize: getFontSize(12),
       color: palette.supportTransparentText,
     },
     supportTextUnderlined: {

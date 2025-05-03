@@ -1,6 +1,7 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
-import { getPalette } from "../../../helpers/getPalette";
 import { fonts } from "../../../constants/fonts";
+import { getPalette } from "../../../helpers/getPalette";
 
 export const getStyles = (theme: "light" | "dark") => {
   const palette = getPalette(theme);
@@ -33,8 +34,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     customTitleInputStyles: {
       backgroundColor: palette.textFieldBgMainScreenPopup,
-      fontSize: 20,
-      lineHeight: 27,
+      fontSize: getFontSize(20),
+      lineHeight: getLineHeight(27),
       fontFamily: fonts.semibold,
       color: palette.mainText,
       textAlign: "center",
@@ -64,8 +65,8 @@ export const getStyles = (theme: "light" | "dark") => {
       gap: 16,
     },
     radioLabelStyle: {
-      fontSize: 14,
-      lineHeight: 19,
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       fontFamily: fonts.regular,
     },
     radioWrapperStyle: {
@@ -99,14 +100,15 @@ export const getStyles = (theme: "light" | "dark") => {
     fullBtnText: {
       fontFamily: fonts.semibold,
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
     },
     smallModalTitle: {
       fontFamily: fonts.bold,
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
+      textAlign: "center",
     },
     smallModalBtns: {
       width: "90%",
@@ -117,8 +119,8 @@ export const getStyles = (theme: "light" | "dark") => {
     btnBolderText: {
       fontFamily: fonts.bold,
       color: palette.mainText,
-      fontSize: 16,
-      lineHeight: 21,
+      fontSize: getFontSize(16),
+      lineHeight: getLineHeight(21),
     },
   });
 };

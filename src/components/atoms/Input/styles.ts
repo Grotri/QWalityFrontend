@@ -1,3 +1,4 @@
+import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../constants/fonts";
 import { getPalette } from "../../../helpers/getPalette";
@@ -12,8 +13,8 @@ export const getStyles = (theme: "light" | "dark") => {
     label: {
       color: palette.mainText,
       fontFamily: fonts.regular,
-      fontSize: 14,
-      lineHeight: 19,
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       paddingLeft: 4,
     },
     input: {
@@ -24,8 +25,8 @@ export const getStyles = (theme: "light" | "dark") => {
       paddingHorizontal: 8,
       color: palette.black,
       fontFamily: fonts.regular,
-      fontSize: 14,
-      lineHeight: 19,
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       textAlignVertical: "center",
       includeFontPadding: false,
     },
@@ -44,8 +45,8 @@ export const getStyles = (theme: "light" | "dark") => {
     },
     error: {
       paddingLeft: 4,
-      fontSize: 12,
-      lineHeight: 16,
+      fontSize: getFontSize(12),
+      lineHeight: getLineHeight(16),
       color: palette.error,
       fontFamily: fonts.semibold,
     },
