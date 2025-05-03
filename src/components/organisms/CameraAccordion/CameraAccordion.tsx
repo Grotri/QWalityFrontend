@@ -10,10 +10,9 @@ import {
   SettingsIcon,
   SortIcon,
 } from "../../../../assets/icons";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import IconRotated from "../../atoms/IconRotated";
 import Defect from "../../molecules/Defect";
-import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
 import CameraSettingsModal from "../CameraSettingsModal";
 import DefectSaveModal from "../DefectSaveModal";
@@ -25,6 +24,7 @@ import { ESortOptions } from "../CameraSortModal/enums";
 import { filterDefects, sortDefects } from "./utils";
 import { ICameraFilter, initialCameraFilter } from "../CameraFilterModal/types";
 import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const CameraAccordion: FC<ICameraAccordion> = ({
   sections,
@@ -40,8 +40,10 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   setSelectedDefect,
 }) => {
   const DEFAULT_PAGE_CAPACITY = 5;
-  const { deleteDefect } = useCamerasStore();
   const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
+  const { deleteDefect } = useCamerasStore();
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [cameraPages, setCameraPages] = useState<Record<string, number>>({});
   const [sortModalCameraId, setSortModalCameraId] = useState<string | null>(

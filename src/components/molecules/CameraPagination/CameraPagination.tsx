@@ -1,16 +1,21 @@
 import React, { FC } from "react";
 import { ICameraPagination } from "./types";
 import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { ArrowPaginationIcon } from "../../../../assets/icons";
-import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const CameraPagination: FC<ICameraPagination> = ({
   total,
   current,
   onPageChange,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
+
   const pages = Math.ceil(total / 5);
   if (pages <= 1) return null;
 

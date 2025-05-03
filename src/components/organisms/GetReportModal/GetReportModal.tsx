@@ -3,16 +3,20 @@ import { IGetReportModal } from "./types";
 import Modal from "../../atoms/Modal";
 import { Text, View } from "react-native";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
 import { formats } from "../../../constants/formats";
-import { palette } from "../../../constants/palette";
 import { showSuccessToast } from "../../../helpers/toast";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const [isSubModalOpened, setIsSubModalOpened] = useState<boolean>(false);
   const [isFormatDdOpen, setIsFormatDdOpen] = useState<boolean>(false);
   const [type, setType] = useState<"report" | "log">("report");

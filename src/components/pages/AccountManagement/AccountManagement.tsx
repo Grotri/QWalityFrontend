@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, TouchableWithoutFeedback, View } from "react-native";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import {
   ArrowBottomIcon,
@@ -12,7 +12,6 @@ import {
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
 import Button from "../../atoms/Button";
-import { palette } from "../../../constants/palette";
 import IconRotated from "../../atoms/IconRotated";
 import useAccountStore from "../../../hooks/useAccountStore";
 import InputPassword from "../../atoms/InputPassword";
@@ -20,9 +19,13 @@ import useAuthStore from "../../../hooks/useAuthStore";
 import { useAvailableRoles } from "../../../helpers/useAvailableRoles";
 import { IUser } from "../../../model/user";
 import { ERoles } from "../../../constants/roles";
+import { usePalette } from "../../../hooks/usePalette";
 
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const {
     accounts,
     changeAccount,
@@ -31,7 +34,6 @@ const AccountManagement = () => {
     changeError,
     refreshErrors,
   } = useAccountStore();
-  const { user } = useAuthStore();
   const availableRoles = useAvailableRoles();
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [sections, setSections] = useState<IUser[]>([...accounts]);
@@ -158,6 +160,7 @@ const AccountManagement = () => {
                 login: section.login.trim(),
                 password: section.password.trim(),
                 role: section.role,
+                theme: section.theme,
               })
             }
           >

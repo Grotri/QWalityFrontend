@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import { Keyboard, Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Dropdown from "../../atoms/Dropdown";
 import { ArrowBottomIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
@@ -16,17 +16,23 @@ import useAccountStore from "../../../hooks/useAccountStore";
 
 const Settings = () => {
   const { navigate } = useMainNavigation();
-  const { user, logout } = useAuthStore();
+  const { user, setUserField, logout } = useAuthStore();
   const { clearAccounts } = useAccountStore();
+  const styles = getStyles(user.theme);
 
   const [isFirstDDOpen, setIsFirstDDOpen] = useState<boolean>(false);
   const [isAutoDelete, setIsAutoDelete] = useState<string>("No");
   const [isSecondDDOpen, setIsSecondDDOpen] = useState<boolean>(false);
+  const [isThemeDDOpen, setIsThemeDDOpen] = useState<boolean>(false);
   const [isAutoClear, setIsAutoClear] = useState<string>("No");
   const [isExitModalOpen, setIsExitModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string>("");
+
+  const toggleTheme = (value: string) => {
+    setUserField("theme", value === "Yes" ? "light" : "dark");
+  };
 
   const closeDD = () => {
     if (isFirstDDOpen) {
@@ -34,6 +40,9 @@ const Settings = () => {
     }
     if (isSecondDDOpen) {
       setIsSecondDDOpen(false);
+    }
+    if (isThemeDDOpen) {
+      setIsThemeDDOpen(false);
     }
   };
 
@@ -50,7 +59,10 @@ const Settings = () => {
     if (isFirstDDOpen && isSecondDDOpen) {
       setIsSecondDDOpen(false);
     }
-  }, [isFirstDDOpen]);
+    if ((isFirstDDOpen || isSecondDDOpen) && isThemeDDOpen) {
+      setIsThemeDDOpen(false);
+    }
+  }, [isFirstDDOpen, isSecondDDOpen]);
 
   useEffect(() => {
     if (!isDeleteModalOpen) {
@@ -92,6 +104,19 @@ const Settings = () => {
                 value={isAutoClear}
                 setIsOpen={setIsSecondDDOpen}
                 isOpen={isSecondDDOpen}
+                wrapperStyle={styles.wrapperStyle}
+                dropdownStyle={styles.dropdownStyle}
+                arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}
+              />
+            </View>
+            <View style={styles.dropdownWrapper}>
+              <Text style={styles.dropdownText}>Светлая тема</Text>
+              <Dropdown
+                data={settingsItems}
+                setValue={toggleTheme}
+                value={user.theme === "dark" ? "No" : "Yes"}
+                setIsOpen={setIsThemeDDOpen}
+                isOpen={isThemeDDOpen}
                 wrapperStyle={styles.wrapperStyle}
                 dropdownStyle={styles.dropdownStyle}
                 arrowIconComponent={<ArrowBottomIcon stroke={2} height={9} />}

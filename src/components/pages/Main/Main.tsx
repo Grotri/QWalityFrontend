@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import {
   ArrowAccordionIcon,
@@ -9,7 +9,6 @@ import {
   SearchIcon,
 } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
-import { palette } from "../../../constants/palette";
 import CameraAccordion from "../../organisms/CameraAccordion";
 import IconRotated from "../../atoms/IconRotated";
 import AddCameraModal from "../../organisms/AddCameraModal";
@@ -19,11 +18,14 @@ import useCamerasStore from "../../../hooks/useCamerasStore";
 import { useCameraLimits } from "../../../helpers/useCameraLimits";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { showErrorToast } from "../../../helpers/toast";
+import { usePalette } from "../../../hooks/usePalette";
 
 const Main = () => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const { cameras: camerasInfo } = useCamerasStore();
   const cameraLimits = useCameraLimits();
-  const { user } = useAuthStore();
   const [cameras, setCameras] = useState<ICamera[]>([]);
   const [activeSections, setActiveSections] = useState<number[]>([]);
   const [isAddCameraModalOpen, setIsAddCameraModalOpen] =

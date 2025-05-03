@@ -2,15 +2,16 @@ import React, { FC, useEffect, useState } from "react";
 import { ICameraSettingsModal } from "./types";
 import { Text, View } from "react-native";
 import Modal from "../../atoms/Modal";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { CrossIcon } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import { ICamera } from "../../pages/Main/types";
 import { initialCamera } from "../../../model/camera";
-import { palette } from "../../../constants/palette";
 import useCamerasStore from "../../../hooks/useCamerasStore";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   camera,
@@ -18,6 +19,9 @@ const CameraSettingsModal: FC<ICameraSettingsModal> = ({
   isHistoryModalOpen,
   setIsHistoryModalOpen,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const {
     errors,
     setErrorsField,

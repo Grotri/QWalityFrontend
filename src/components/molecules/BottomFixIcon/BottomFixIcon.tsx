@@ -2,7 +2,8 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import Svg, { Defs, RadialGradient, Stop, Path } from "react-native-svg";
 import { IBottomFixIcon } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const BottomFixIcon: React.FC<IBottomFixIcon> = ({
   icon,
@@ -11,36 +12,41 @@ const BottomFixIcon: React.FC<IBottomFixIcon> = ({
   gap,
   marginRight,
   marginBottom,
-}) => (
-  <Pressable onPress={onPress} style={styles.wrapper}>
-    <Svg
-      width={130}
-      height={130}
-      fill="none"
-      viewBox="0 0 130 130"
-      style={styles.gradient}
-    >
-      <Path fill="url(#a)" d="M0 0h130v130H0z" />
-      <Defs>
-        <RadialGradient
-          id="a"
-          cx={0}
-          cy={0}
-          r={1}
-          gradientTransform="rotate(-128.908 62.313 22.426)scale(89.9569)"
-          gradientUnits="userSpaceOnUse"
-        >
-          <Stop />
-          <Stop offset={1} stopColor="#042555" stopOpacity={0} />
-        </RadialGradient>
-      </Defs>
-    </Svg>
+}) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
 
-    <View style={[styles.btn, { gap, marginRight, marginBottom }]}>
-      <View style={styles.circle}>{icon}</View>
-      <Text style={styles.btnText}>{text}</Text>
-    </View>
-  </Pressable>
-);
+  return (
+    <Pressable onPress={onPress} style={styles.wrapper}>
+      <Svg
+        width={130}
+        height={130}
+        fill="none"
+        viewBox="0 0 130 130"
+        style={styles.gradient}
+      >
+        <Path fill="url(#a)" d="M0 0h130v130H0z" />
+        <Defs>
+          <RadialGradient
+            id="a"
+            cx={0}
+            cy={0}
+            r={1}
+            gradientTransform="rotate(-128.908 62.313 22.426)scale(89.9569)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <Stop />
+            <Stop offset={1} stopColor="#042555" stopOpacity={0} />
+          </RadialGradient>
+        </Defs>
+      </Svg>
+
+      <View style={[styles.btn, { gap, marginRight, marginBottom }]}>
+        <View style={styles.circle}>{icon}</View>
+        <Text style={styles.btnText}>{text}</Text>
+      </View>
+    </Pressable>
+  );
+};
 
 export default BottomFixIcon;

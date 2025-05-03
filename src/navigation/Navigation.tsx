@@ -1,18 +1,19 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { authRoutes, mainRoutes, subscriptionRoutes } from "./routes";
-import { StyleSheet, StatusBar, View, Platform } from "react-native";
-import { palette } from "../constants/palette";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+import { palette } from "../constants/palette";
+import { toastConfig } from "../helpers/toastConfig";
 import useAuthStore from "../hooks/useAuthStore";
+import { authRoutes, mainRoutes, subscriptionRoutes } from "./routes";
 import {
   TypeAuthStackParamList,
   TypeMainStackParamList,
   TypeSubscriptionStackParamList,
 } from "./types";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Toasts } from "@backpackapp-io/react-native-toast";
 
 const RootStack = createNativeStackNavigator();
 const AuthStack = createNativeStackNavigator<TypeAuthStackParamList>();
@@ -105,14 +106,7 @@ export const Navigation = () => {
             </RootStack.Navigator>
           </NavigationContainer>
         </View>
-        <Toasts
-          globalAnimationType="spring"
-          globalAnimationConfig={{
-            duration: 300,
-            flingPositionReturnDuration: 100,
-          }}
-          overrideDarkMode={false}
-        />
+        <Toast config={toastConfig} />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );

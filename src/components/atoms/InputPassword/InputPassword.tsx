@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 import { IInputPassword } from "./types";
-import { palette } from "../../../constants/palette";
 import Input from "../Input/Input";
 import { EyeIcon } from "../../../../assets/icons";
+import { usePalette } from "../../../hooks/usePalette";
 
 const InputPassword: FC<IInputPassword> = ({
   value,
@@ -12,12 +12,13 @@ const InputPassword: FC<IInputPassword> = ({
   customLabelStyles,
   customInputWrapperStyles,
   onChangeText,
-  cursorColor = palette.black,
+  cursorColor,
   errorText,
   errorStyles,
   iconColor,
   iconSize,
 }) => {
+  const palette = usePalette();
   const [isSecured, setIsSecured] = useState<boolean>(true);
 
   return (
@@ -31,7 +32,7 @@ const InputPassword: FC<IInputPassword> = ({
       customLabelStyles={customLabelStyles}
       customInputWrapperStyles={customInputWrapperStyles}
       errorStyles={errorStyles}
-      cursorColor={cursorColor}
+      cursorColor={cursorColor || palette.black}
       errorText={errorText}
       rightIcon={
         <EyeIcon

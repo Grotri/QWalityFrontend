@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import GradientPageTemplate from "../../templates/GradientPageTemplate";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import SliderCard from "../../organisms/SliderCard";
 import Button from "../../atoms/Button";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../../../assets/icons";
@@ -21,6 +21,7 @@ import { getAllowedRolesBySubscription } from "../../../helpers/getAllowedRolesB
 const SubscriptionChange = () => {
   const { navigate } = useMainNavigation();
   const { user, setUserField, logout } = useAuthStore();
+  const styles = getStyles(user.theme);
   const { cameras } = useCamerasStore();
   const { accounts, clearAccounts } = useAccountStore();
   const [currentSlide, setCurrentSlide] = useState<number>(

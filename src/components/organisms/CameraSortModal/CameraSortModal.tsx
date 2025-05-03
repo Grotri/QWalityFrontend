@@ -2,12 +2,13 @@ import React, { FC, useEffect, useState } from "react";
 import { ICameraSortModal } from "./types";
 import { Text, View } from "react-native";
 import Modal from "../../atoms/Modal";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
 import Dropdown from "../../atoms/Dropdown";
 import { ESortOptions } from "./enums";
-import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const CameraSortModal: FC<ICameraSortModal> = ({
   isOpen,
@@ -15,6 +16,9 @@ const CameraSortModal: FC<ICameraSortModal> = ({
   setIsOpen,
   onApply,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const [isDDOpen, setIsDDOpen] = useState<boolean>(false);
   const [option, setOption] = useState<keyof typeof ESortOptions>("type");
 
