@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import { ISliderCard } from "./types";
 import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Radio from "../../atoms/Radio";
 import Button from "../../atoms/Button";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
-import { palette } from "../../../constants/palette";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const SliderCard: FC<ISliderCard> = ({
   id,
@@ -16,6 +17,10 @@ const SliderCard: FC<ISliderCard> = ({
   price,
   onPress,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
+
   const isSmallHeight = screenHeight < 700;
 
   return (

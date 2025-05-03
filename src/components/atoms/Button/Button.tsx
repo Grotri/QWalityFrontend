@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { IButton } from "./types";
 import { TouchableOpacity } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const Button: FC<IButton> = ({
   children,
@@ -11,8 +12,11 @@ const Button: FC<IButton> = ({
   customColor,
   disabled,
 }) => {
-  const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
   
+  const buttonColorStyle = styles[`btn_${color}` as keyof typeof styles];
+
   return (
     <TouchableOpacity
       onPress={onPress}

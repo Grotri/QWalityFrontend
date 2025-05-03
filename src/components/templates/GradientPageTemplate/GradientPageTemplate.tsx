@@ -9,8 +9,9 @@ import RadialGradientBg from "../../atoms/RadialGradient";
 import { screenHeight, screenWidth } from "../../../constants/screenSize";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IGradientPageTemplate } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Header from "../../molecules/Header";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const GradientPageTemplate = forwardRef(
   (
@@ -22,31 +23,39 @@ const GradientPageTemplate = forwardRef(
       underlined = false,
     }: PropsWithChildren<IGradientPageTemplate>,
     scrollRef: Ref<ScrollView>
-  ) => (
-    <SafeAreaView style={styles.container}>
-      <RadialGradientBg screenWidth={screenWidth} screenHeight={screenHeight} />
-      {headerText && (
-        <Header
-          headerText={headerText}
-          onClick={onHeaderClick}
-          underlined={underlined}
+  ) => {
+    const { user } = useAuthStore();
+    const styles = getStyles(user.theme);
+
+    return (
+      <SafeAreaView style={styles.container}>
+        <RadialGradientBg
+          screenWidth={screenWidth}
+          screenHeight={screenHeight}
         />
-      )}
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {mustScroll ? (
-          <ScrollView
-            ref={scrollRef}
-            contentContainerStyle={styles.scrollContainer}
-            showsVerticalScrollIndicator={false}
-          >
-            {children}
-          </ScrollView>
-        ) : (
-          <View style={styles.scrollContainer}>{children}</View>
+        {headerText && (
+          <Header
+            headerText={headerText}
+            onClick={onHeaderClick}
+            underlined={underlined}
+          />
         )}
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
-  )
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          {mustScroll ? (
+            <ScrollView
+              ref={scrollRef}
+              contentContainerStyle={styles.scrollContainer}
+              showsVerticalScrollIndicator={false}
+            >
+              {children}
+            </ScrollView>
+          ) : (
+            <View style={styles.scrollContainer}>{children}</View>
+          )}
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    );
+  }
 );
 
 GradientPageTemplate.displayName = "GradientPageTemplate";

@@ -2,16 +2,17 @@ import React, { FC, useEffect, useState } from "react";
 import { ICameraFilterModal, initialCameraFilter } from "./types";
 import { Text, View } from "react-native";
 import Modal from "../../atoms/Modal";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
 import Dropdown from "../../atoms/Dropdown";
-import { palette } from "../../../constants/palette";
 import Button from "../../atoms/Button";
 import Radio from "../../atoms/Radio";
 import DatePicker from "../../atoms/DatePicker";
 import { EDefectFilterOptions } from "./enums";
 import { showErrorToast } from "../../../helpers/toast";
 import { EErrors } from "../../../constants/errors";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const CameraFilterModal: FC<ICameraFilterModal> = ({
   isOpen,
@@ -19,6 +20,9 @@ const CameraFilterModal: FC<ICameraFilterModal> = ({
   initialFilter,
   onApply,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const [isDDOpen, setIsDDOpen] = useState<boolean>(false);
   const [isDateFilter, setIsDateFilter] = useState<boolean>(true);
   const [startDate, setStartDate] = useState<Date | null>(null);

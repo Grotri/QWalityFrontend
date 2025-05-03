@@ -3,13 +3,16 @@ import { menuItems } from "../../../constants/menuItems";
 import { Pressable, Text, View } from "react-native";
 import MenuItem from "../../molecules/MenuItem";
 import { IMenu, IMenuItem } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { LogoIcon, MenuProfileIcon } from "../../../../assets/icons";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import Hamburger from "../../atoms/Hamburger/Hamburger";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const Menu: FC<IMenu> = ({ isExpanded, setIsExpanded }) => {
   const { navigate } = useMainNavigation();
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
 
   const toggle = () => {
     setIsExpanded(!isExpanded);

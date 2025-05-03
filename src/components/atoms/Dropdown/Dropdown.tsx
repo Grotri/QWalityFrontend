@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { IDropdown } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { ArrowBottomIcon } from "../../../../assets/icons";
 import { Text, View } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { palette } from "../../../constants/palette";
 import IconRotated from "../IconRotated";
 import { useSharedValue } from "react-native-reanimated";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const Dropdown: FC<IDropdown> = ({
   data,
@@ -20,10 +21,13 @@ const Dropdown: FC<IDropdown> = ({
   selectedTextStyle,
   labelStyle,
   itemContainerStyle,
-  borderColor = palette.bg,
+  borderColor,
   arrowIconComponent,
   maxHeight,
 }) => {
+  const { user } = useAuthStore();
+  const palette = usePalette();
+  const styles = getStyles(user.theme);
   const rotation = useSharedValue(0);
 
   const renderIcon = () => (
@@ -47,9 +51,13 @@ const Dropdown: FC<IDropdown> = ({
         }}
         value={value}
         maxHeight={maxHeight}
-        style={[styles.dropdown, dropdownStyle, { borderColor }]}
+        style={[
+          styles.dropdown,
+          dropdownStyle,
+          { borderColor: borderColor || palette.bg },
+        ]}
         textStyle={[styles.textStyle, selectedTextStyle]}
-        dropDownContainerStyle={{ borderColor }}
+        dropDownContainerStyle={{ borderColor: borderColor || palette.bg }}
         listItemContainerStyle={[styles.item, itemContainerStyle]}
         selectedItemContainerStyle={styles.selectedItem}
         listMessageTextStyle={{ color: palette.black }}

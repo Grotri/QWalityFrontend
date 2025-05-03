@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { Pressable, Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Accordion from "react-native-collapsible/Accordion";
 import { questions } from "../../../constants/questions";
 import { IQuestionSection } from "./types";
 import { ArrowAccordionIcon, MessageIcon } from "../../../../assets/icons";
 import IconRotated from "../../atoms/IconRotated";
 import BottomFixIcon from "../../molecules/BottomFixIcon";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const FAQ = () => {
   const { navigate } = useMainNavigation();
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
   const [activeSections, setActiveSections] = useState<number[]>([]);
 
   const handleSectionChange = (sections: number[]) => {

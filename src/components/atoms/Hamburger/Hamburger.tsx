@@ -6,9 +6,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { IHamburger } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const Hamburger: FC<IHamburger> = ({ active }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
   const progress = useSharedValue(0);
 
   useEffect(() => {

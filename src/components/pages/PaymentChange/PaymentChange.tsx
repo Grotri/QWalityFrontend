@@ -3,7 +3,7 @@ import { useRoute } from "@react-navigation/native";
 import { useCost } from "../../../helpers/useCost";
 import useAuthStore from "../../../hooks/useAuthStore";
 import Button from "../../atoms/Button";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { Text, View } from "react-native";
 import PageTemplate from "../../templates/PageTemplate";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
@@ -11,8 +11,9 @@ import { showSuccessToast } from "../../../helpers/toast";
 
 const PaymentChange = () => {
   const route = useRoute();
+  const { user, setUserField } = useAuthStore();
+  const styles = getStyles(user.theme);
   const { navigate } = useMainNavigation();
-  const { setUserField } = useAuthStore();
   const { sliderId } = route.params as { sliderId: string };
   const subscriptionCost = useCost(sliderId || "0");
 

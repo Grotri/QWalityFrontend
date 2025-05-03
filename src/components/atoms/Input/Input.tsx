@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import { IInput } from "./types";
 import { Platform, Text, TextInput, View } from "react-native";
-import { styles } from "./styles";
-import { palette } from "../../../constants/palette";
+import { getStyles } from "./styles";
 import * as NavigationBar from "expo-navigation-bar";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const Input: FC<IInput> = ({
   value,
@@ -22,10 +23,14 @@ const Input: FC<IInput> = ({
   secureTextEntry = false,
   placeholderTextColor,
   rightIcon,
-  cursorColor = palette.black,
+  cursorColor,
   errorText,
   errorStyles,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
+
   return (
     <View style={[styles.container, customStyles]}>
       {label && <Text style={[styles.label, customLabelStyles]}>{label}</Text>}
@@ -46,7 +51,7 @@ const Input: FC<IInput> = ({
           keyboardAppearance={keyboardAppearance}
           inputMode={inputMode}
           maxLength={maxLength}
-          cursorColor={cursorColor}
+          cursorColor={cursorColor || palette.black}
           secureTextEntry={secureTextEntry}
           onKeyPress={() => {
             if (Platform.OS === "android") {

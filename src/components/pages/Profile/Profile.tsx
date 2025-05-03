@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
 import { ProfileIcon } from "../../../../assets/icons";
 import Button from "../../atoms/Button";
 import Input from "../../atoms/Input";
-import { palette } from "../../../constants/palette";
 import { IErrors, initialErrors } from "./types";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern, innPattern } from "../../../constants/patterns";
@@ -19,10 +18,13 @@ import { screenHeight } from "../../../constants/screenSize";
 import useAuthStore from "../../../hooks/useAuthStore";
 import { initialUser, IUser } from "../../../model/user";
 import { ERoles } from "../../../constants/roles";
+import { usePalette } from "../../../hooks/usePalette";
 
 const Profile = () => {
   const { navigate } = useMainNavigation();
   const { user, setUser } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const [userInfo, setUserInfo] = useState<IUser>({ ...initialUser });
   const [errors, setErrors] = useState<IErrors>({ ...initialErrors });
   const [code, setCode] = useState<string>("");

@@ -12,9 +12,10 @@ import {
 } from "react-native-safe-area-context";
 import Header from "../../molecules/Header";
 import { IPageTemplate } from "./types";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import Menu from "../../organisms/Menu";
 import BlurView from "../../atoms/BlurView";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   children,
@@ -28,6 +29,8 @@ const PageTemplate: FC<PropsWithChildren & IPageTemplate> = ({
   isBlurOn = false,
   isWholeBlurOn = false,
 }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
   const insets = useSafeAreaInsets();
   const [isMenuExpanded, setIsMenuExpanded] = useState<boolean>(false);
 

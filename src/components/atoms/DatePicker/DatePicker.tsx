@@ -9,10 +9,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { formatDate } from "../../../helpers/formatDate";
+import useAuthStore from "../../../hooks/useAuthStore";
 
 const DatePicker: FC<IDatePicker> = ({ date, setDate, datePickerStyle }) => {
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
   const [show, setShow] = useState<boolean>(false);
   const defaultDate = new Date();
 

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { getStyles } from "./styles";
 import { useMainNavigation } from "../../../hooks/useTypedNavigation";
 import PageTemplate from "../../templates/PageTemplate";
-import { palette } from "../../../constants/palette";
 import { ArrowBottomIcon } from "../../../../assets/icons";
 import Input from "../../atoms/Input";
 import Dropdown from "../../atoms/Dropdown";
@@ -21,9 +20,14 @@ import { useAccountLimits } from "../../../helpers/useAccountLimits";
 import { IUser } from "../../../model/user";
 import { showErrorToast } from "../../../helpers/toast";
 import { ERoles } from "../../../constants/roles";
+import useAuthStore from "../../../hooks/useAuthStore";
+import { usePalette } from "../../../hooks/usePalette";
 
 const Admin = () => {
   const { navigate } = useMainNavigation();
+  const { user } = useAuthStore();
+  const styles = getStyles(user.theme);
+  const palette = usePalette();
   const { accounts, registerAccount } = useAccountStore();
   const availableRoles = useAvailableRoles();
   const accountLimits = useAccountLimits();
@@ -60,6 +64,7 @@ const Admin = () => {
         login: login.trim(),
         password: password.trim(),
         role,
+        theme: "dark",
       };
       if (validate()) {
         registerAccount(account);
