@@ -35,7 +35,9 @@ const PaymentChange = () => {
               setUserField("subscription", sliderId);
               navigate("Profile", { direction: "backward" });
               showSuccessToast("Подписка успешно оплачена");
-              showSuccessToast("Вы успешно поменяли уровень подписки");
+              setTimeout(() => {
+                showSuccessToast("Вы успешно поменяли уровень подписки");
+              }, 2000);
             }}
             style={styles.btn}
             color="blue"
