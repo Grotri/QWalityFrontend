@@ -27,8 +27,16 @@ export const toastConfig = () => {
       (
         <Component
           {...props}
-          style={{ ...baseStyle, backgroundColor: bgColor }}
+          style={{
+            ...baseStyle,
+            backgroundColor: bgColor,
+            height: "auto",
+            minHeight: 60,
+            paddingVertical: 16,
+          }}
           text1Style={text1Style}
+          text1NumberOfLines={0}
+          text2NumberOfLines={0}
         />
       );
 
