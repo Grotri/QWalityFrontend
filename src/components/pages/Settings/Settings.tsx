@@ -1,4 +1,5 @@
 import { fontSizes } from "@/src/constants/fontSizes";
+import { themes } from "@/src/constants/themes";
 import React, { Fragment, useEffect, useState } from "react";
 import { Keyboard, Text, View } from "react-native";
 import { ArrowBottomIcon } from "../../../../assets/icons";
@@ -33,7 +34,7 @@ const Settings = () => {
   const [error, setError] = useState<string>("");
 
   const toggleTheme = (value: string) => {
-    setUserField("theme", value === "Yes" ? "light" : "dark");
+    setUserField("theme", value);
   };
 
   const toggleFontSize = (value: string) => {
@@ -130,11 +131,11 @@ const Settings = () => {
               />
             </View>
             <View style={styles.dropdownWrapper}>
-              <Text style={styles.dropdownText}>Светлая тема</Text>
+              <Text style={styles.dropdownText}>Тема</Text>
               <Dropdown
-                data={settingsItems}
+                data={themes}
                 setValue={toggleTheme}
-                value={user.theme === "dark" ? "No" : "Yes"}
+                value={user.theme}
                 setIsOpen={setIsThemeDDOpen}
                 isOpen={isThemeDDOpen}
                 wrapperStyle={[styles.wrapperStyle, { zIndex: 2 }]}

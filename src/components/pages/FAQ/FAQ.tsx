@@ -1,5 +1,6 @@
+import { supportLink } from "@/src/constants/support";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Linking, Pressable, Text, View } from "react-native";
 import Accordion from "react-native-collapsible/Accordion";
 import { ArrowAccordionIcon, MessageIcon } from "../../../../assets/icons";
 import { questions } from "../../../constants/questions";
@@ -45,7 +46,7 @@ const FAQ = () => {
         <BottomFixIcon
           icon={<MessageIcon />}
           text="Обратиться в поддержку"
-          onPress={() => alert("Обратиться в поддержку пока невозможно.")}
+          onPress={() => Linking.openURL(supportLink)}
           marginRight={12}
           marginBottom={28}
         />

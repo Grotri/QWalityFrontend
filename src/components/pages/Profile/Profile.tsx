@@ -1,5 +1,6 @@
+import { supportLink } from "@/src/constants/support";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Linking, Text, View } from "react-native";
 import { ProfileIcon } from "../../../../assets/icons";
 import { EErrors } from "../../../constants/errors";
 import { emailPattern, innPattern } from "../../../constants/patterns";
@@ -198,9 +199,7 @@ const Profile = () => {
             </Button>
             <View style={styles.supportTextWrapper}>
               <Text style={styles.supportText}>Нет доступа к почте?</Text>
-              <Button
-                onPress={() => alert("Обратиться в поддержку пока невозможно.")}
-              >
+              <Button onPress={() => Linking.openURL(supportLink)}>
                 <Text
                   style={[styles.supportText, styles.supportTextUnderlined]}
                 >
