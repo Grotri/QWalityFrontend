@@ -1,8 +1,9 @@
+import { EErrors } from "@/src/constants/errors";
 import React, { FC, useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import { ArrowBottomIcon, CrossIcon } from "../../../../assets/icons";
 import { formats } from "../../../constants/formats";
-import { showSuccessToast } from "../../../helpers/toast";
+import { showErrorToast, showSuccessToast } from "../../../helpers/toast";
 import { usePalette } from "../../../hooks/usePalette";
 import Button from "../../atoms/Button";
 import DatePicker from "../../atoms/DatePicker";
@@ -21,6 +22,39 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [format, setFormat] = useState<string>("0");
+
+  const validateDates = (): boolean => {
+    if (!startDate || !endDate) {
+      showErrorToast(EErrors.chooseDates);
+      return false;
+    }
+
+    if (endDate > new Date()) {
+      showErrorToast(EErrors.futureDate);
+      return false;
+    }
+
+    if (startDate > endDate) {
+      showErrorToast(EErrors.timeDates);
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSave = () => {
+    if (!validateDates()) return;
+
+    showSuccessToast(type === "log" ? "Лог скачан" : "Отчет скачан");
+    closeModals();
+  };
+
+  const handleDelete = () => {
+    if (!validateDates()) return;
+
+    showSuccessToast(type === "log" ? "Лог удален" : "Отчет удален");
+    closeModals();
+  };
 
   const closeModals = () => {
     if (isSubModalOpened) {
@@ -119,10 +153,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                 <Button
                   customColor={palette.modalBtn}
                   style={styles.btnModal}
-                  onPress={() => {
-                    closeModals();
-                    showSuccessToast("Лог скачан");
-                  }}
+                  onPress={handleSave}
                 >
                   <Text style={styles.btnModalText}>Скачать</Text>
                 </Button>
@@ -139,10 +170,7 @@ const GetReportModal: FC<IGetReportModal> = ({ isOpen, setIsOpen }) => {
                   <Button
                     color="red"
                     style={styles.btnModal}
-                    onPress={() => {
-                      closeModals();
-                      showSuccessToast("Лог удален");
-                    }}
+                    onPress={handleDelete}
                   >
                     <Text style={styles.btnModalTextBold}>Да</Text>
                   </Button>
