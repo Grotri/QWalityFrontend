@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Navigation } from "./src/navigation";
 import * as Font from "expo-font";
+import * as NavigationBar from "expo-navigation-bar";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  StyleSheet,
   ActivityIndicator,
   AppState,
   Platform,
+  StyleSheet,
+  View,
 } from "react-native";
 import { palette } from "./src/constants/palette";
-import * as NavigationBar from "expo-navigation-bar";
+import { Navigation } from "./src/navigation";
 
 const App = () => {
   const [areFontsLoaded, setAreFontsLoaded] = useState<boolean>(false);
@@ -31,6 +31,8 @@ const App = () => {
     };
 
     const setupNavigationBar = async () => {
+      if (Platform.OS !== "android") return;
+
       await NavigationBar.setBehaviorAsync("overlay-swipe");
       await NavigationBar.setVisibilityAsync("hidden");
 
@@ -58,7 +60,7 @@ const App = () => {
     };
 
     loadFont();
-    
+
     if (Platform.OS === "android") {
       setupNavigationBar();
     }

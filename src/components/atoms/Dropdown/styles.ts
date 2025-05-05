@@ -25,7 +25,7 @@ export const getStyles = () => {
     },
     textStyle: {
       color: palette.mainText,
-      lineHeight: getLineHeight(14),
+      lineHeight: getLineHeight(19),
       fontSize: getFontSize(14),
       fontFamily: fonts.regular,
     },
@@ -33,7 +33,7 @@ export const getStyles = () => {
       minHeight: 0,
       height: "auto",
       paddingHorizontal: 8,
-      paddingVertical: 10,
+      paddingVertical: 8,
       backgroundColor: palette.dropdownListBgTransparent,
     },
     selectedItem: {

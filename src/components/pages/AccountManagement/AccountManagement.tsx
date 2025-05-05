@@ -24,7 +24,7 @@ import { getStyles } from "./styles";
 const AccountManagement = () => {
   const { navigate } = useMainNavigation();
   const { user } = useAuthStore();
-  const styles = getStyles(user.fontSize);
+  const styles = getStyles();
   const palette = usePalette();
   const {
     accounts,
@@ -141,7 +141,7 @@ const AccountManagement = () => {
           label="Роль"
           wrapperStyle={[
             styles.dropdownWrapper,
-            { marginBottom: isDdOpen ? 140 : 36 },
+            { marginBottom: isDdOpen ? 46 * availableRoles.length : 36 },
           ]}
           labelStyle={styles.inputLabel}
           dropdownStyle={styles.dropdown}
