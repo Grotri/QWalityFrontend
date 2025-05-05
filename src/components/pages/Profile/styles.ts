@@ -34,7 +34,7 @@ export const getStyles = () => {
       fontFamily: fonts.semibold,
     },
     btn: {
-      width: "64%",
+      minWidth: "64%",
       height: 35,
       borderRadius: 12,
     },

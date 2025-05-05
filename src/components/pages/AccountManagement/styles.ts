@@ -1,12 +1,10 @@
 import { getFontSize, getLineHeight } from "@/src/helpers/getFontSize";
 import { usePalette } from "@/src/hooks/usePalette";
-import { TFontSize } from "@/src/model/user";
 import { StyleSheet } from "react-native";
 import { fonts } from "../../../constants/fonts";
 
-export const getStyles = (font: TFontSize) => {
+export const getStyles = () => {
   const palette = usePalette();
-  const itemHeight = font === "large" ? 26 : 22;
 
   return StyleSheet.create({
     managerWrapper: {
@@ -44,13 +42,13 @@ export const getStyles = (font: TFontSize) => {
     },
     inputWrapperStyles: {
       width: "64%",
-      height: itemHeight,
+      height: 26,
     },
     input: {
       backgroundColor: palette.textFieldInFolderBg,
       borderRadius: 6,
       paddingHorizontal: 6,
-      height: itemHeight,
+      height: 26,
       color: palette.mainText,
       fontFamily: fonts.semibold,
       fontSize: getFontSize(16),
@@ -70,7 +68,7 @@ export const getStyles = (font: TFontSize) => {
     },
     dropdown: {
       backgroundColor: palette.textFieldInFolderBg,
-      height: itemHeight,
+      height: 26,
       borderRadius: 6,
       paddingHorizontal: 6,
     },
@@ -90,17 +88,19 @@ export const getStyles = (font: TFontSize) => {
     },
     btn: {
       width: "30%",
-      height: itemHeight,
+      height: 26,
       borderRadius: 6,
     },
     btnText: {
+      fontSize: getFontSize(14),
+      lineHeight: getLineHeight(19),
       color: palette.mainText,
       fontFamily: fonts.semibold,
     },
     noAccounts: {
       marginTop: 28,
       fontSize: getFontSize(16),
-      lineHeight: getLineHeight(16),
+      lineHeight: getLineHeight(21),
       fontFamily: fonts.semibold,
       color: palette.sectionTransparentText,
     },
