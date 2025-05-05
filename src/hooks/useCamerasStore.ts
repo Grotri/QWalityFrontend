@@ -1,14 +1,15 @@
+import uuid from "react-native-uuid";
 import { create } from "zustand";
-import { IStoreStatus } from "../model/misc";
 import { initialCameras } from "../constants/cameras";
 import { EErrors } from "../constants/errors";
-import uuid from "react-native-uuid";
-import { ICamera } from "../model/camera";
+import { linkPattern } from "../constants/patterns";
 import {
   showErrorToast,
   showInfoToast,
   showSuccessToast,
 } from "../helpers/toast";
+import { ICamera } from "../model/camera";
+import { IStoreStatus } from "../model/misc";
 
 interface IErrors {
   name: string;
@@ -65,7 +66,11 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
   validate: (name, link) => {
     const newErrors: IErrors = {
       name: !name.trim() ? EErrors.required : "",
-      link: !link.trim() ? EErrors.required : "",
+      link: !link.trim()
+        ? EErrors.required
+        : !linkPattern.test(link.trim())
+        ? EErrors.link
+        : "",
     };
 
     set({ errors: newErrors });
