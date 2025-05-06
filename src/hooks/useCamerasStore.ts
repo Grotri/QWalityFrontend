@@ -31,6 +31,7 @@ interface IUseCamerasStore extends IStoreStatus {
   addCamera: (name: string, link: string) => void;
   editCamera: (camera: ICamera, onEdit: (camera: null) => void) => void;
   deleteCamera: (camera: ICamera) => void;
+  recoverCamera: (cameraId: string) => void;
   deleteHistory: (cameraId: string) => void;
   deleteDefect: (cameraId: string, defectId: string) => void;
   recoverDefect: (cameraId: string, defectId: string) => void;
@@ -143,20 +144,34 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
 
   deleteCamera: (camera) => {
     const { cameras } = get();
+    const now = new Date().toISOString();
+
     try {
       set({ loading: true, error: null });
       set({
-        cameras: cameras.filter((c) => c.id !== camera.id),
+        cameras: cameras.map((c) =>
+          c.id === camera.id ? { ...c, deletedAt: now } : c
+        ),
         errors: { ...initialErrors },
         loading: false,
         error: false,
       });
-      showSuccessToast(`Камера "${camera.title}" успешно удалена`);
+      showSuccessToast(`Камера "${camera.title}" успешно перемещена в корзину`);
     } catch (error) {
       showErrorToast("Не удалось удалить камеру");
       console.error(error);
       set({ error, loading: false });
     }
+  },
+
+  recoverCamera: (cameraId: string) => {
+    const { cameras } = get();
+    set({
+      cameras: cameras.map((c) =>
+        c.id === cameraId ? { ...c, deletedAt: undefined } : c
+      ),
+    });
+    showSuccessToast("Камера восстановлена");
   },
 
   deleteHistory: (id) => {
@@ -165,7 +180,9 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
       set({ loading: true, error: null });
       set({
         cameras: cameras.map((camera: ICamera) =>
-          camera.id === id ? { ...camera, defects: [] } : camera
+          camera.id === id
+            ? { ...camera, defects: camera.defects.filter((d) => d.deletedAt) }
+            : camera
         ),
         errors: { ...initialErrors },
         loading: false,
@@ -181,6 +198,8 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
 
   deleteDefect: (cameraId, defectId) => {
     const { cameras } = get();
+    const now = new Date().toISOString();
+
     try {
       set({ loading: true, error: null });
       set({
@@ -189,7 +208,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
             ? {
                 ...c,
                 defects: c.defects.map((d) =>
-                  d.id === defectId ? { ...d, isDeleted: true } : d
+                  d.id === defectId ? { ...d, deletedAt: now } : d
                 ),
               }
             : c
@@ -215,7 +234,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
             ? {
                 ...c,
                 defects: c.defects.map((d) =>
-                  d.id === defectId ? { ...d, isDeleted: false } : d
+                  d.id === defectId ? { ...d, deletedAt: undefined } : d
                 ),
               }
             : c
@@ -238,7 +257,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
       set({
         cameras: cameras.map((c) => ({
           ...c,
-          defects: c.defects.filter((d) => !d.isDeleted),
+          defects: c.defects.filter((d) => !d.deletedAt),
         })),
         loading: false,
         error: false,
@@ -278,7 +297,7 @@ const useCamerasStore = create<IUseCamerasStore>((set, get) => ({
       const updatedCameras = cameras.map((camera) => ({
         ...camera,
         defects: camera.defects.filter((defect) => {
-          if (!defect.isDeleted) return true;
+          if (!defect.deletedAt) return true;
 
           const defectDate = new Date(defect.date);
           const shouldDelete = defectDate >= start && defectDate <= end;

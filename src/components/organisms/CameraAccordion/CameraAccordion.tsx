@@ -115,7 +115,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   }, [sections.length]);
 
   const renderHeader = (camera: ICamera, index: number) => {
-    const defects = camera.defects.filter((defect) => !defect.isDeleted);
+    const defects = camera.defects.filter((defect) => !defect.deletedAt);
     return (
       <View style={styles.header} key={camera.id}>
         <View style={styles.headerMain}>
@@ -156,7 +156,7 @@ const CameraAccordion: FC<ICameraAccordion> = ({
   };
 
   const renderContent = (camera: ICamera) => {
-    const defects = camera.defects.filter((defect) => !defect.isDeleted);
+    const defects = camera.defects.filter((defect) => !defect.deletedAt);
     const page = cameraPages[camera.id] || 1;
     const sortOption = cameraSortOptions[camera.id];
     const filterOption = cameraFilterOptions[camera.id];
