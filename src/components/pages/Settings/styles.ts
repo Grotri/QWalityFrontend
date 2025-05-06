@@ -32,7 +32,7 @@ export const getStyles = () => {
       flexShrink: 1,
     },
     wrapperStyle: {
-      width: 94,
+      width: 108,
     },
     btn: {
       height: 34,
