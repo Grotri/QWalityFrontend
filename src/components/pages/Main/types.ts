@@ -2,7 +2,7 @@ export interface IDefect {
   id: string;
   name: string;
   date: string;
-  isDeleted: boolean;
+  deletedAt?: string;
 }
 
 export interface ICamera {
@@ -12,4 +12,5 @@ export interface ICamera {
   uptime: string;
   defects: IDefect[];
   link: string;
+  deletedAt?: string;
 }
